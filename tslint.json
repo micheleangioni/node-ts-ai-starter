@@ -38,6 +38,7 @@
       true,
       "array"
     ],
+    "interface-over-type-literal": false,
     "class-name": true,
     "arrow-return-shorthand": true,
     "no-var-keyword": true,
