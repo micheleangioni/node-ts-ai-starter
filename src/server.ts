@@ -1,14 +1,14 @@
 import express from 'express';
 import application from './app';
 
-const app = express();
+const expressApp: express.Application = express();
 const port = process.env.PORT || 8081;
 
-app.on('ready', function() {
-    app.listen(port, () => console.log(`Application start: listening on port ${port}!`));
+expressApp.on('ready', () => {
+  expressApp.listen(port, () => console.log(`Application start: listening on port ${port}!`));
 });
 
-application(app)
+application(expressApp)
     .then(({ app, logger }) => {
         logger.info(`Going to start application on port ${port}!`);
         app.emit('ready');

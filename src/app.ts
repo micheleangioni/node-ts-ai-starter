@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import express from 'express';
 import path from 'path';
 import api from './api';
 import applicationServices from './application';
@@ -12,7 +13,7 @@ const logger = console;
 
 import infraServices from './infra';
 
-async function loadApp(app: any) {
+async function loadApp(app: express.Application) {
     /**
      * Attach the infrastructure services to the Application.
      */
@@ -31,14 +32,14 @@ async function loadApp(app: any) {
     return app;
 }
 
-export default function (app: any) {
+export default function (app: express.Application) {
     app.set('logger', logger);
 
     /**
      * Configure Body Parser.
      */
     app.use(bodyParser.urlencoded({
-        extended: true
+        extended: true,
     }));
     app.use(bodyParser.json());
 
@@ -47,14 +48,14 @@ export default function (app: any) {
      */
     app.use(cors({
         allowedHeaders: ['Authorization', 'Content-Type', 'X-Requested-With'],
-        exposedHeaders: ['Authorization', 'Content-Type']
+        exposedHeaders: ['Authorization', 'Content-Type'],
     }));
     app.options('*', cors({
         allowedHeaders: ['Authorization', 'Content-Type', 'X-Requested-With'],
-        exposedHeaders: ['Authorization', 'Content-Type']
+        exposedHeaders: ['Authorization', 'Content-Type'],
     }));
 
-    process.on('uncaughtException', function (err) {
+    process.on('uncaughtException', (err) => {
         console.log(`${new Date().toISOString()} uncaughtException`, err);
         logger.error(err.message);
         logger.error(err.stack);
@@ -62,7 +63,7 @@ export default function (app: any) {
     });
 
     return loadApp(app)
-        .then(app => {
-            return {app, logger};
+        .then((expressApp) => {
+            return {app: expressApp, logger};
         });
-};
+}

@@ -36,6 +36,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/express": "^4.16.0",
+    "@types/mongoose": "^5.2.11",
     "@types/node": "^10.9.4",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
@@ -44,6 +45,7 @@
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "moment": "^2.22.2",
+    "mongoose": "^5.2.13",
     "validator": "^10.3.0"
   },
   "devDependencies": {
