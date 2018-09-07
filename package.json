@@ -1,0 +1,61 @@
+{
+  "name": "node-ts-starter",
+  "version": "0.1.0",
+  "description": "Starter kit for Node.js application written in TypeScript",
+  "main": "build/server.js",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "debug": "ts-node --inspect=5858 src/server.ts",
+    "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ]
+  },
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "express",
+    "starter",
+    "boilerplate"
+  ],
+  "author": {
+    "name": "Michele Angioni",
+    "email": "michele.angioni@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "@types/node": "^10.9.4",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "dynamoose": "^0.8.7",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "moment": "^2.22.2",
+    "validator": "^10.3.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.4",
+    "@types/dotenv": "^4.0.3",
+    "@types/jest": "^23.3.1",
+    "@types/validator": "^9.4.1",
+    "jest": "^23.5.0",
+    "nodemon": "^1.18.2",
+    "ts-jest": "^23.1.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3"
+  }
+}
