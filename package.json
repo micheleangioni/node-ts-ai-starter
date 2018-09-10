@@ -4,9 +4,9 @@
   "description": "Starter kit for Node.js application written in TypeScript",
   "main": "build/server.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "debug": "ts-node --inspect=5858 src/server.ts",
-    "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "start": "tsc && node build/server.js",
+    "run": "node build/server.js",
+    "debug": "node --inspect=3001 -r ts-node/register",
     "test": "jest",
     "test:watch": "jest --watch"
   },
