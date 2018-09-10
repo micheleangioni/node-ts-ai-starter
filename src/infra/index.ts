@@ -9,5 +9,5 @@ export default function (app: express.Application) {
   models(app);
 
   // Add repositories
-  app.set('userRepo', UserRepo(app));
+  app.set('userRepo', UserRepo(app.get('userModel')));
 }

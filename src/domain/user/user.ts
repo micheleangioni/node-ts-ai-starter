@@ -1,7 +1,8 @@
 import validator from 'validator';
+import { IEntity } from '../declarations';
 import { UserData } from './declarations';
 
-export default class User {
+export default class User implements IEntity {
   protected id: string;
   protected email: string;
   protected password: string;
