@@ -1,8 +1,8 @@
 import express from 'express';
-
 const router = express.Router();
 import User from '../../domain/user/user';
 import { IUserRepo } from '../../infra/repositories/declarations';
+import userTransformer from './userTransformer';
 // import encryptPassword from './middlewares/encryptPassword';
 // import usersValidationNew from './middlewares/users.validation.new';
 
@@ -34,10 +34,8 @@ export default function (app: express.Application) {
     }
 
     res.json({
-      data: users.map((userData: User) => {
-        return {
-          username: userData.getUsername(),
-        };
+      data: users.map((user: User) => {
+        return userTransformer(user);
       }),
     });
   });
@@ -62,10 +60,7 @@ export default function (app: express.Application) {
     }
 
     res.json({
-      data: {
-        email: user.getEmail(),
-        username: user.getUsername(),
-      },
+      data: userTransformer(user),
     });
   });
 
