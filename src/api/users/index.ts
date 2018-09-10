@@ -2,9 +2,8 @@ import express from 'express';
 const router = express.Router();
 import User from '../../domain/user/user';
 import { IUserRepo } from '../../infra/repositories/declarations';
+import usersValidationNew from './middlewares/users.validation.new';
 import userTransformer from './userTransformer';
-// import encryptPassword from './middlewares/encryptPassword';
-// import usersValidationNew from './middlewares/users.validation.new';
 
 export default function (app: express.Application) {
   const logger = app.get('logger');
@@ -12,8 +11,9 @@ export default function (app: express.Application) {
 
   // Validation Middleware.
 
-  // router.post('/', usersValidationNew);
+  router.post('/', usersValidationNew);
 
+  // TODO Implement an encryption middleware. Suggested package for encryption: 'bcrypt'
   // Encrypt Password Middleware.
 
   // router.post('/', encryptPassword);
@@ -54,7 +54,7 @@ export default function (app: express.Application) {
       });
     } catch (err) {
       logger.error(err);
-      res.status(500).json({hasError: 1, error: 'Internal error'});
+      res.status(500).json({ hasError: 1, error: 'Internal error' });
 
       return;
     }

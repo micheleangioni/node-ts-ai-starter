@@ -57,7 +57,30 @@ class UserRepo implements IUserRepo {
     return new Promise((resolve, reject) => {
       this.userModel.findOne({ email })
         .then((userData: UserData | null) => {
-          if (!userData) {
+          if (userData === null) {
+            resolve({});
+
+            return;
+          }
+
+          resolve(new User(userData));
+        })
+        .catch((error: any) => reject(error));
+    });
+  }
+
+  /**
+   * Find and return a User by username.
+   * Resolve an empty object if no User is found.
+   *
+   * @param {string} username
+   * @returns {Promise<User> | Promise<object>}
+   */
+  public findByUsername (username: string): Promise<User> | Promise<object> {
+    return new Promise((resolve, reject) => {
+      this.userModel.findOne({ username })
+        .then((userData: UserData | null) => {
+          if (userData === null) {
             resolve({});
 
             return;

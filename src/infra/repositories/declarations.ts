@@ -5,6 +5,7 @@ export interface IUserRepo {
   all (): Promise<User[]>;
   findById (userId: string): Promise<User> | Promise<object>;
   findByEmail (email: string): Promise<User> | Promise<object>;
+  findByUsername (email: string): Promise<User> | Promise<object>;
   count (): Promise<number>;
   create (data: UserCreateData ): Promise<User>;
   updateUser (userId: string, data: UserUpdateData): Promise<User>;
