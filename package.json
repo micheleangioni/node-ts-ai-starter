@@ -41,7 +41,6 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
-    "dynamoose": "^0.8.7",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "moment": "^2.22.2",
