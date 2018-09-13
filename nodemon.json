@@ -1,6 +1,6 @@
 {
   "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", "node_modules"],
   "watch": ["src"],
-  "exec": "npm run debug",
+  "exec": "node --inspect=3001 -r ts-node/register",
   "ext": "ts"
 }
