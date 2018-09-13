@@ -8,12 +8,12 @@
     "run": "node build/server.js",
     "debug": "node --inspect=3001 -r ts-node/register src/server.ts",
     "watch": "node_modules/nodemon/bin/nodemon.js --inspect=3001 src/server.ts",
-    "test": "jest",
+    "test": "jest --forceExit",
     "test:watch": "jest --watch"
   },
   "jest": {
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
@@ -52,9 +52,11 @@
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^4.0.3",
     "@types/jest": "^23.3.1",
+    "@types/supertest": "^2.0.6",
     "@types/validator": "^9.4.1",
     "jest": "^23.5.0",
     "nodemon": "^1.18.2",
+    "supertest": "^3.3.0",
     "ts-jest": "^23.1.4",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
