@@ -9,7 +9,7 @@ expressApp.on('ready', () => {
 });
 
 application(expressApp)
-    .then(({ app, logger }) => {
-        logger.info(`Going to start application on port ${port}!`);
-        app.emit('ready');
-    });
+  .then(({ app, logger }) => {
+    logger.info(`Going to start application on port ${port}!`);
+    app.emit('ready');
+  });
