@@ -14,7 +14,9 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 
 ## Installation
 
-Just clone the repo and run `npm install` to install the needed dependencies.
+1. Clone the repo;
+2. Copy the `env.example` file into a new `.env` file and fill in the variables;
+3. Run `npm install` to install the needed dependencies.
 
 ## Running the Application
 
