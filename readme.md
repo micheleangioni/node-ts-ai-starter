@@ -38,7 +38,7 @@ Run `npm test` to run the tests or `npm run test:watch` to run the test and the 
 
 ## Contribution Guidelines
 
-Please follow the coding style defined in the `.tskint.json` file.
+Please follow the coding style defined in the `.tslint.json` file.
 
 Pull requests are welcome.
 
