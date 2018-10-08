@@ -61,4 +61,14 @@ describe('Test the users API', () => {
         done();
       });
   });
+
+  test('(GET)/sql should respond with the list of users of the SQL db', async (done) => {
+    const { app } = await appModule(expressApp);
+
+    supertest(app).get('/api/users').then((response: any) => {
+      expect(response.statusCode).toBe(200);
+      expect(response.body.data.length).toBe(2);
+      done();
+    });
+  });
 });
