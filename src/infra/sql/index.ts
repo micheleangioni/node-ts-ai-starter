@@ -18,4 +18,6 @@ export default () => new Sequelize(
 
     // SQLite only
     storage: path.join(__dirname, '../../../storage/db.sqlite'),
+
+    logging: false,
   });
