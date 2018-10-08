@@ -10,13 +10,22 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 - server configuration with enabled CORS
 - dotenv to handle environment variables
 - MongoDB integration
+- MySQL / SqLite / Postgres / MsSQL integration
 - Testing through Jest
 
 ## Installation
 
 1. Clone the repo;
+
 2. Copy the `env.example` file into a new `.env` file and fill in the variables;
+
 3. Run `npm install` to install the needed dependencies.
+
+3. (optional) If willing to use an SQL database, set the `SQL_DIALECT` key of the `.env` file to one of the supported values: `mysql`, `sqlite`, `postgres` or `mssql`.
+
+    Then run migrations by running `node_modules/.bin/sequelize db:migrate` and seeding via `node_modules/.bin/sequelize db:seed:all`.
+
+    Migrations can be undone by running `node_modules/.bin/sequelize db:undo:all`.
 
 ## Running the Application
 
@@ -35,6 +44,8 @@ Just run `tsc` to build the application.
 ## Testing
 
 Run `npm test` to run the tests or `npm run test:watch` to run the test and the watcher.
+
+It will be used an in-memory SqLite database, against which migrations and seedings will be run. 
 
 ## Contribution Guidelines
 
