@@ -7,6 +7,7 @@ import userTransformer from './userTransformer';
 
 export default function (app: express.Application) {
   const logger = app.get('logger');
+  const sqlUserRepo = app.get('sqlUserRepo') as IUserRepo;
   const userRepo = app.get('userRepo') as IUserRepo;
 
   // Validation Middleware.
@@ -61,6 +62,28 @@ export default function (app: express.Application) {
 
     res.json({
       data: userTransformer(user),
+    });
+  });
+
+  /**
+   * Retrieve all Users.
+   */
+  router.get('/sql', async (req, res) => {
+    let users;
+
+    try {
+      users = await sqlUserRepo.all();
+    } catch (err) {
+      logger.error(err);
+      res.status(500).json({ hasError: 1, error: 'Internal error' });
+
+      return;
+    }
+
+    res.json({
+      data: users.map((user: User) => {
+        return userTransformer(user);
+      }),
     });
   });
 
