@@ -3,8 +3,6 @@ const path = require('path');
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-console.log('ENVIRONMENT', process.env)
-
 module.exports = {
   local: {
     username: process.env.SQL_USERNAME,
