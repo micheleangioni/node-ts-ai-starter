@@ -8,7 +8,7 @@
     "run": "node build/server.js",
     "debug": "node --inspect=3001 -r ts-node/register src/server.ts",
     "watch": "node_modules/nodemon/bin/nodemon.js --inspect=3001 src/server.ts",
-    "test": "jest --forceExit",
+    "test": "SQL_DIALECT=sqlite jest --forceExit",
     "test:watch": "jest --watch"
   },
   "jest": {
@@ -39,6 +39,8 @@
     "@types/express": "^4.16.0",
     "@types/mongoose": "^5.2.11",
     "@types/node": "^10.9.4",
+    "@types/sequelize": "^4.27.26",
+    "@types/umzug": "^2.2.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
@@ -46,6 +48,10 @@
     "helmet": "^3.13.0",
     "moment": "^2.22.2",
     "mongoose": "^5.2.13",
+    "mysql2": "^1.6.1",
+    "sequelize": "^5.0.0-beta.12",
+    "sequelize-cli": "^4.1.1",
+    "umzug": "^2.1.0",
     "validator": "^10.3.0"
   },
   "devDependencies": {
@@ -56,6 +62,7 @@
     "@types/validator": "^9.4.1",
     "jest": "^23.5.0",
     "nodemon": "^1.18.2",
+    "sqlite": "^3.0.0",
     "supertest": "^3.3.0",
     "ts-jest": "^23.1.4",
     "ts-node": "^7.0.1",
