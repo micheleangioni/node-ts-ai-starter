@@ -8,7 +8,7 @@
     "run": "node build/server.js",
     "debug": "node --inspect=3001 -r ts-node/register src/server.ts",
     "watch": "node_modules/nodemon/bin/nodemon.js --inspect=3001 src/server.ts",
-    "test": "SQL_DIALECT=sqlite jest --forceExit",
+    "test": "SQL_DIALECT=sqlite jest",
     "test:watch": "jest --watch"
   },
   "jest": {
