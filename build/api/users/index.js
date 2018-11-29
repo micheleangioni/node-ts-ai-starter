@@ -13,16 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-// import encryptPassword from './middlewares/encryptPassword';
-// import usersValidationNew from './middlewares/users.validation.new';
+const users_validation_new_1 = __importDefault(require("./middlewares/users.validation.new"));
+const userTransformer_1 = __importDefault(require("./userTransformer"));
 function default_1(app) {
     const logger = app.get('logger');
-    const userRepo = app.get('userRepo').all()
-        .then((data) => {
-        console.log('data', data);
-    });
+    const sqlUserRepo = app.get('sqlUserRepo');
+    const userRepo = app.get('userRepo');
     // Validation Middleware.
-    // router.post('/', usersValidationNew);
+    router.post('/', users_validation_new_1.default);
+    // TODO Implement an encryption middleware. Suggested package for encryption: 'bcrypt'
     // Encrypt Password Middleware.
     // router.post('/', encryptPassword);
     /**
@@ -39,10 +38,8 @@ function default_1(app) {
             return;
         }
         res.json({
-            data: users.map((userData) => {
-                return {
-                    username: userData.getUsername(),
-                };
+            data: users.map((user) => {
+                return userTransformer_1.default(user);
             }),
         });
     }));
@@ -64,10 +61,26 @@ function default_1(app) {
             return;
         }
         res.json({
-            data: {
-                email: user.getEmail(),
-                username: user.getUsername(),
-            },
+            data: userTransformer_1.default(user),
+        });
+    }));
+    /**
+     * Retrieve all Users.
+     */
+    router.get('/sql', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        let users;
+        try {
+            users = yield sqlUserRepo.all();
+        }
+        catch (err) {
+            logger.error(err);
+            res.status(500).json({ hasError: 1, error: 'Internal error' });
+            return;
+        }
+        res.json({
+            data: users.map((user) => {
+                return userTransformer_1.default(user);
+            }),
         });
     }));
     return router;

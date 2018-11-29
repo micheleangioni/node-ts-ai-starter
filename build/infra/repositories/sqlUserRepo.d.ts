@@ -1,10 +1,10 @@
-import { Model } from 'mongoose';
+import { Model } from 'sequelize';
 import { UserCreateData, UserUpdateData } from '../../domain/user/declarations';
 import User from '../../domain/user/user';
 import { IUserRepo } from './declarations';
 declare class UserRepo implements IUserRepo {
-    protected userModel: Model<any>;
-    constructor(userModel: Model<any>);
+    protected userModel: Model<any, any>;
+    constructor(userModel: Model<any, any>);
     /**
      * Return all Users as an array of User entities.
      *
@@ -13,26 +13,26 @@ declare class UserRepo implements IUserRepo {
     all(): Promise<User[]>;
     /**
      * Find and return a User by id.
-     * Resolve null if no User is found.
+     * Resolve an empty object if no User is found.
      *
      * @param {string} userId
-     * @returns {Promise<User|null>}
+     * @returns {Promise<User> | Promise<object>}
      */
     findById(userId: string): Promise<User | null>;
     /**
      * Find and return a User by email.
-     * Resolve null if no User is found.
+     * Resolve an empty object if no User is found.
      *
      * @param {string} email
-     * @returns {Promise<User|null>}
+     * @returns {Promise<User> | Promise<object>}
      */
     findByEmail(email: string): Promise<User | null>;
     /**
      * Find and return a User by username.
-     * Resolve null if no User is found.
+     * Resolve an empty object if no User is found.
      *
      * @param {string} username
-     * @returns {Promise<User|null>}
+     * @returns {Promise<User> | Promise<object>}
      */
     findByUsername(username: string): Promise<User | null>;
     /**
@@ -57,5 +57,5 @@ declare class UserRepo implements IUserRepo {
      */
     updateUser(userId: string, data: UserUpdateData): Promise<User>;
 }
-export default function (userModel: Model<any>): UserRepo;
+export default function (userModel: Model<any, any>): UserRepo;
 export {};

@@ -15,17 +15,17 @@ class UserRepo {
      */
     all() {
         return new Promise((resolve, reject) => {
-            this.userModel.find()
+            this.userModel.findAll()
                 .then((data) => resolve(data.map((userData) => new user_1.default(userData))))
                 .catch((error) => reject(error));
         });
     }
     /**
      * Find and return a User by id.
-     * Resolve null if no User is found.
+     * Resolve an empty object if no User is found.
      *
      * @param {string} userId
-     * @returns {Promise<User|null>}
+     * @returns {Promise<User> | Promise<object>}
      */
     findById(userId) {
         return new Promise((resolve, reject) => {
@@ -42,14 +42,14 @@ class UserRepo {
     }
     /**
      * Find and return a User by email.
-     * Resolve null if no User is found.
+     * Resolve an empty object if no User is found.
      *
      * @param {string} email
-     * @returns {Promise<User|null>}
+     * @returns {Promise<User> | Promise<object>}
      */
     findByEmail(email) {
         return new Promise((resolve, reject) => {
-            this.userModel.findOne({ email })
+            this.userModel.findOne({ where: { email } })
                 .then((userData) => {
                 if (userData === null) {
                     resolve(null);
@@ -62,14 +62,14 @@ class UserRepo {
     }
     /**
      * Find and return a User by username.
-     * Resolve null if no User is found.
+     * Resolve an empty object if no User is found.
      *
      * @param {string} username
-     * @returns {Promise<User|null>}
+     * @returns {Promise<User> | Promise<object>}
      */
     findByUsername(username) {
         return new Promise((resolve, reject) => {
-            this.userModel.findOne({ username })
+            this.userModel.findOne({ where: { username } })
                 .then((userData) => {
                 if (userData === null) {
                     resolve(null);
@@ -116,9 +116,9 @@ class UserRepo {
      */
     updateUser(userId, data) {
         return new Promise((resolve, reject) => {
-            this.userModel.findByIdAndUpdate(userId, data)
-                .then((userData) => {
-                resolve(new user_1.default(userData));
+            this.userModel.update(data, { returning: true, where: { id: userId } })
+                .then(([_, updatedUsers]) => {
+                resolve(new user_1.default(updatedUsers[0]));
             })
                 .catch((error) => reject(error));
         });
@@ -128,4 +128,4 @@ function default_1(userModel) {
     return new UserRepo(userModel);
 }
 exports.default = default_1;
-//# sourceMappingURL=userRepo.js.map
+//# sourceMappingURL=sqlUserRepo.js.map
