@@ -30,12 +30,12 @@ class UserRepo implements IUserRepo {
    * @param {string} userId
    * @returns {Promise<User> | Promise<object>}
    */
-  public findById (userId: string): Promise<User> | Promise<object> {
+  public findById (userId: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       this.userModel.findById(userId)
         .then((userData: UserData | null) => {
           if (!userData) {
-            resolve({});
+            resolve(null);
 
             return;
           }
@@ -53,12 +53,12 @@ class UserRepo implements IUserRepo {
    * @param {string} email
    * @returns {Promise<User> | Promise<object>}
    */
-  public findByEmail (email: string): Promise<User> | Promise<object> {
+  public findByEmail (email: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       this.userModel.findOne({ where: { email } })
         .then((userData: UserData | null) => {
           if (userData === null) {
-            resolve({});
+            resolve(null);
 
             return;
           }
@@ -76,12 +76,12 @@ class UserRepo implements IUserRepo {
    * @param {string} username
    * @returns {Promise<User> | Promise<object>}
    */
-  public findByUsername (username: string): Promise<User> | Promise<object> {
+  public findByUsername (username: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       this.userModel.findOne({ where: { username } })
         .then((userData: UserData | null) => {
           if (userData === null) {
-            resolve({});
+            resolve(null);
 
             return;
           }
