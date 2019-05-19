@@ -1,3 +1,3 @@
-export default function(app: any) {
-
-};
+export default function (app: any) {
+  // Add application services
+}

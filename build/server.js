@@ -8,6 +8,7 @@ const app_1 = __importDefault(require("./app"));
 const expressApp = express_1.default();
 const port = process.env.PORT || 8081;
 expressApp.on('ready', () => {
+    // tslint:disable-next-line:no-console
     expressApp.listen(port, () => console.log(`Application start: listening on port ${port}!`));
 });
 app_1.default(expressApp)

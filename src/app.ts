@@ -57,6 +57,7 @@ export default function (app: express.Application) {
   }));
 
   process.on('uncaughtException', (err) => {
+    // tslint:disable-next-line:no-console
     console.log(`${new Date().toISOString()} uncaughtException`, err);
     logger.error(err.message);
     logger.error(err.stack);

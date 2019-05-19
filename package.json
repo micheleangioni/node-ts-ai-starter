@@ -5,12 +5,15 @@
   "main": "build/server.js",
   "scripts": {
     "start": "node build/server.js",
-    "build": "rm -rf ./build && tsc --strictNullChecks",
+    "serve": "npm start",
+    "build": "npm run tslint && rm -rf ./build && tsc --strictNullChecks && npm run copy-static-assets",
     "run": "node build/server.js",
     "debug": "node --inspect=3001 -r ts-node/register src/server.ts",
-    "watch": "node_modules/nodemon/bin/nodemon.js --inspect=3001 src/server.ts",
+    "watch": "nodemon --inspect=3001 src/server.ts",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "copy-static-assets": "ts-node copyStaticAssets.ts",
     "test": "SQL_DIALECT=sqlite jest --runInBand --forceExit",
-    "test:watch": "jest  --runInBand --watch"
+    "watch-test": "SQL_DIALECT=sqlite jest  --runInBand --watch"
   },
   "jest": {
     "testEnvironment": "node",
@@ -65,10 +68,12 @@
     "@types/cors": "^2.8.5",
     "@types/dotenv": "^4.0.3",
     "@types/jest": "^23.3.14",
+    "@types/shelljs": "^0.8.5",
     "@types/supertest": "^2.0.7",
     "@types/validator": "^9.4.4",
     "jest": "^24.8.0",
     "nodemon": "^1.19.0",
+    "shelljs": "^0.8.3",
     "sqlite": "^3.0.3",
     "supertest": "^3.4.2",
     "ts-jest": "^24.0.2",
