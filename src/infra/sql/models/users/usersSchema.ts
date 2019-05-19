@@ -1,26 +1,24 @@
-import Sequelize from 'sequelize';
+import { DataTypes } from 'sequelize';
+import User from './User';
+
+export const attributes = {
+  email: { type: DataTypes.STRING, allowNull: false },
+  id: {
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER.UNSIGNED,
+  },
+  password: { type: DataTypes.STRING, allowNull: false },
+  username: { type: DataTypes.STRING, allowNull: true, defaultValue: null },
+};
+
+export const tableName = 'users';
 
 export default function (sequelize: any) {
-  // The following tweak allows for seeding in testing directly using Sequelize to handle DB operations
-  try {
-    sequelize.define('User', {
-      email: { type: Sequelize.STRING, allowNull: false },
-      id: {
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER.UNSIGNED,
-      },
-      password: { type: Sequelize.STRING, allowNull: false },
-      username: { type: Sequelize.STRING, allowNull: true, defaultValue: null },
-    }, {
-      indexes: [{
-        fields: ['email'],
-        unique: true,
-      }],
-    });
-  } catch (error) {
-    // sequelize.models.User
-  }
+  User.init(attributes, {
+    sequelize,
+    tableName,
+  });
 
-  return  sequelize.models.User;
+  return true;
 }

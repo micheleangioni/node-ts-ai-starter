@@ -1,7 +1,7 @@
 import express from 'express';
-
-import usersModel from './users/users';
+import usersSchema from './users/usersSchema';
 
 export default function (app: express.Application) {
-  app.set('sqlUserModel', usersModel(app));
+  // Init models
+  usersSchema(app.get('sqlClient'));
 }

@@ -23,6 +23,6 @@ export default function (app: express.Application) {
     app.set('sqlClient', Sequelize());
     sqlModels(app);
 
-    app.set('sqlUserRepo', SqlUserRepo(app.get('sqlUserModel')));
+    app.set('sqlUserRepo', SqlUserRepo());
   }
 }

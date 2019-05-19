@@ -3,13 +3,13 @@ import { IEntity } from '../declarations';
 import { UserData } from './declarations';
 
 export default class User implements IEntity {
-  protected id: string;
+  protected id: number;
   protected email: string;
   protected password: string;
   protected username: string | null = null;
 
-  constructor({ _id, email, password, username }: UserData) {
-    this.id = _id;
+  constructor({ id, email, password, username }: UserData) {
+    this.id = id;
     this.email = email;
     this.password = password;
 
@@ -18,7 +18,7 @@ export default class User implements IEntity {
     }
   }
 
-  public getId(): string {
+  public getId(): number {
     return this.id;
   }
 

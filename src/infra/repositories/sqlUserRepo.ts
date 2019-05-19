@@ -1,15 +1,9 @@
-import { Model } from 'sequelize';
 import { UserCreateData, UserData, UserUpdateData } from '../../domain/user/declarations';
 import User from '../../domain/user/user';
+import { default as UserModel } from '../sql/models/users/user';
 import { IUserRepo } from './declarations';
 
 class UserRepo implements IUserRepo {
-  protected userModel: Model<any, any>;
-
-  constructor(userModel: Model<any, any>) {
-    this.userModel = userModel;
-  }
-
   /**
    * Return all Users as an array of User entities.
    *
@@ -17,8 +11,8 @@ class UserRepo implements IUserRepo {
    */
   public all (): Promise<User[]> {
     return new Promise((resolve, reject) => {
-      this.userModel.findAll()
-        .then((data: UserData[]) => resolve(data.map((userData: UserData) => new User(userData))))
+      UserModel.findAll()
+        .then((data: UserModel[]) => resolve(data.map((userData: UserModel) => new User(userData))))
         .catch((error: any) => reject(error));
     });
   }
@@ -32,7 +26,7 @@ class UserRepo implements IUserRepo {
    */
   public findById (userId: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
-      this.userModel.findById(userId)
+      UserModel.findByPk(userId)
         .then((userData: UserData | null) => {
           if (!userData) {
             resolve(null);
@@ -55,7 +49,7 @@ class UserRepo implements IUserRepo {
    */
   public findByEmail (email: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
-      this.userModel.findOne({ where: { email } })
+      UserModel.findOne({ where: { email } })
         .then((userData: UserData | null) => {
           if (userData === null) {
             resolve(null);
@@ -78,7 +72,7 @@ class UserRepo implements IUserRepo {
    */
   public findByUsername (username: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
-      this.userModel.findOne({ where: { username } })
+      UserModel.findOne({ where: { username } })
         .then((userData: UserData | null) => {
           if (userData === null) {
             resolve(null);
@@ -99,7 +93,7 @@ class UserRepo implements IUserRepo {
    */
   public count (): Promise<number> {
     return new Promise((resolve, reject) => {
-      this.userModel.count({})
+      UserModel.count({})
         .then((count: number) => resolve(count))
         .catch((error: any) => reject(error));
     });
@@ -113,7 +107,7 @@ class UserRepo implements IUserRepo {
    */
   public create (data: UserCreateData ): Promise<User> {
     return new Promise((resolve, reject) => {
-      this.userModel.create(data)
+      UserModel.create(data)
         .then((userData: UserData) => {
           resolve(new User(userData));
         })
@@ -130,7 +124,7 @@ class UserRepo implements IUserRepo {
    */
   public updateUser(userId: string, data: UserUpdateData): Promise<User> {
     return new Promise((resolve, reject) => {
-      this.userModel.update(
+      UserModel.update(
         data,
         { returning: true, where: { id: userId } },
       )
@@ -142,6 +136,6 @@ class UserRepo implements IUserRepo {
   }
 }
 
-export default function (userModel: Model<any, any>): UserRepo {
-  return new UserRepo(userModel);
+export default function (): UserRepo {
+  return new UserRepo();
 }

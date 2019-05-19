@@ -1,8 +1,8 @@
 export type UserData = {
-  _id: string,
+  id: number,
   email: string,
   password: string,
-  username?: string,
+  username: string|undefined|null,
 };
 
 export type UserCreateData = {

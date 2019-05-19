@@ -1,3 +1,3 @@
 export interface IEntity {
-  getId(): string;
+  getId(): number;
 }

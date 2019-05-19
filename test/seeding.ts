@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 import path from 'path';
-import SequelizeLibrary from 'sequelize';
+import SequelizeLibrary, { DataTypes } from 'sequelize';
 import Umzug from 'umzug';
 import userSchemaCreator from '../src/infra/mongo/models/users/usersSchema';
 import Sequelize from '../src/infra/sql';
-import sqlUsersModel from '../src/infra/sql/models/users/usersSchema';
+import User from '../src/infra/sql/models/users/user';
+import { attributes, tableName } from '../src/infra/sql/models/users/usersSchema';
 import usersData from './testData/users.json';
 
 // Connect to mongoose
@@ -17,7 +18,6 @@ mongoose.connect(
 
 // Connect to SqLite
 const sequelize = Sequelize();
-sqlUsersModel(sequelize);
 
 const umzug = new Umzug({
   storage: 'sequelize',
@@ -46,8 +46,13 @@ export async function seedDatabase() {
   await userModel.insertMany(usersData);
 
   // SqLite migrations and seedings
+  User.init(attributes, {
+    sequelize,
+    tableName,
+  });
+
   await umzug.up();
-  await sequelize.models.User.bulkCreate(usersData);
+  await User.bulkCreate(usersData);
 }
 
 export async function cleanDatabase() {
