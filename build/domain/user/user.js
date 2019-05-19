@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const validator_1 = __importDefault(require("validator"));
 class User {
-    constructor({ _id, email, password, username }) {
+    constructor({ id, email, password, username }) {
         this.username = null;
-        this.id = _id;
+        this.id = id;
         this.email = email;
         this.password = password;
         if (username) {

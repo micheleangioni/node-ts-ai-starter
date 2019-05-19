@@ -21,7 +21,7 @@ function default_1(app) {
     if (process.env.SQL_DIALECT !== 'none') {
         app.set('sqlClient', sql_1.default());
         models_2.default(app);
-        app.set('sqlUserRepo', sqlUserRepo_1.default(app.get('sqlUserModel')));
+        app.set('sqlUserRepo', sqlUserRepo_1.default());
     }
 }
 exports.default = default_1;

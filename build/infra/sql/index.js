@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
-const sequelize_1 = __importDefault(require("sequelize"));
-exports.default = () => new sequelize_1.default(`${process.env.SQL_NAME}`, `${process.env.SQL_USERNAME}`, `${process.env.SQL_PASSWORD}`, {
-    dialect: `${process.env.SQL_DIALECT}`,
+const sequelize_1 = require("sequelize");
+const sqlDialect = process.env.SQL_DIALECT;
+exports.default = () => new sequelize_1.Sequelize(`${process.env.SQL_NAME}`, `${process.env.SQL_USERNAME}`, `${process.env.SQL_PASSWORD}`, {
+    dialect: sqlDialect,
     host: `${process.env.SQL_HOST}`,
     pool: {
         acquire: 30000,

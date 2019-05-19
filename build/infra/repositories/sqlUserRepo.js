@@ -4,10 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = __importDefault(require("../../domain/user/user"));
+const user_2 = __importDefault(require("../sql/models/users/user"));
 class UserRepo {
-    constructor(userModel) {
-        this.userModel = userModel;
-    }
     /**
      * Return all Users as an array of User entities.
      *
@@ -15,7 +13,7 @@ class UserRepo {
      */
     all() {
         return new Promise((resolve, reject) => {
-            this.userModel.findAll()
+            user_2.default.findAll()
                 .then((data) => resolve(data.map((userData) => new user_1.default(userData))))
                 .catch((error) => reject(error));
         });
@@ -29,7 +27,7 @@ class UserRepo {
      */
     findById(userId) {
         return new Promise((resolve, reject) => {
-            this.userModel.findById(userId)
+            user_2.default.findByPk(userId)
                 .then((userData) => {
                 if (!userData) {
                     resolve(null);
@@ -49,7 +47,7 @@ class UserRepo {
      */
     findByEmail(email) {
         return new Promise((resolve, reject) => {
-            this.userModel.findOne({ where: { email } })
+            user_2.default.findOne({ where: { email } })
                 .then((userData) => {
                 if (userData === null) {
                     resolve(null);
@@ -69,7 +67,7 @@ class UserRepo {
      */
     findByUsername(username) {
         return new Promise((resolve, reject) => {
-            this.userModel.findOne({ where: { username } })
+            user_2.default.findOne({ where: { username } })
                 .then((userData) => {
                 if (userData === null) {
                     resolve(null);
@@ -87,7 +85,7 @@ class UserRepo {
      */
     count() {
         return new Promise((resolve, reject) => {
-            this.userModel.count({})
+            user_2.default.count({})
                 .then((count) => resolve(count))
                 .catch((error) => reject(error));
         });
@@ -100,7 +98,7 @@ class UserRepo {
      */
     create(data) {
         return new Promise((resolve, reject) => {
-            this.userModel.create(data)
+            user_2.default.create(data)
                 .then((userData) => {
                 resolve(new user_1.default(userData));
             })
@@ -116,7 +114,7 @@ class UserRepo {
      */
     updateUser(userId, data) {
         return new Promise((resolve, reject) => {
-            this.userModel.update(data, { returning: true, where: { id: userId } })
+            user_2.default.update(data, { returning: true, where: { id: userId } })
                 .then(([_, updatedUsers]) => {
                 resolve(new user_1.default(updatedUsers[0]));
             })
@@ -124,8 +122,8 @@ class UserRepo {
         });
     }
 }
-function default_1(userModel) {
-    return new UserRepo(userModel);
+function default_1() {
+    return new UserRepo();
 }
 exports.default = default_1;
 //# sourceMappingURL=sqlUserRepo.js.map
