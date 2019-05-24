@@ -7,10 +7,10 @@
     "start": "node build/server.js",
     "serve": "npm start",
     "build": "npm run tslint && rm -rf ./build && tsc --strictNullChecks && npm run copy-static-assets",
-    "run": "node build/server.js",
     "debug": "node --inspect=3001 -r ts-node/register src/server.ts",
     "watch": "nodemon --inspect=3001 src/server.ts",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "lint": "npm run lint",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "test": "SQL_DIALECT=sqlite jest --runInBand --forceExit",
     "watch-test": "SQL_DIALECT=sqlite jest  --runInBand --watch"

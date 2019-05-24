@@ -18,7 +18,9 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 
 1. Clone the repo;
 
-2. Copy the `env.example` file into a new `.env` file and fill in the variables;
+2. Either 
+    - copy the `env.example` file into a new `.env` file and fill in the variables;
+    - set up the needed environment variables;
 
 3. Run `npm install` to install the needed dependencies.
 
@@ -30,7 +32,9 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 
 ## Running the Application
 
-Run `npm run run` to simply run the application or `npm run start` to compile TypeScript before running it.
+First compile the application via `npm run build`.
+
+Then run `npm start` to simply run the application.
 
 ## Development
 
@@ -40,7 +44,7 @@ Take a look at [this article](https://samkirkiles.svbtle.com/webstorm-node-js-de
 
 ## Building the application
 
-Just run `tsc` to build the application.
+Run `npm run build` to build the application.
 
 ## Configuration and Features
 
@@ -54,7 +58,7 @@ In order to use Keycloak, you need to setup a Keycloak server to be used to auth
 
 Once the server is setup, fill in the correct parameters in the `.env` files, so that the application will be able to connect to it.
 
-**Instantiating Keykloak**
+**Instantiating Keycloak**
 
 The `KeycloakConnector` class is a wrapper to the [official Node.js adapter](https://www.keycloak.org/docs/latest/securing_apps/index.html#_nodejs_adapter).
 
@@ -110,7 +114,7 @@ More options are available in the [official Node.js adapter documentation](https
 
 ## Testing
 
-Run `npm test` to run the tests or `npm run test:watch` to run the test and the watcher.
+Run `npm test` to run the tests or `npm run watch-test` to run the tests and the watcher.
 
 It will be used an in-memory SqLite database, against which migrations and seedings will be run. 
 
