@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import User from './User';
+import User from './user';
 
 export const attributes = {
   email: { type: DataTypes.STRING, allowNull: false },
