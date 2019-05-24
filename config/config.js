@@ -11,6 +11,13 @@ module.exports = {
     host: process.env.SQL_HOST,
     dialect: process.env.SQL_DIALECT
   },
+  ci: {
+    username: process.env.SQL_USERNAME,
+    password: process.env.SQL_PASSWORD,
+    database: process.env.SQL_NAME,
+    host: process.env.SQL_HOST,
+    dialect: process.env.SQL_DIALECT
+  },
   test: {
     username: process.env.SQL_USERNAME,
     password: process.env.SQL_PASSWORD,
