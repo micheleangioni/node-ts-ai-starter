@@ -5,7 +5,7 @@ node_js:
   - '10'
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS node-ts-starter;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS node_ts_starter;'
 
 install:
   - npm install
@@ -26,12 +26,12 @@ env:
     - DB_ACTIVE=true
     - DB_HOST=localhost
     - DB_PORT=27017
-    - DB_NAME=node-ts-starter
+    - DB_NAME=node_ts_starter
     - DB_USERNAME=
     - DB_PASSWORD=
     - SQL_DIALECT=mysql
     - SQL_HOST=localhost
     - SQL_PORT=3306
-    - SQL_NAME=node-ts-starter
+    - SQL_NAME=node_ts_starter
     - SQL_USERNAME=travis
     - SQL_PASSWORD=
