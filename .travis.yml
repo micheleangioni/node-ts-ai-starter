@@ -4,6 +4,9 @@ node_js:
   - '12'
   - '10'
 
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS node-ts-starter;'
+
 install:
   - npm install
   - npm run migrate
