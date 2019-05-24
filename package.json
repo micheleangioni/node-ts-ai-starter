@@ -12,7 +12,7 @@
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "lint": "npm run tslint",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
-    "test": "SQL_DIALECT=sqlite jest --runInBand --forceExit",
+    "test": "jest --runInBand --forceExit",
     "watch-test": "SQL_DIALECT=sqlite jest  --runInBand --watch",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
