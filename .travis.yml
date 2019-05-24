@@ -1,0 +1,33 @@
+language: node_js
+
+node_js:
+  - '12'
+  - '10'
+
+install:
+  - npm install
+  - npm run migrate
+
+script:
+  - npm run build
+  - npm run test
+
+services:
+  - mongodb
+  - mysql
+
+env:
+  - NODE_ENV=ci
+  - DB_ACTIVE=active
+  - DB_ACTIVE=true
+  - DB_HOST=localhost
+  - DB_PORT=27017
+  - DB_NAME=node-ts-starter
+  - DB_USERNAME=
+  - DB_PASSWORD=
+  - SQL_DIALECT=mysql
+  - SQL_HOST=localhost
+  - SQL_PORT=3306
+  - SQL_NAME=node-ts-starter
+  - SQL_USERNAME=travis
+  - SQL_PASSWORD=
