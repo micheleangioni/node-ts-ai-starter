@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
+import helmet from 'helmet';
 import path from 'path';
 import api from './api';
 import applicationServices from './application';
@@ -34,6 +35,7 @@ async function loadApp(app: express.Application) {
 }
 
 export default function (app: express.Application) {
+  app.use(helmet());
   app.set('logger', logger);
 
   /**
