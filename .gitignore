@@ -4,9 +4,13 @@
 # Package managers
 node_modules
 
+# Build
+build
+
 # IDEs and editors
 .idea
 .project
+.vscode
 .classpath
 .c9/
 *.launch
