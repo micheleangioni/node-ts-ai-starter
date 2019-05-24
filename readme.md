@@ -26,9 +26,9 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 
 3. (optional) If willing to use an SQL database, set the `SQL_DIALECT` key of the `.env` file to one of the supported values: `mysql`, `sqlite`, `postgres` or `mssql`.
 
-    Then run migrations by running `node_modules/.bin/sequelize db:migrate` and seeding via `node_modules/.bin/sequelize db:seed:all`.
+    Then run migrations by running `npm run migrate` and seeding via `npm run seed`.
 
-    Migrations can be undone by running `node_modules/.bin/sequelize db:undo:all`.
+    Migrations can be undone by running `migrate-revert` or `migrate-revert-all`.
 
 ## Running the Application
 
