@@ -1,5 +1,7 @@
 # Node TypeScript Starter
 
+[![Build Status](https://api.travis-ci.org/micheleangioni/node-ts-starter.svg?branch=master)](https://travis-ci.org/micheleangioni/node-ts-starter)
+
 > Starter kit application for projects using Express and TypeScript with MongoDB, SQL, Jest testing and much more configured out of the box.
 
 ## Introduction
@@ -114,13 +116,11 @@ More options are available in the [official Node.js adapter documentation](https
 
 ## Testing
 
-Run `npm test` to run the tests or `npm run watch-test` to run the tests and the watcher.
+Run `npm test` to run the tests or `npm run watch-test` to run the tests with the watcher.
 
 It will be used an in-memory SqLite database, against which migrations and seedings will be run. 
 
 ## Contribution Guidelines
-
-Please follow the coding style defined in the `.tslint.json` file.
 
 Pull requests are welcome.
 
