@@ -65,7 +65,7 @@
     "mongoose": "^5.5.9",
     "mysql2": "^1.6.5",
     "sequelize": "^5.8.6",
-    "sequelize-cli": "^5.4.0",
+    "sequelize-cli": "^5.5.1",
     "umzug": "^2.2.0",
     "validator": "^10.11.0"
   },
