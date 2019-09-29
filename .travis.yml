@@ -32,6 +32,6 @@ env:
     - SQL_DIALECT=mysql
     - SQL_HOST=localhost
     - SQL_PORT=3306
-    - SQL_NAME=node_ts_starter
+    - SQL_NAME=node_ts_starter_test
     - SQL_USERNAME=travis
     - SQL_PASSWORD=
