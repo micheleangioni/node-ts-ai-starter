@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const mongoUri = process.env.MONGO_URI
     ? process.env.MONGO_URI
-    : `mongodb://localhost:27017/mongoDbName-${process.env.NODE_ENV}`;
+    : `mongodb://localhost:27017/node-ts-starter_${process.env.NODE_ENV}`;
 
 mongoose.connect(mongoUri, {useNewUrlParser: true})
   .catch((e: any) => {
