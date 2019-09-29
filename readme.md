@@ -24,7 +24,7 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 
 3. Run `npm install` to install the needed dependencies.
 
-3. (optional) If willing to use an SQL database, set the `SQL_DIALECT` key of the `.env` file to one of the supported values: `mysql`, `sqlite`, `postgres` or `mssql`.
+3. (optional) If willing to use an SQL database, set the `SQL_DIALECT` key of the `.env` file to one of the supported values: `mysql`, `sqlite`, `postgres`, `mssql` or `none`.
 
     Then run migrations by running `npm run migrate` and seeding via `npm run seed`.
 
