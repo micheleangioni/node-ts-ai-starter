@@ -26,7 +26,7 @@ env:
     - DB_ACTIVE=true
     - DB_HOST=localhost
     - DB_PORT=27017
-    - DB_NAME=node_ts_starter
+    - DB_NAME=node_ts_starter_test
     - DB_USERNAME=
     - DB_PASSWORD=
     - SQL_DIALECT=mysql
