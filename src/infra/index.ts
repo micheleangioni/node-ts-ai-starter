@@ -9,13 +9,11 @@ import sqlModels from './sql/models/models';
 export default function (app: express.Application) {
   // If MongoDB is active, add Mongoose and its models
 
-  if (process.env.DB_ACTIVE === 'true') {
-    app.set('mongooseClient', mongoose);
-    models(app);
+  app.set('mongooseClient', mongoose);
+  models(app);
 
-    // Add repositories
-    app.set('userRepo', UserRepo(app.get('userModel')));
-  }
+  // Add repositories
+  app.set('userRepo', UserRepo(app.get('userModel')));
 
   // If a SQL dialect is set, add Sequelize, its models and repos
 
