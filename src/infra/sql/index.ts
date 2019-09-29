@@ -5,7 +5,7 @@ type SqlDialect = 'mysql'|'sqlite'|'mariadb'|'postgres'|'mssql';
 
 const sqlDialect = process.env.SQL_DIALECT || 'sqlite';
 const SQL_NAME = process.env.SQL_NAME
-    ? `${process.env.SQL_NAME}_${process.env.NODE_ENV}`
+    ? `${process.env.SQL_NAME}`
     : `node-ts-starter_${process.env.NODE_ENV}`;
 
 export default () => new Sequelize(
