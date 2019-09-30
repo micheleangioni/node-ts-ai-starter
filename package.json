@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.5",
-    "@types/dotenv": "^4.0.3",
+    "@types/dotenv": "^6.1.1",
     "@types/jest": "^23.3.14",
     "@types/shelljs": "^0.8.5",
     "@types/supertest": "^2.0.7",
