@@ -70,7 +70,7 @@
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.5",
+    "@types/cors": "^2.8.6",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^24.0.18",
     "@types/shelljs": "^0.8.5",
