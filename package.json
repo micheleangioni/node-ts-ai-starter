@@ -64,13 +64,13 @@
     "moment": "^2.24.0",
     "mongoose": "^5.5.9",
     "mysql2": "^1.7.0",
-    "sequelize": "^5.19.1",
+    "sequelize": "^5.19.2",
     "sequelize-cli": "^5.5.1",
     "umzug": "^2.2.0",
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.5",
+    "@types/cors": "^2.8.6",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^24.0.18",
     "@types/shelljs": "^0.8.5",
