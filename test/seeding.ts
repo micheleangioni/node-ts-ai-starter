@@ -10,13 +10,13 @@ import usersData from './testData/users.json';
 
 // Connect to mongoose
 const mongoUri = process.env.MONGO_URI
-    ? process.env.MONGO_URI
-    : `mongodb://localhost:27017/mongoDbName-${process.env.NODE_ENV}`;
+  ? process.env.MONGO_URI
+  : `mongodb://localhost:27017/node-ts-starter_${process.env.NODE_ENV}`;
 
 mongoose.connect(mongoUri, {useNewUrlParser: true})
-    .catch((e: any) => {
-      throw e;
-    });
+  .catch((e: any) => {
+    throw e;
+  });
 
 // Connect to SqLite
 const sequelize = Sequelize();
