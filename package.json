@@ -49,7 +49,7 @@
     "@types/helmet": "0.0.44",
     "@types/jsonwebtoken": "^8.3.4",
     "@types/keycloak-connect": "^4.5.1",
-    "@types/mongodb": "^3.3.4",
+    "@types/mongodb": "^3.3.6",
     "@types/mongoose": "^5.5.19",
     "@types/node": "^10.14.7",
     "@types/umzug": "^2.2.2",
