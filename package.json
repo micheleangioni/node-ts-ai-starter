@@ -51,7 +51,7 @@
     "@types/keycloak-connect": "^4.5.1",
     "@types/mongodb": "^3.3.6",
     "@types/mongoose": "^5.5.20",
-    "@types/node": "^10.14.7",
+    "@types/node": "^12.7.12",
     "@types/umzug": "^2.2.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
