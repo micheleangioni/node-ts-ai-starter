@@ -60,7 +60,7 @@
     "get-keycloak-public-key": "^1.0.3",
     "helmet": "^3.21.1",
     "jsonwebtoken": "^8.5.1",
-    "keycloak-connect": "^4.8.3",
+    "keycloak-connect": "^7.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.7.5",
     "mysql2": "^1.7.0",
