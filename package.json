@@ -58,7 +58,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "get-keycloak-public-key": "^1.0.3",
-    "helmet": "^3.21.1",
+    "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
     "keycloak-connect": "^4.8.3",
     "moment": "^2.24.0",
