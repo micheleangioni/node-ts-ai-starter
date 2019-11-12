@@ -1,8 +1,13 @@
-export type UserData = {
-  id: number,
+export type UserDomainData = {
   email: string,
   password: string,
-  username: string|undefined|null,
+  username?: string,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type UserData = UserDomainData & {
+  id: number | string,
 };
 
 export type UserCreateData = {

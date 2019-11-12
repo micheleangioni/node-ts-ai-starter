@@ -1,14 +1,16 @@
 import express from 'express';
 const router = express.Router();
+import UserService from '../../application/user/userService';
+import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
-import { IUserRepo } from '../../infra/repositories/declarations';
+import errorHandler from '../errorHandler';
 import usersValidationNew from './middlewares/users.validation.new';
 import userTransformer from './userTransformer';
 
 export default function (app: express.Application) {
   const logger = app.get('logger');
   const sqlUserRepo = app.get('sqlUserRepo') as IUserRepo;
-  const userRepo = app.get('userRepo') as IUserRepo;
+  const userService = app.get('userService') as UserService;
 
   // Validation Middleware.
 
@@ -26,12 +28,9 @@ export default function (app: express.Application) {
     let users;
 
     try {
-      users = await userRepo.all();
+      users = await userService.getAll();
     } catch (err) {
-      logger.error(err);
-      res.status(500).json({ hasError: 1, error: 'Internal error' });
-
-      return;
+      return errorHandler(err, res);
     }
 
     res.json({
@@ -48,16 +47,13 @@ export default function (app: express.Application) {
     let user;
 
     try {
-      user = await userRepo.create({
+      user = await userService.createUser({
         email: req.body.email,
         password: req.body.password,
         username: req.body.username,
       });
     } catch (err) {
-      logger.error(err);
-      res.status(500).json({ hasError: 1, error: 'Internal error' });
-
-      return;
+      return errorHandler(err, res);
     }
 
     res.json({
@@ -74,10 +70,7 @@ export default function (app: express.Application) {
     try {
       users = await sqlUserRepo.all();
     } catch (err) {
-      logger.error(err);
-      res.status(500).json({ hasError: 1, error: 'Internal error' });
-
-      return;
+      return errorHandler(err, res);
     }
 
     res.json({

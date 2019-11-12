@@ -1,11 +1,11 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import validator from 'validator';
-import User from '../../../domain/user/user';
-import { IUserRepo } from '../../../infra/repositories/declarations';
+import ApplicationError from '../../../application/ApplicationError';
+import { ErrorCodes } from '../../../application/declarations';
+import UserService from '../../../application/user/userService';
 
 export default async function (req: Request, res: Response, next: NextFunction) {
-  const logger = req.app.get('logger');
-  const userRepo = req.app.get('userRepo') as IUserRepo;
+  const userService = req.app.get('userService') as UserService;
 
   const data = req.body;
   const errors = [];
@@ -20,19 +20,14 @@ export default async function (req: Request, res: Response, next: NextFunction) 
       errors.push('The email is invalid.');
     } else {
       // Check whether the username has already been taken
-      let user;
 
       try {
-        user = await userRepo.findByEmail(data.email);
-      } catch (e) {
-        logger.error(e);
-        res.status(500).json({ hasError: 1, error: 'Internal error.' });
-
-        return;
-      }
-
-      if (user instanceof User) {
+        await userService.getByEmail(data.email);
         errors.push('The email has already been taken.');
+      } catch (error) {
+        if (error.status !== 404) {
+          return next(error);
+        }
       }
     }
   }
@@ -50,19 +45,14 @@ export default async function (req: Request, res: Response, next: NextFunction) 
       errors.push('Only alphanumeric characters are allowed in the username.');
     } else {
       // Check whether the username has already been taken
-      let user;
 
       try {
-        user = await userRepo.findByUsername(data.username);
-      } catch (e) {
-        logger.error(e);
-        res.status(500).json({ hasError: 1, error: 'Internal error.' });
-
-        return;
-      }
-
-      if (user instanceof User) {
+        await userService.getByUsername(data.username);
         errors.push('The username has already been taken.');
+      } catch (error) {
+        if (error.status !== 404) {
+          return next(error);
+        }
       }
     }
   }
@@ -81,9 +71,11 @@ export default async function (req: Request, res: Response, next: NextFunction) 
   // but it is a good practice to always use it
 
   if (errors.length > 0) {
-    res.status(422).json({ hasError: 1, error: errors.join(' ') });
-
-    return;
+    return next(new ApplicationError({
+      code: ErrorCodes.INVALID_DATA,
+      message: errors.join(' '),
+      status: 422,
+    }));
   }
 
   next();

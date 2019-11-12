@@ -3,10 +3,10 @@ import { IEntity } from '../declarations';
 import { UserData } from './declarations';
 
 export default class User implements IEntity {
-  protected id: number;
-  protected email: string;
-  protected password: string;
-  protected username: string | null = null;
+  private readonly id: number | string;
+  private email: string;
+  private password: string;
+  private username?: string;
 
   constructor({ id, email, password, username }: UserData) {
     this.id = id;
@@ -18,7 +18,7 @@ export default class User implements IEntity {
     }
   }
 
-  public getId(): number {
+  public getId(): number | string {
     return this.id;
   }
 
@@ -42,11 +42,11 @@ export default class User implements IEntity {
       this.password = password;
   }
 
-  public getUsername(): string | null {
+  public getUsername(): string | undefined {
       return this.username;
   }
 
-  public setUsername(username: string | null) {
+  public setUsername(username: string | undefined) {
       this.username = username;
   }
 }

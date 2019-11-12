@@ -1,9 +1,18 @@
-import { UserCreateData, UserData, UserUpdateData } from '../../domain/user/declarations';
+import { UserData } from '../../domain/user/declarations';
+import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import { default as UserModel } from '../sql/models/users/user';
-import { IUserRepo } from './declarations';
 
-class UserRepo implements IUserRepo {
+class SqlUserRepo implements IUserRepo {
+  /**
+   * Create and return a new MongoDB id.
+   *
+   * @return string
+   */
+  public nextIdentity(): string {
+    throw new Error('SqlUserRepo uses auto-incremental ids');
+  }
+
   /**
    * Return all Users as an array of User entities.
    *
@@ -12,7 +21,9 @@ class UserRepo implements IUserRepo {
   public all (): Promise<User[]> {
     return new Promise((resolve, reject) => {
       UserModel.findAll()
-        .then((data: UserModel[]) => resolve(data.map((userData: UserModel) => new User(userData))))
+        .then((data: UserModel[]) => {
+          return resolve(data.map((userData: UserModel) => new User(this.convertUserModelToUserData(userData))));
+        })
         .catch((error: any) => reject(error));
     });
   }
@@ -27,14 +38,14 @@ class UserRepo implements IUserRepo {
   public findById (userId: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       UserModel.findByPk(userId)
-        .then((userData: UserData | null) => {
+        .then((userData) => {
           if (!userData) {
             resolve(null);
 
             return;
           }
 
-          resolve(new User(userData));
+          resolve(new User(this.convertUserModelToUserData(userData)));
         })
         .catch((error: any) => reject(error));
     });
@@ -50,14 +61,14 @@ class UserRepo implements IUserRepo {
   public findByEmail (email: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       UserModel.findOne({ where: { email } })
-        .then((userData: UserData | null) => {
+        .then((userData) => {
           if (userData === null) {
             resolve(null);
 
             return;
           }
 
-          resolve(new User(userData));
+          resolve(new User(this.convertUserModelToUserData(userData)));
         })
         .catch((error: any) => reject(error));
     });
@@ -73,14 +84,14 @@ class UserRepo implements IUserRepo {
   public findByUsername (username: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       UserModel.findOne({ where: { username } })
-        .then((userData: UserData | null) => {
+        .then((userData) => {
           if (userData === null) {
             resolve(null);
 
             return;
           }
 
-          resolve(new User(userData));
+          resolve(new User(this.convertUserModelToUserData(userData)));
         })
         .catch((error: any) => reject(error));
     });
@@ -100,42 +111,55 @@ class UserRepo implements IUserRepo {
   }
 
   /**
-   * Create a new User.
+   * Persist a User instance.
    *
-   * @param {UserCreateData} data
+   * @param {User} user
    * @returns {Promise<User>}
    */
-  public create (data: UserCreateData ): Promise<User> {
+  public persist (user: User): Promise<User> {
+    const userData: UserData = {
+      email: user.getEmail(),
+      id: user.getId(),
+      password: user.getPassword(),
+    };
+
+    if (user.getUsername()) {
+      userData.username = user.getUsername();
+    }
+
     return new Promise((resolve, reject) => {
-      UserModel.create(data)
-        .then((userData: UserData) => {
-          resolve(new User(userData));
-        })
-        .catch((error: any) => reject(error));
+      return UserModel
+        .findOne({ where: { id: user.getId() } })
+        .then((foundUserData) => {
+          if (!foundUserData) {
+            // Item doesn't exist, so we create it
+
+            UserModel.create(userData)
+              .then((persistedUserData) => {
+                resolve(new User(this.convertUserModelToUserData(persistedUserData)));
+              })
+              .catch((error: any) => reject(error));
+          }
+
+          // Item already exists, so we update it
+          return UserModel
+            .update(userData, { where: { id: user.getId() } })
+            .then((persistedUserData) => (resolve(new User(userData))))
+            .catch((error: any) => reject(error));
+        });
     });
   }
 
-  /**
-   * Update input User.
-   *
-   * @param {string} userId
-   * @param {UserUpdateData} data
-   * @returns {Promise<User>}
-   */
-  public updateUser(userId: string, data: UserUpdateData): Promise<User> {
-    return new Promise((resolve, reject) => {
-      UserModel.update(
-        data,
-        { returning: true, where: { id: userId } },
-      )
-        .then(([_, updatedUsers]) => {
-          resolve(new User(updatedUsers[0]));
-        })
-        .catch((error: any) => reject(error));
-    });
+  private convertUserModelToUserData(userModel: UserModel): UserData {
+    return {
+      email: userModel.email,
+      id: userModel.id,
+      password: userModel.password,
+      username: userModel.username || undefined,
+    };
   }
 }
 
-export default function (): UserRepo {
-  return new UserRepo();
+export default function (): SqlUserRepo {
+  return new SqlUserRepo();
 }

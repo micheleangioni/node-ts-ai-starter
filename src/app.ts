@@ -4,6 +4,7 @@ import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
 import api from './api';
+import errorsMiddlewareFactory from './api/errorsMiddlewareFactory';
 import applicationServices from './application';
 
 import dotenv from 'dotenv';
@@ -30,6 +31,9 @@ async function loadApp(app: express.Application) {
    * Attach the api services to the Application.
    */
   await api(app);
+
+  // The errors middleware needs to be the last one, after the apis
+  app.use(errorsMiddlewareFactory());
 
   return app;
 }

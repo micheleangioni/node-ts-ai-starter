@@ -1,4 +1,4 @@
-import express from 'express';
+import { Application } from 'express';
 import mongoose from './mongo';
 import models from './mongo/models/models';
 import SqlUserRepo from './repositories/sqlUserRepo';
@@ -6,7 +6,7 @@ import UserRepo from './repositories/userRepo';
 import Sequelize from './sql';
 import sqlModels from './sql/models/models';
 
-export default function (app: express.Application) {
+export default function (app: Application) {
   // If MongoDB is active, add Mongoose and its models
 
   app.set('mongooseClient', mongoose);
