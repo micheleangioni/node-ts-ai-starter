@@ -2,7 +2,7 @@ import express from 'express';
 import application from './app';
 
 const expressApp: express.Application = express();
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 3010;
 
 expressApp.on('ready', () => {
   // tslint:disable-next-line:no-console
