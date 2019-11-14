@@ -1,4 +1,5 @@
 import { Application } from 'express';
+import Logger from './logger';
 import mongoose from './mongo';
 import models from './mongo/models/models';
 import SqlUserRepo from './repositories/sqlUserRepo';
@@ -7,6 +8,9 @@ import Sequelize from './sql';
 import sqlModels from './sql/models/models';
 
 export default function (app: Application) {
+  // Add logger
+  app.set('logger', new Logger());
+
   // If MongoDB is active, add Mongoose and its models
 
   app.set('mongooseClient', mongoose);

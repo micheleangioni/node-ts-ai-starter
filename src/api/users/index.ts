@@ -3,12 +3,13 @@ const router = express.Router();
 import UserService from '../../application/user/userService';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
+import ILogger from '../../infra/logger/ILogger';
 import errorHandler from '../errorHandler';
 import usersValidationNew from './middlewares/users.validation.new';
 import userTransformer from './userTransformer';
 
 export default function (app: express.Application) {
-  const logger = app.get('logger');
+  const logger = app.get('logger') as ILogger;
   const sqlUserRepo = app.get('sqlUserRepo') as IUserRepo;
   const userService = app.get('userService') as UserService;
 
@@ -30,7 +31,7 @@ export default function (app: express.Application) {
     try {
       users = await userService.getAll();
     } catch (err) {
-      return errorHandler(err, res);
+      return errorHandler(err, res, logger);
     }
 
     res.json({
@@ -53,7 +54,7 @@ export default function (app: express.Application) {
         username: req.body.username,
       });
     } catch (err) {
-      return errorHandler(err, res);
+      return errorHandler(err, res, logger);
     }
 
     res.json({
@@ -70,7 +71,7 @@ export default function (app: express.Application) {
     try {
       users = await sqlUserRepo.all();
     } catch (err) {
-      return errorHandler(err, res);
+      return errorHandler(err, res, logger);
     }
 
     res.json({

@@ -11,9 +11,6 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-// Define a very basic logger
-const logger = console;
-
 import infraServices from './infra';
 
 async function loadApp(app: express.Application) {
@@ -33,14 +30,13 @@ async function loadApp(app: express.Application) {
   await api(app);
 
   // The errors middleware needs to be the last one, after the apis
-  app.use(errorsMiddlewareFactory());
+  app.use(errorsMiddlewareFactory(app.get('logger')));
 
   return app;
 }
 
 export default function (app: express.Application) {
   app.use(helmet());
-  app.set('logger', logger);
 
   /**
    * Configure Body Parser.
@@ -65,13 +61,13 @@ export default function (app: express.Application) {
   process.on('uncaughtException', (err) => {
     // tslint:disable-next-line:no-console
     console.log(`${new Date().toISOString()} uncaughtException`, err);
-    logger.error(err.message);
-    logger.error(err.stack);
+    console.error(err.message);
+    console.error(err.stack);
     process.exit(1);
   });
 
   return loadApp(app)
     .then((expressApp) => {
-      return { app: expressApp, logger };
+      return { app: expressApp, logger: expressApp.get('logger') };
     });
 }
