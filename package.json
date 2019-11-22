@@ -67,7 +67,7 @@
     "sequelize": "^5.21.2",
     "sequelize-cli": "^5.5.1",
     "umzug": "^2.2.0",
-    "validator": "^12.0.0"
+    "validator": "^12.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
