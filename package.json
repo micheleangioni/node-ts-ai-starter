@@ -62,7 +62,7 @@
     "jsonwebtoken": "^8.5.1",
     "keycloak-connect": "^4.8.3",
     "moment": "^2.24.0",
-    "mongoose": "^5.7.12",
+    "mongoose": "^5.7.13",
     "mysql2": "^2.0.1",
     "sequelize": "^5.21.2",
     "sequelize-cli": "^5.5.1",
