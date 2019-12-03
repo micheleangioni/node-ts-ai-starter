@@ -8,7 +8,7 @@ import errorHandler from '../errorHandler';
 import usersValidationNew from './middlewares/users.validation.new';
 import userTransformer from './userTransformer';
 
-export default function (app: express.Application) {
+export default function (app: express.Application, source: string) {
   const logger = app.get('logger') as ILogger;
   const sqlUserRepo = app.get('sqlUserRepo') as IUserRepo;
   const userService = app.get('userService') as UserService;
@@ -52,7 +52,7 @@ export default function (app: express.Application) {
         email: req.body.email,
         password: req.body.password,
         username: req.body.username,
-      });
+      }, source);
     } catch (err) {
       return errorHandler(err, res, logger);
     }

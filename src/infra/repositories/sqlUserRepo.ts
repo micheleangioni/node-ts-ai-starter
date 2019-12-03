@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { UserData } from '../../domain/user/declarations';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
@@ -136,6 +137,8 @@ class SqlUserRepo implements IUserRepo {
 
             UserModel.create(userData)
               .then((persistedUserData) => {
+                user.updateDates(moment(persistedUserData.createdAt));
+
                 resolve(new User(this.convertUserModelToUserData(persistedUserData)));
               })
               .catch((error: any) => reject(error));
@@ -143,8 +146,11 @@ class SqlUserRepo implements IUserRepo {
 
           // Item already exists, so we update it
           return UserModel
-            .update(userData, { where: { id: user.getId() } })
-            .then((persistedUserData) => (resolve(new User(userData))))
+            .update(userData, { returning: true, where: { id: user.getId() } })
+            .then(([ _, [persistedUserData] ]) => {
+              user.updateDates(moment(persistedUserData.updatedAt));
+              resolve(user);
+            })
             .catch((error: any) => reject(error));
         });
     });

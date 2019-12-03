@@ -1,14 +1,29 @@
 import express from 'express';
 import supertest from 'supertest';
 import appModule from '../../src/app';
+import EventPublisher from '../../src/application/eventPublisher';
+import {UserCreated} from '../../src/domain/user/events/UserCreated';
 import { cleanDatabase, seedDatabase } from '../seeding';
+
+jest.mock('../../src/application/eventPublisher');
 
 describe('Test the users API', () => {
   const expressApp: express.Application = express();
+  const mockPublish = jest.fn();
+
+  beforeAll(() => {
+    // @ts-ignore
+    EventPublisher.mockImplementation(() => {
+      return {
+        publish: mockPublish,
+      };
+    });
+  });
 
   beforeEach(async (done) => {
     await cleanDatabase();
     await seedDatabase();
+    mockPublish.mockClear();
     done();
   });
   afterEach(async (done) => {
@@ -28,7 +43,7 @@ describe('Test the users API', () => {
 
   test('(POST)/ should create and return a new user', async (done) => {
     const { app } = await appModule(expressApp);
-    const userData: object = {
+    const userData = {
       email: 'users.spec@test.com',
       password: 'password',
       username: 'usersSpec',
@@ -39,8 +54,13 @@ describe('Test the users API', () => {
       .then((response: any) => {
         expect(response.statusCode).toBe(200);
         expect(response.body.data).toMatchObject({
-          email: 'users.spec@test.com',
-          username: 'usersSpec',
+          email: userData.email,
+          username: userData.username,
+        });
+        expect(mockPublish.mock.calls[0][1][0]).toBeInstanceOf(UserCreated);
+        expect(mockPublish.mock.calls[0][1][0].getEventData()).toMatchObject({
+          email: userData.email,
+          username: userData.username,
         });
         done();
       });

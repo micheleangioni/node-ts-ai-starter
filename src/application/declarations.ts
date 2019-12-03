@@ -1,3 +1,6 @@
+import Cloudevent from 'cloudevents-sdk/v1';
+import {IDomainEvent} from '../domain/IDomainEvent';
+
 export type ApplicationErrorData = {
   code?: string,
   message: string,
@@ -11,3 +14,11 @@ export enum ErrorCodes {
   NOT_FOUND = 'not-found',
   UNAUTHORIZED = 'unauthorized',
 }
+
+export type GroupedByAggregateEvents = {
+  [aggregate: string]: IDomainEvent[],
+};
+
+export type GroupedByAggregateCloudevents = {
+  [aggregate: string]: Cloudevent[],
+};

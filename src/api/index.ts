@@ -2,5 +2,6 @@ import express from 'express';
 import usersRouter from './users';
 
 export default function (app: express.Application) {
-  app.use('/api/users', usersRouter(app));
+  const source = '/api/users';
+  app.use(source, usersRouter(app, source));
 }

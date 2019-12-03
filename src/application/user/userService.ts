@@ -4,18 +4,10 @@ import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import ApplicationError from '../ApplicationError';
 import { ErrorCodes } from '../declarations';
+import EventPublisher from '../eventPublisher';
 
 export default class UserService {
-  constructor(private userRepo: IUserRepo) {}
-
-  /**
-   * Create and return a new MongoDB id.
-   *
-   * @return string
-   */
-  public nextIdentity(): string {
-    return new mongo.ObjectID().toString();
-  }
+  constructor(private userRepo: IUserRepo, private eventPublisher?: EventPublisher) {}
 
   public async getAll(): Promise<User[]> {
     return await this.userRepo.all();
@@ -63,9 +55,32 @@ export default class UserService {
     return user;
   }
 
-  public async createUser(data: UserCreateData): Promise<User> {
-    const user = new User({ id: this.nextIdentity(), ...data});
+  public async createUser(data: UserCreateData, source: string): Promise<User> {
+    const user = new User({ id: this.userRepo.nextIdentity(), ...data });
 
-    return this.userRepo.persist(user);
+    return this.persistUserAndEmitEvents(user, source);
+  }
+
+  private async persistUserAndEmitEvents(user: User, source: string): Promise<User> {
+    const updatedUser = await this.userRepo.persist(user);
+    await this.sendApplicationEvents(source, user);
+
+    return updatedUser;
+  }
+
+  private async sendApplicationEvents(source: string, user: User): Promise<true> {
+    if (!user.getCreatedAt()) {
+      throw new ApplicationError({
+        code: ErrorCodes.INTERNAL_ERROR,
+        message: 'A non-persisted User should not be used to send events',
+        status: 500,
+      });
+    }
+
+    if (this.eventPublisher) {
+      await this.eventPublisher.publish(source, user.releaseDomainEvents(), user.getId().toString());
+    }
+
+    return true;
   }
 }

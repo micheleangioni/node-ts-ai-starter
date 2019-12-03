@@ -1,4 +1,7 @@
+import brokerFactory from '@micheleangioni/node-messagebrokers';
 import { Application } from 'express';
+import config from '../../src/config';
+import EventPublisher from '../application/eventPublisher';
 import Logger from './logger';
 import mongoose from './mongo';
 import models from './mongo/models/models';
@@ -7,9 +10,10 @@ import UserRepo from './repositories/userRepo';
 import Sequelize from './sql';
 import sqlModels from './sql/models/models';
 
-export default function (app: Application) {
+export default async function (app: Application) {
   // Add logger
-  app.set('logger', new Logger());
+  const logger = new Logger();
+  app.set('logger', logger);
 
   // If MongoDB is active, add Mongoose and its models
 
@@ -26,5 +30,27 @@ export default function (app: Application) {
     sqlModels(app);
 
     app.set('sqlUserRepo', SqlUserRepo());
+  }
+
+  if (process.env.ENABLE_MESSAGE_BROKER === 'true') {
+    const kafkaBroker = brokerFactory(config.kafka.topics);
+
+    try {
+      await kafkaBroker.init();
+    } catch (err) {
+      const error = {
+        error: err,
+        message: `Kafka topics creation error: ${err.toString()}`,
+        type: 'kafka',
+      };
+
+      logger.fatal(error);
+
+      throw err;
+    }
+
+    logger.info('Kafka Broker successfully initialized');
+    const eventPublisher = new EventPublisher(kafkaBroker, logger);
+    app.set('messageBroker', eventPublisher);
   }
 }

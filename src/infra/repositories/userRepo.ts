@@ -1,11 +1,9 @@
+import moment from 'moment';
 import { Model, mongo } from 'mongoose';
-import { UserData, UserDomainData } from '../../domain/user/declarations';
+import { UserData } from '../../domain/user/declarations';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
-
-type PersistedUserData = UserDomainData & {
-  _id: string,
-};
+import { PersistedUserMongoData, ToBePersistedUserMongoData } from './declarations';
 
 class UserRepo implements IUserRepo {
   protected userModel: Model<any>;
@@ -135,7 +133,7 @@ class UserRepo implements IUserRepo {
    * @returns {Promise<User>}
    */
   public persist(user: User): Promise<User> {
-    const userData: PersistedUserData = {
+    const userData: ToBePersistedUserMongoData = {
       _id: user.getId().toString(),
       email: user.getEmail(),
       password: user.getPassword(),
@@ -148,8 +146,10 @@ class UserRepo implements IUserRepo {
     return new Promise((resolve, reject) => {
       this.userModel.findByIdAndUpdate(user.getId().toString(), userData, { new: true, upsert: true })
         .lean()
-        .then((userPersistedData: PersistedUserData) => {
-          resolve(new User({ ...userPersistedData, id: userPersistedData._id }));
+        .then((userPersistedData: PersistedUserMongoData) => {
+          user.updateDates(moment(userPersistedData.createdAt));
+
+          resolve(user);
         })
         .catch((error: any) => reject(error));
     });
