@@ -37,7 +37,10 @@
     "nodejs",
     "express",
     "starter",
-    "boilerplate"
+    "boilerplate",
+    "ddd",
+    "domain-driven design",
+    "kafka"
   ],
   "author": {
     "name": "Michele Angioni",
@@ -49,7 +52,6 @@
     "@types/express": "^4.17.2",
     "@types/helmet": "0.0.45",
     "@types/jsonwebtoken": "^8.3.5",
-    "@types/keycloak-connect": "^4.5.1",
     "@types/mongodb": "^3.3.11",
     "@types/mongoose": "^5.5.32",
     "@types/node": "^10.14.7",
@@ -58,10 +60,8 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "get-keycloak-public-key": "^1.0.3",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
-    "keycloak-connect": "^4.8.3",
     "moment": "^2.24.0",
     "mongoose": "^5.7.13",
     "mysql2": "^2.0.1",

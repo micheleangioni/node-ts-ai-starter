@@ -3,6 +3,7 @@ import path from 'path';
 import SequelizeLibrary from 'sequelize';
 import Umzug from 'umzug';
 import userSchemaCreator from '../src/infra/mongo/models/users/usersSchema';
+import userRepoCreator from '../src/infra/repositories/userRepo';
 import Sequelize from '../src/infra/sql';
 import User from '../src/infra/sql/models/users/user';
 import { attributes, tableName } from '../src/infra/sql/models/users/usersSchema';
@@ -42,6 +43,8 @@ const mongooseClient: any = mongoose;
 
 const userSchema = userSchemaCreator(mongooseClient);
 const userModel = mongoose.model('users', userSchema);
+
+export const userRepo = userRepoCreator(userModel);
 
 export async function seedDatabase() {
   // Mongo
