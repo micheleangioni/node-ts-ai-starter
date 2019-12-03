@@ -36,4 +36,4 @@ env:
     - SQL_NAME=node_ts_starter_test
     - SQL_USERNAME=travis
     - SQL_PASSWORD=
-    - ENABLE_MESSAGE_BROKE=true
+    - ENABLE_MESSAGE_BROKER=true
