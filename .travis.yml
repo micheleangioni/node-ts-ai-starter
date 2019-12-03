@@ -8,6 +8,7 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS node_ts_starter_test;'
 
 install:
+  - docker-compose up -d
   - npm install
   - npm run migrate
 
@@ -35,3 +36,4 @@ env:
     - SQL_NAME=node_ts_starter_test
     - SQL_USERNAME=travis
     - SQL_PASSWORD=
+    - ENABLE_MESSAGE_BROKE=true

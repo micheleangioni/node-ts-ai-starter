@@ -63,12 +63,12 @@ Topic names should follow the name structure `<company>.events.<application_name
 
 Apache Kafka can be configured through the following environment variables:
 
-- `ENABLE_MESSAGE_BROKER`: `'true'` or `'false'`, whether domain events are published. Default `'false'`.
-- `KAFKA_URI`: URI of the Kafka Message Broker
-- `SSL_CERT`: SSL certificate (string)
-- `SSL_KEY`: SSL key
-- `SSL_CA`: SSL certificate authority
-- `REVERSE_DNS`: Reverse DNS to customise the type field of the event payload
+- `ENABLE_MESSAGE_BROKER`: `'true'` or `'false'`, whether domain events are published. Default `'false'`;
+- `KAFKA_URI`: URI of the Kafka Message Broker. Default `localhost:9092`;
+- `SSL_CERT`: SSL certificate (string);
+- `SSL_KEY`: SSL key (string);
+- `SSL_CA`: SSL certificate authority (string);
+- `REVERSE_DNS`: Reverse DNS to customise the type field of the event payload.
 
 The following events are emitted by the Application:
 
