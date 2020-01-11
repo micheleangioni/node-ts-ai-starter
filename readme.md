@@ -14,7 +14,6 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 - MongoDB integration
 - MySQL / SqLite / Postgres / MsSQL integration
 - Domain Event via Kafka Message Broker
-- Keycloak integration
 - Testing through Jest
 
 ## Installation
