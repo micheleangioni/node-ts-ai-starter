@@ -6,7 +6,8 @@
 
 ## Introduction
 
-Node TypeScript Starter is a starter kit for applications written in TypeScript and using Express as web framework. It comes with the following feature out of the box:
+Node TypeScript Starter is a starter kit for applications written in TypeScript and using Express as web framework. 
+It comes with the following features configured out of the box:
 
 - DDD structure
 - server configuration with enabled CORS
