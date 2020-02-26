@@ -1,6 +1,8 @@
 # Node TypeScript Starter
 
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/micheleangioni/node-ts-starter?color=stable&label=version)
 [![Build Status](https://api.travis-ci.org/micheleangioni/node-ts-starter.svg?branch=master)](https://travis-ci.org/micheleangioni/node-ts-starter)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 > Starter kit application for projects using Express and TypeScript with MongoDB, SQL, Jest testing and much more configured out of the box.
 
@@ -27,7 +29,7 @@ It comes with the following features configured out of the box:
 
 3. Run `npm install` to install the needed dependencies.
 
-3. (optional) If willing to use an SQL database, set the `SQL_DIALECT` key of the `.env` file to one of the supported values: `mysql`, `sqlite`, `postgres`, `mssql` or `none`.
+4. (optional) If willing to use an SQL database, set the `SQL_DIALECT` env variable to one of the supported values: `mysql`, `sqlite`, `postgres`, `mssql` or `none`.
 
     Then run migrations by running `npm run migrate` and seeding via `npm run seed`.
 
@@ -37,7 +39,7 @@ It comes with the following features configured out of the box:
 
 First compile the application via `npm run build`.
 
-Then run `npm start` to simply run the application.
+Then simply run `npm start` to run it.
 
 ## Development
 
@@ -65,6 +67,13 @@ Apache Kafka can be configured through the following environment variables:
 
 - `ENABLE_MESSAGE_BROKER`: `'true'` or `'false'`, whether domain events are published. Default `'false'`;
 - `KAFKA_URI`: URI of the Kafka Message Broker. Default `localhost:9092`;
+- `KAFKA_CLIENT_ID`: client id for the Kafka connection. If not set, a random generated will be used;
+- `KAFKA_LOG_LEVEL`: set the logging level of the Kafka client:
+    - `0` = nothing
+    - `1` = error
+    - `2` = warning
+    - `4` = info (default)
+    - `5` = debug
 - `SSL_CERT`: SSL certificate (string);
 - `SSL_KEY`: SSL key (string);
 - `SSL_CA`: SSL certificate authority (string);
@@ -85,7 +94,12 @@ The following events are emitted by the Application:
 
 Run `npm test` to run the tests or `npm run watch-test` to run the tests with the watcher.
 
-It will be used an in-memory SqLite database, against which migrations and seedings will be run. 
+The tests will use both a MongoDB and an in-memory SqLite database, against which migrations and seedings will be run. 
+
+## Going Serverless
+
+If you are interested in Serverless architecture, take a look at [Serverless Node TypeScript](https://github.com/micheleangioni/sls-node-ts),
+a starter kit ready for Serverless deployment out of the box. 
 
 ## Contribution Guidelines
 
