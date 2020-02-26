@@ -1,4 +1,3 @@
-import { mongo } from 'mongoose';
 import { UserCreateData } from '../../domain/user/declarations';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';

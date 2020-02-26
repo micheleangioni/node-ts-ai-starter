@@ -17,9 +17,9 @@ class SqlUserRepo implements IUserRepo {
   /**
    * Return all Users as an array of User entities.
    *
-   * @returns {Promise<User[]>}
+   * @returns Promise<User[]>
    */
-  public all (): Promise<User[]> {
+  public all(): Promise<User[]> {
     return new Promise((resolve, reject) => {
       UserModel.findAll()
         .then((data: UserModel[]) => {
@@ -34,9 +34,9 @@ class SqlUserRepo implements IUserRepo {
    * Resolve an empty object if no User is found.
    *
    * @param {string} userId
-   * @returns {Promise<User> | Promise<object>}
+   * @returns Promise<User> | Promise<object>
    */
-  public findById (userId: string): Promise<User|null> {
+  public findById(userId: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       UserModel.findByPk(userId)
         .then((userData) => {
@@ -57,9 +57,9 @@ class SqlUserRepo implements IUserRepo {
    * Resolve an empty object if no User is found.
    *
    * @param {string} email
-   * @returns {Promise<User> | Promise<object>}
+   * @returns Promise<User> | Promise<object>
    */
-  public findByEmail (email: string): Promise<User|null> {
+  public findByEmail(email: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       UserModel.findOne({ where: { email } })
         .then((userData) => {
@@ -80,9 +80,9 @@ class SqlUserRepo implements IUserRepo {
    * Resolve an empty object if no User is found.
    *
    * @param {string} username
-   * @returns {Promise<User> | Promise<object>}
+   * @returns Promise<User> | Promise<object>
    */
-  public findByUsername (username: string): Promise<User|null> {
+  public findByUsername(username: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       UserModel.findOne({ where: { username } })
         .then((userData) => {
@@ -101,9 +101,9 @@ class SqlUserRepo implements IUserRepo {
   /**
    * Count the number of Users.
    *
-   * @return {Promise<number>}
+   * @return Promise<number>
    */
-  public count (): Promise<number> {
+  public count(): Promise<number> {
     return new Promise((resolve, reject) => {
       UserModel.count({})
         .then((count: number) => resolve(count))
@@ -115,9 +115,9 @@ class SqlUserRepo implements IUserRepo {
    * Persist a User instance.
    *
    * @param {User} user
-   * @returns {Promise<User>}
+   * @returns Promise<User>
    */
-  public persist (user: User): Promise<User> {
+  public persist(user: User): Promise<User> {
     const userData: UserData = {
       email: user.getEmail(),
       id: user.getId(),
@@ -129,7 +129,7 @@ class SqlUserRepo implements IUserRepo {
     }
 
     return new Promise((resolve, reject) => {
-      return UserModel
+      UserModel
         .findOne({ where: { id: user.getId() } })
         .then((foundUserData) => {
           if (!foundUserData) {
@@ -145,7 +145,7 @@ class SqlUserRepo implements IUserRepo {
           }
 
           // Item already exists, so we update it
-          return UserModel
+          UserModel
             .update(userData, { returning: true, where: { id: user.getId() } })
             .then(([ _, [persistedUserData] ]) => {
               user.updateDates(moment(persistedUserData.updatedAt));
@@ -166,6 +166,6 @@ class SqlUserRepo implements IUserRepo {
   }
 }
 
-export default function (): SqlUserRepo {
+export default (): SqlUserRepo => {
   return new SqlUserRepo();
-}
+};

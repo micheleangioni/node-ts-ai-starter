@@ -14,11 +14,11 @@ export const attributes = {
 
 export const tableName = 'users';
 
-export default function (sequelize: any) {
+export default (sequelize: any) => {
   User.init(attributes, {
     sequelize,
     tableName,
   });
 
   return true;
-}
+};

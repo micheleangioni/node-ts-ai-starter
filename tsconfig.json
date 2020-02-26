@@ -1,28 +1,30 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "sourceMap": true,
-    "outDir": "build",
-    "allowJs": true,
     "strict": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "lib":["es2018"],
     "moduleResolution": "node",
-    "lib":["dom", "es2017"],
-    "baseUrl": ".",
-    "paths": {
-      "*": [
-        "node_modules/*"
-      ]
-    },
-    "esModuleInterop": true
+    "module": "commonjs",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "target": "es6",
+    "outDir": "build",
+    "rootDir": "./"
   },
   "include": [
-    "src/**/*.ts"
+    "copyStaticAssets.ts",
+    "src/"
   ],
   "exclude": [
+    "build",
+    "config",
     "node_modules",
-    "build"
+    "migrations",
+    "seeders",
+    "test"
   ]
 }

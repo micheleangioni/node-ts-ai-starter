@@ -13,7 +13,7 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 
 import infraServices from './infra';
 
-async function loadApp(app: express.Application) {
+const loadApp = async (app: express.Application) => {
   /**
    * Attach the infrastructure services to the Application.
    */
@@ -33,9 +33,9 @@ async function loadApp(app: express.Application) {
   app.use(errorsMiddlewareFactory(app.get('logger')));
 
   return app;
-}
+};
 
-export default function (app: express.Application) {
+export default (app: express.Application) => {
   app.use(helmet());
 
   /**
@@ -70,4 +70,4 @@ export default function (app: express.Application) {
     .then((expressApp) => {
       return { app: expressApp, logger: expressApp.get('logger') };
     });
-}
+};

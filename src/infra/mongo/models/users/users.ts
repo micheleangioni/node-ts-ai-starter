@@ -1,7 +1,7 @@
 import express from 'express';
 import userSchemaCreator from './usersSchema';
 
-export default function (app: express.Application) {
+export default (app: express.Application) => {
   const mongoose = app.get('mongooseClient');
   const usersSchema = userSchemaCreator(mongoose);
   let model: any;
@@ -14,4 +14,4 @@ export default function (app: express.Application) {
   }
 
   return model;
-}
+};

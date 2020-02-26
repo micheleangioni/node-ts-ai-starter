@@ -38,23 +38,23 @@ export default class User extends BaseEntity implements IEntity {
   }
 
   public getEmail(): string {
-      return this.email;
+    return this.email;
   }
 
   public getPassword(): string {
-      return this.password;
+    return this.password;
   }
 
   public setPassword(password: string) {
-      this.password = password;
+    this.password = password;
   }
 
   public getUsername(): string | undefined {
-      return this.username;
+    return this.username;
   }
 
   public setUsername(username: string | undefined) {
-      this.username = username;
+    this.username = username;
   }
 
   public getCreatedAt(): Moment | undefined {

@@ -10,7 +10,7 @@ import UserRepo from './repositories/userRepo';
 import Sequelize from './sql';
 import sqlModels from './sql/models/models';
 
-export default async function (app: Application) {
+export default async (app: Application) => {
   // Add logger
   const logger = new Logger();
   app.set('logger', logger);
@@ -53,4 +53,4 @@ export default async function (app: Application) {
     const eventPublisher = new EventPublisher(kafkaBroker, logger);
     app.set('messageBroker', eventPublisher);
   }
-}
+};

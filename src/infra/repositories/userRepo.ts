@@ -156,6 +156,6 @@ class UserRepo implements IUserRepo {
   }
 }
 
-export default function (userModel: Model<any>): UserRepo {
+export default (userModel: Model<any>): UserRepo => {
   return new UserRepo(userModel);
-}
+};

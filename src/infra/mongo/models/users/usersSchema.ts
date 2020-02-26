@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export default function (mongooseClient: typeof mongoose) {
+export default (mongooseClient: typeof mongoose) => {
   const { Schema } = mongooseClient;
 
   return new Schema({
@@ -8,4 +8,4 @@ export default function (mongooseClient: typeof mongoose) {
     password: { type: String, required: true },
     username: { type: String, unique: true, sparse: true },
   }, { timestamps: true });
-}
+};

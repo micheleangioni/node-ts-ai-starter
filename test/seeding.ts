@@ -46,7 +46,7 @@ const userModel = mongoose.model('users', userSchema);
 
 export const userRepo = userRepoCreator(userModel);
 
-export async function seedDatabase() {
+export const seedDatabase = async () => {
   // Mongo
   await userModel.insertMany(usersData);
 
@@ -58,9 +58,9 @@ export async function seedDatabase() {
 
   await umzug.up();
   await User.bulkCreate(usersData);
-}
+};
 
-export async function cleanDatabase() {
+export const cleanDatabase = async () => {
   await userModel.remove({});
   await umzug.down();
-}
+};

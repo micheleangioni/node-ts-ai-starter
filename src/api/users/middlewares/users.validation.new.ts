@@ -4,7 +4,7 @@ import ApplicationError from '../../../application/ApplicationError';
 import { ErrorCodes } from '../../../application/declarations';
 import UserService from '../../../application/user/userService';
 
-export default async function (req: Request, res: Response, next: NextFunction) {
+export default async (req: Request, _res: Response, next: NextFunction) => {
   const userService = req.app.get('userService') as UserService;
 
   const data = req.body;
@@ -79,4 +79,4 @@ export default async function (req: Request, res: Response, next: NextFunction) 
   }
 
   next();
-}
+};

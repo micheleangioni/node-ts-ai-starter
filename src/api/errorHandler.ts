@@ -4,7 +4,7 @@ import { ErrorCodes } from '../application/declarations';
 import ILogger from '../infra/logger/ILogger';
 import { getErrorResponse } from './responseGenerator';
 
-export default function errorHandler(error: any, res: Response, logger: ILogger) {
+export default (error: any, res: Response, logger: ILogger) => {
   if (error instanceof ApplicationError) {
     if (error.status >= 500) {
       logger.error(error);
@@ -16,4 +16,4 @@ export default function errorHandler(error: any, res: Response, logger: ILogger)
   logger.error(error);
 
   return res.status(500).json(getErrorResponse('Internal Error', ErrorCodes.INTERNAL_ERROR, 500));
-}
+};

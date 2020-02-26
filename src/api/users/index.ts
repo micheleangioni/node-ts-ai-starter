@@ -8,7 +8,7 @@ import errorHandler from '../errorHandler';
 import usersValidationNew from './middlewares/users.validation.new';
 import userTransformer from './userTransformer';
 
-export default function (app: express.Application, source: string) {
+export default (app: express.Application, source: string) => {
   const logger = app.get('logger') as ILogger;
   const sqlUserRepo = app.get('sqlUserRepo') as IUserRepo;
   const userService = app.get('userService') as UserService;
@@ -25,7 +25,7 @@ export default function (app: express.Application, source: string) {
   /**
    * Retrieve all Users.
    */
-  router.get('/', async (req, res) => {
+  router.get('/', async (_req, res) => {
     let users;
 
     try {
@@ -65,7 +65,7 @@ export default function (app: express.Application, source: string) {
   /**
    * Retrieve all Users.
    */
-  router.get('/sql', async (req, res) => {
+  router.get('/sql', async (_req, res) => {
     let users;
 
     try {
@@ -82,4 +82,4 @@ export default function (app: express.Application, source: string) {
   });
 
   return router;
-}
+};

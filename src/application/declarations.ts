@@ -2,9 +2,9 @@ import Cloudevent from 'cloudevents-sdk/v1';
 import {IDomainEvent} from '../domain/IDomainEvent';
 
 export type ApplicationErrorData = {
-  code?: string,
-  message: string,
-  status?: number,
+  code?: string;
+  message: string;
+  status?: number;
 };
 
 export enum ErrorCodes {
@@ -16,9 +16,9 @@ export enum ErrorCodes {
 }
 
 export type GroupedByAggregateEvents = {
-  [aggregate: string]: IDomainEvent[],
+  [aggregate: string]: IDomainEvent[];
 };
 
 export type GroupedByAggregateCloudevents = {
-  [aggregate: string]: Cloudevent[],
+  [aggregate: string]: Cloudevent[];
 };
