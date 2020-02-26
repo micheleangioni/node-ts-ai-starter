@@ -1,8 +1,9 @@
 language: node_js
 
 node_js:
-  - '12'
   - '10'
+  - '12'
+  - 'node'
 
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS node_ts_starter_test;'
