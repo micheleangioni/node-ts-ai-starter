@@ -56,6 +56,7 @@ export default class EventPublisher {
     } else {
       Object.keys(groupedEvents).forEach((aggregate) => {
         this.logger.info({
+          data: groupedEvents[aggregate].map((cloudevent) => cloudevent.getEventData()),
           message: `Successfully published ${groupedEvents[aggregate].length} ${aggregate} events`,
           type: 'kafka',
         });
