@@ -1,5 +1,10 @@
 version: '3.5'
 services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - 27017:27017
 
   zookeeper:
     image: zookeeper
