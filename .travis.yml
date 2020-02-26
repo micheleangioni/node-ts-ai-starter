@@ -18,7 +18,6 @@ script:
   - npm run test
 
 services:
-  - mongodb
   - mysql
 
 env:
