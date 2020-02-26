@@ -24,7 +24,7 @@ class UserRepo implements IUserRepo {
   /**
    * Return all Users as an array of User entities.
    *
-   * @returns {Promise<User[]>}
+   * @return Promise<User[]>
    */
   public all(): Promise<User[]> {
     return new Promise((resolve, reject) => {
@@ -40,7 +40,7 @@ class UserRepo implements IUserRepo {
    * Resolve null if no User is found.
    *
    * @param {string} userId
-   * @returns {Promise<User|null>}
+   * @return Promise<User|null>
    */
   public findById(userId: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ class UserRepo implements IUserRepo {
    * Resolve null if no User is found.
    *
    * @param {string} email
-   * @returns {Promise<User|null>}
+   * @return Promise<User|null>
    */
   public findByEmail(email: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
@@ -94,7 +94,7 @@ class UserRepo implements IUserRepo {
    * Resolve null if no User is found.
    *
    * @param {string} username
-   * @returns {Promise<User|null>}
+   * @return Promise<User|null>
    */
   public findByUsername(username: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
@@ -116,7 +116,7 @@ class UserRepo implements IUserRepo {
   /**
    * Count the number of Users.
    *
-   * @return {Promise<number>}
+   * @return Promise<number>
    */
   public count(): Promise<number> {
     return new Promise((resolve, reject) => {
@@ -130,7 +130,7 @@ class UserRepo implements IUserRepo {
    * Persist a User instance.
    *
    * @param {User} user
-   * @returns {Promise<User>}
+   * @return Promise<User>
    */
   public persist(user: User): Promise<User> {
     const userData: ToBePersistedUserMongoData = {

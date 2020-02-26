@@ -13,7 +13,7 @@ export default (error: any, res: Response, logger: ILogger) => {
     return res.status(error.status).json(getErrorResponse(error.message, error.code));
   }
 
-  logger.error(error);
+  logger.error(error.toString());
 
   return res.status(500).json(getErrorResponse('Internal Error', ErrorCodes.INTERNAL_ERROR, 500));
 };

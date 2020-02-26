@@ -66,6 +66,14 @@ export default (app: express.Application) => {
     process.exit(1);
   });
 
+  process.on('unhandledRejection', (err: any) => {
+    // tslint:disable-next-line:no-console
+    console.log(`${new Date().toISOString()} unhandledRejection`, err);
+    console.error(err.message);
+    console.error(err.stack);
+    process.exit(1);
+  });
+
   return loadApp(app)
     .then((expressApp) => {
       return { app: expressApp, logger: expressApp.get('logger') };
