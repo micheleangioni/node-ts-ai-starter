@@ -52,7 +52,7 @@
     "@types/helmet": "0.0.45",
     "@types/jsonwebtoken": "^8.3.7",
     "@types/mongodb": "^3.3.16",
-    "@types/mongoose": "^5.5.42",
+    "@types/mongoose": "^5.7.2",
     "@types/node": "^12.12.28",
     "@types/umzug": "^2.2.2",
     "body-parser": "^1.19.0",
