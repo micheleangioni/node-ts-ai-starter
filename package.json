@@ -53,7 +53,7 @@
     "@types/jsonwebtoken": "^8.3.7",
     "@types/mongodb": "^3.3.16",
     "@types/mongoose": "^5.7.3",
-    "@types/node": "^12.12.28",
+    "@types/node": "^13.7.6",
     "@types/umzug": "^2.2.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
