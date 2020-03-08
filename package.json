@@ -1,6 +1,6 @@
 {
   "name": "node-ts-starter",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Starter kit for Node.js application written in TypeScript",
   "main": "build/server.js",
   "scripts": {
