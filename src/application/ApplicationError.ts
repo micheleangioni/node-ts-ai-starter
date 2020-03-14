@@ -1,23 +1,26 @@
-import { ApplicationErrorData, ErrorCodes } from './declarations';
+import { ApplicationErrorData } from './declarations';
 
 export default class ApplicationError extends Error {
-  public code: string;
-  public message: string;
-  public status: number;
+  public readonly code: string;
+  public readonly error?: Error;
+  public readonly message: string;
+  public readonly status: number;
+  public readonly stack?: string;
 
-  constructor({ code, message, status }: ApplicationErrorData) {
-    super(message);
+  constructor({ code, error, status }: ApplicationErrorData) {
+    super(typeof error === 'string' ? error : error.message);
 
-    this.code = code || ErrorCodes.INTERNAL_ERROR;
-    this.message = message || 'InternalError';
-    this.status = status || 500;
+    this.code = code;
+    this.message = typeof error === 'string' ? error : error.message.toString();
+    this.status = status;
   }
 
   public toString(): string {
     return JSON.stringify({
       code: this.code,
       message: this.message,
-      status: this.status,
+      statusCode: this.status,
+      ...(this.stack && { stack: this.stack }),
     });
   }
 }

@@ -18,7 +18,7 @@ export default class UserService {
     if (!user) {
       throw new ApplicationError({
         code: ErrorCodes.NOT_FOUND,
-        message: 'User not found',
+        error: 'User not found',
         status: 404,
       });
     }
@@ -32,7 +32,7 @@ export default class UserService {
     if (!user) {
       throw new ApplicationError({
         code: ErrorCodes.NOT_FOUND,
-        message: 'User not found',
+        error: 'User not found',
         status: 404,
       });
     }
@@ -46,7 +46,7 @@ export default class UserService {
     if (!user) {
       throw new ApplicationError({
         code: ErrorCodes.NOT_FOUND,
-        message: 'User not found',
+        error: 'User not found',
         status: 404,
       });
     }
@@ -71,7 +71,7 @@ export default class UserService {
     if (!user.getCreatedAt()) {
       throw new ApplicationError({
         code: ErrorCodes.INTERNAL_ERROR,
-        message: 'A non-persisted User should not be used to send events',
+        error: 'A non-persisted User should not be used to send events',
         status: 500,
       });
     }

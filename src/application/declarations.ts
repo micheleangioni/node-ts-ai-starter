@@ -2,9 +2,9 @@ import Cloudevent from 'cloudevents-sdk/v1';
 import {IDomainEvent} from '../domain/IDomainEvent';
 
 export type ApplicationErrorData = {
-  code?: string;
-  message: string;
-  status?: number;
+  code: string;
+  error: Error | string;
+  status: number;
 };
 
 export enum ErrorCodes {

@@ -4,16 +4,18 @@ import { ErrorCodes } from '../application/declarations';
 import ILogger from '../infra/logger/ILogger';
 import { getErrorResponse } from './responseGenerator';
 
-export default (error: any, res: Response, logger: ILogger) => {
-  if (error instanceof ApplicationError) {
-    if (error.status >= 500) {
-      logger.error(error);
+export default (err: any, res: Response, logger: ILogger) => {
+  if (err instanceof ApplicationError) {
+    if (err.status >= 500) {
+      logger.error(err);
+    } else {
+      logger.debug(err);
     }
 
-    return res.status(error.status).json(getErrorResponse(error.message, error.code));
+    return res.status(err.status).json(getErrorResponse(err.message, err.code, err.status));
   }
 
-  logger.error(error.toString());
+  logger.error(err);
 
   return res.status(500).json(getErrorResponse('Internal Error', ErrorCodes.INTERNAL_ERROR, 500));
 };

@@ -73,7 +73,7 @@ export default async (req: Request, _res: Response, next: NextFunction) => {
   if (errors.length > 0) {
     return next(new ApplicationError({
       code: ErrorCodes.INVALID_DATA,
-      message: errors.join(' '),
+      error: errors.join(' '),
       status: 422,
     }));
   }
