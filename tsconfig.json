@@ -25,6 +25,6 @@
     "node_modules",
     "migrations",
     "seeders",
-    "test"
+    "test/**/*.ts"
   ]
 }

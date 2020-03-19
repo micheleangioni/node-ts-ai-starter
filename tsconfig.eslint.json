@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "copyStaticAssets.ts",
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "exclude": [
+    "build",
+    "config",
+    "node_modules",
+    "migrations",
+    "seeders"
+  ]
+}
