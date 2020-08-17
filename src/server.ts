@@ -11,6 +11,11 @@ expressApp.on('ready', () => {
 
 application(expressApp)
   .then(({ app, logger }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     logger.info(`Going to start application on port ${port}!`);
     app.emit('ready');
+  })
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
   });

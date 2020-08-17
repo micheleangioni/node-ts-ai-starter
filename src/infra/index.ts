@@ -39,8 +39,8 @@ export default async (app: Application) => {
       await kafkaBroker.init();
     } catch (err) {
       const error = {
-        error: err,
-        message: `Kafka topics creation error: ${err.toString()}`,
+        error: err as Error,
+        message: `Kafka topics creation error: ${(err as Error).toString()}`,
         type: 'kafka',
       };
 

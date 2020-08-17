@@ -76,6 +76,7 @@ export default (app: express.Application) => {
 
   return loadApp(app)
     .then((expressApp) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       return { app: expressApp, logger: expressApp.get('logger') };
     });
 };

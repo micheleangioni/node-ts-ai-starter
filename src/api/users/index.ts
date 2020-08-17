@@ -13,10 +13,6 @@ export default (app: express.Application, source: string) => {
   const sqlUserRepo = app.get('sqlUserRepo') as IUserRepo;
   const userService = app.get('userService') as UserService;
 
-  // Validation Middleware.
-
-  router.post('/', usersValidationNew);
-
   // TODO Implement an encryption middleware. Suggested package for encryption: 'bcrypt'
   // Encrypt Password Middleware.
 
@@ -44,14 +40,14 @@ export default (app: express.Application, source: string) => {
   /**
    * Create a new User.
    */
-  router.post('/', async (req, res) => {
+  router.post('/', usersValidationNew, async (req, res) => {
     let user;
 
     try {
       user = await userService.createUser({
-        email: req.body.email,
-        password: req.body.password,
-        username: req.body.username,
+        email: req.body.email as string,
+        password: req.body.password as string,
+        username: req.body.username as string | undefined,
       }, source);
     } catch (err) {
       return errorHandler(err, res, logger);

@@ -152,6 +152,9 @@ class SqlUserRepo implements IUserRepo {
               resolve(user);
             })
             .catch((error: any) => reject(error));
+        })
+        .catch((error) => {
+          reject(error);
         });
     });
   }

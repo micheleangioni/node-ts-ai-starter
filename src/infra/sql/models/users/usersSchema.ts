@@ -1,4 +1,4 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 import User from './user';
 
 export const attributes = {
@@ -14,7 +14,7 @@ export const attributes = {
 
 export const tableName = 'users';
 
-export default (sequelize: any) => {
+export default (sequelize: Sequelize) => {
   User.init(attributes, {
     sequelize,
     tableName,

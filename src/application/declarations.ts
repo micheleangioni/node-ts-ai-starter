@@ -1,4 +1,4 @@
-import Cloudevent from 'cloudevents-sdk/v1';
+import {CloudEvent} from 'cloudevents';
 import {IDomainEvent} from '../domain/IDomainEvent';
 
 export type ApplicationErrorData = {
@@ -20,7 +20,7 @@ export type GroupedByAggregateEvents = {
 };
 
 export type GroupedByAggregateCloudevents = {
-  [aggregate: string]: Cloudevent[];
+  [aggregate: string]: CloudEvent[];
 };
 
 export type UserCreateData = {

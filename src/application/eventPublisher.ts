@@ -1,5 +1,6 @@
 import { CloudEventFactory } from '@micheleangioni/node-messagebrokers';
 import { IBrokerInterface } from '@micheleangioni/node-messagebrokers';
+import { CloudEvent } from 'cloudevents';
 import { IDomainEvent } from '../domain/IDomainEvent';
 import ILogger from '../infra/logger/ILogger';
 import { GroupedByAggregateCloudevents, GroupedByAggregateEvents } from './declarations';
@@ -64,7 +65,7 @@ export default class EventPublisher {
     }
   }
 
-  private convertDomainEventToCloudEvent(source: string, event: IDomainEvent): any {
+  private convertDomainEventToCloudEvent(source: string, event: IDomainEvent): CloudEvent {
     return CloudEventFactory.createV1(event.getEventAggregate(), event.getEventName(), source, event.getEventData());
   }
 }

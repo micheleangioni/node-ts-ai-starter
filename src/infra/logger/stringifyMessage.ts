@@ -3,7 +3,7 @@ import ILogger from './ILogger';
 const stringifyMessageProperties = (message: any, level: keyof ILogger): string => {
   return JSON.stringify(Object.getOwnPropertyNames(message)
     .reduce((plainObject, key) => {
-      plainObject[key] = message[key];
+      plainObject[key] = message[key] as unknown;
 
       return plainObject;
     }, { level } as { [key: string]: any }));
@@ -16,9 +16,11 @@ const stringifyNonStackedErrorMessage = (message: any, level: keyof ILogger): st
 
   if (typeof message === 'string') {
     try {
-      const parsedMessage = JSON.parse(message);
+      const parsedMessage = JSON.parse(message) as unknown;
 
-      return JSON.stringify({ ...parsedMessage, ...{ level } });
+      return typeof parsedMessage === 'object'
+        ? JSON.stringify({ ...parsedMessage, ...{ level } })
+        : JSON.stringify({ parsedMessage, ...{ level } });
     } catch (_) {
       return `level: ${level}, ${message}`;
     }
