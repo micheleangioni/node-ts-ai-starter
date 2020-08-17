@@ -11,12 +11,11 @@
     "sourceMap": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "es2019",
     "outDir": "build",
-    "rootDir": "./"
+    "rootDir": "./src"
   },
   "include": [
-    "copyStaticAssets.ts",
     "src/**/*.ts"
   ],
   "exclude": [

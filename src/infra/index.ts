@@ -1,6 +1,6 @@
 import brokerFactory from '@micheleangioni/node-messagebrokers';
 import { Application } from 'express';
-import config from '../../src/config';
+import config from '../config';
 import EventPublisher from '../application/eventPublisher';
 import Logger from './logger';
 import mongoose from './mongo';
