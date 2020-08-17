@@ -1,8 +1,8 @@
 import EventPublisher from '../../../src/application/eventPublisher';
 import UserService from '../../../src/application/user/userService';
-import {UserCreateData} from '../../../src/domain/user/declarations';
 import {UserCreated} from '../../../src/domain/user/events/UserCreated';
 import {cleanDatabase, seedDatabase, userRepo} from '../../seeding';
+import {UserCreateData} from '../../../src/application/declarations';
 
 jest.mock('../../../src/application/eventPublisher');
 

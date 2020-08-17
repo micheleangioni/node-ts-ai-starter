@@ -1,21 +1,13 @@
+import {Moment} from 'moment';
+
 export type UserDomainData = {
   email: string;
   password: string;
   username?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date | Moment;
+  updatedAt?: Date | Moment;
 };
 
 export type UserData = UserDomainData & {
   id: number | string;
-};
-
-export type UserCreateData = {
-  email: string;
-  password: string;
-  username?: string;
-};
-
-export type UserUpdateData = {
-  username?: string;
 };

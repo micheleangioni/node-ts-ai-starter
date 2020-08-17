@@ -1,16 +1,11 @@
 import moment from 'moment';
 import { Model, mongo } from 'mongoose';
-import { UserData } from '../../domain/user/declarations';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import { PersistedUserMongoData, ToBePersistedUserMongoData } from './declarations';
 
 class UserRepo implements IUserRepo {
-  protected userModel: Model<any>;
-
-  constructor(userModel: Model<any>) {
-    this.userModel = userModel;
-  }
+  constructor(private readonly userModel: Model<any>) {}
 
   /**
    * Create and return a new MongoDB id.
@@ -26,13 +21,13 @@ class UserRepo implements IUserRepo {
    *
    * @return Promise<User[]>
    */
-  public all(): Promise<User[]> {
-    return new Promise((resolve, reject) => {
-      this.userModel.find()
-        .lean()
-        .then((data: UserData[]) => resolve(data.map((userData: UserData) => new User(userData))))
-        .catch((error: any) => reject(error));
-    });
+  public async all(): Promise<User[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return (await this.userModel.find().lean() as PersistedUserMongoData[])
+      .map((userData: PersistedUserMongoData) => new User({
+        ...userData,
+        id: userData._id.toString(),
+      }));
   }
 
   /**
@@ -42,27 +37,21 @@ class UserRepo implements IUserRepo {
    * @param {string} userId
    * @return Promise<User|null>
    */
-  public findById(userId: string): Promise<User|null> {
-    return new Promise((resolve, reject) => {
-      this.userModel.findById(userId)
-        .lean()
-        .then((userData: UserData | null) => {
-          if (!userData) {
-            resolve(null);
+  public async findById(userId: string): Promise<User|null> {
+    try {
+      const userData = await this.userModel.findById(userId).lean() as PersistedUserMongoData | null;
 
-            return;
-          }
+      return userData && new User({
+        ...userData,
+        id: userData._id.toString(),
+      });
+    } catch(error) {
+      if (error.name === 'CastError') {
+        return null;
+      }
 
-          resolve(new User(userData));
-        })
-        .catch((error: any) => {
-          if (error.name === 'CastError') {
-            return resolve(null);
-          }
-
-          reject(error);
-        });
-    });
+      throw error;
+    }
   }
 
   /**
@@ -72,21 +61,21 @@ class UserRepo implements IUserRepo {
    * @param {string} email
    * @return Promise<User|null>
    */
-  public findByEmail(email: string): Promise<User|null> {
-    return new Promise((resolve, reject) => {
-      this.userModel.findOne({ email })
-        .lean()
-        .then((userData: UserData | null) => {
-          if (userData === null) {
-            resolve(null);
+  public async findByEmail(email: string): Promise<User|null> {
+    try {
+      const userData = await this.userModel.findOne({ email }).lean() as PersistedUserMongoData | null;
 
-            return;
-          }
+      return userData && new User({
+        ...userData,
+        id: userData._id.toString(),
+      });
+    } catch(error) {
+      if (error.name === 'CastError') {
+        return null;
+      }
 
-          resolve(new User(userData));
-        })
-        .catch((error: any) => reject(error));
-    });
+      throw error;
+    }
   }
 
   /**
@@ -96,21 +85,21 @@ class UserRepo implements IUserRepo {
    * @param {string} username
    * @return Promise<User|null>
    */
-  public findByUsername(username: string): Promise<User|null> {
-    return new Promise((resolve, reject) => {
-      this.userModel.findOne({ username })
-        .lean()
-        .then((userData: UserData | null) => {
-          if (userData === null) {
-            resolve(null);
+  public async findByUsername(username: string): Promise<User|null> {
+    try {
+      const userData = await this.userModel.findOne({ username }).lean() as PersistedUserMongoData | null;
 
-            return;
-          }
+      return userData && new User({
+        ...userData,
+        id: userData._id.toString(),
+      });
+    } catch(error) {
+      if (error.name === 'CastError') {
+        return null;
+      }
 
-          resolve(new User(userData));
-        })
-        .catch((error: any) => reject(error));
-    });
+      throw error;
+    }
   }
 
   /**
@@ -118,12 +107,8 @@ class UserRepo implements IUserRepo {
    *
    * @return Promise<number>
    */
-  public count(): Promise<number> {
-    return new Promise((resolve, reject) => {
-      this.userModel.count({})
-        .then((count: number) => resolve(count))
-        .catch((error: any) => reject(error));
-    });
+  public async count(): Promise<number> {
+    return this.userModel.count({});
   }
 
   /**
@@ -132,7 +117,7 @@ class UserRepo implements IUserRepo {
    * @param {User} user
    * @return Promise<User>
    */
-  public persist(user: User): Promise<User> {
+  public async persist(user: User): Promise<User> {
     const userData: ToBePersistedUserMongoData = {
       _id: user.getId().toString(),
       email: user.getEmail(),
@@ -143,16 +128,14 @@ class UserRepo implements IUserRepo {
       userData.username = user.getUsername();
     }
 
-    return new Promise((resolve, reject) => {
-      this.userModel.findByIdAndUpdate(user.getId().toString(), userData, { new: true, upsert: true })
-        .lean()
-        .then((userPersistedData: PersistedUserMongoData) => {
-          user.updateDates(moment(userPersistedData.createdAt));
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      user.getId().toString(),
+      userData,
+      { new: true, upsert: true }).lean() as PersistedUserMongoData;
 
-          resolve(user);
-        })
-        .catch((error: any) => reject(error));
-    });
+    user.updateDates(moment(updatedUser.createdAt));
+
+    return user;
   }
 }
 

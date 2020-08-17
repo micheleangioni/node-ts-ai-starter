@@ -22,3 +22,9 @@ export type GroupedByAggregateEvents = {
 export type GroupedByAggregateCloudevents = {
   [aggregate: string]: Cloudevent[];
 };
+
+export type UserCreateData = {
+  email: string;
+  password: string;
+  username?: string;
+};

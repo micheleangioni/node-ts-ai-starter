@@ -1,8 +1,7 @@
-import { UserCreateData } from '../../domain/user/declarations';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import ApplicationError from '../ApplicationError';
-import { ErrorCodes } from '../declarations';
+import { ErrorCodes, UserCreateData } from '../declarations';
 import EventPublisher from '../eventPublisher';
 
 export default class UserService {
