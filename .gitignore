@@ -16,6 +16,7 @@ build
 *.launch
 .settings/
 *.sublime-workspace
+.vscode
 
 # Linux
 *~
