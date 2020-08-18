@@ -64,7 +64,7 @@
     "moment": "^2.27.0",
     "mongoose": "^5.10.0",
     "mysql2": "^2.1.0",
-    "sequelize": "^5.21.5",
+    "sequelize": "^6.3.4",
     "sequelize-cli": "^5.5.1",
     "umzug": "^2.3.0",
     "validator": "^13.1.1"
