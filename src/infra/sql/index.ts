@@ -10,7 +10,7 @@ const SQL_NAME = process.env.SQL_NAME
 
 export default () => new Sequelize(
   SQL_NAME,
-  `${process.env.SQL_USERNAME || ''}`,
+  `${process.env.SQL_USERNAME || 'root'}`,
   `${process.env.SQL_PASSWORD || ''}`,
   {
     dialect: (sqlDialect as SqlDialect),
