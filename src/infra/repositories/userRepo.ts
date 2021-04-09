@@ -45,7 +45,7 @@ class UserRepo implements IUserRepo {
         ...userData,
         id: userData._id.toString(),
       });
-    } catch(error) {
+    } catch (error) {
       if (error.name === 'CastError') {
         return null;
       }
@@ -69,7 +69,7 @@ class UserRepo implements IUserRepo {
         ...userData,
         id: userData._id.toString(),
       });
-    } catch(error) {
+    } catch (error) {
       if (error.name === 'CastError') {
         return null;
       }
@@ -93,7 +93,7 @@ class UserRepo implements IUserRepo {
         ...userData,
         id: userData._id.toString(),
       });
-    } catch(error) {
+    } catch (error) {
       if (error.name === 'CastError') {
         return null;
       }

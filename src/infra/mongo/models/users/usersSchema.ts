@@ -4,8 +4,8 @@ export default (mongooseClient: typeof mongoose) => {
   const { Schema } = mongooseClient;
 
   return new Schema({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    username: { type: String, unique: true, sparse: true },
+    email: { required: true, type: String, unique: true },
+    password: { required: true, type: String },
+    username: { sparse: true, type: String, unique: true },
   }, { timestamps: true });
 };

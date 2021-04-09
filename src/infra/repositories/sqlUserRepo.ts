@@ -147,7 +147,7 @@ class SqlUserRepo implements IUserRepo {
           // Item already exists, so we update it
           UserModel
             .update(userData, { returning: true, where: { id: user.getId() } })
-            .then(([ _, [persistedUserData] ]) => {
+            .then(([_, [persistedUserData]]) => {
               user.updateDates(moment(persistedUserData.updatedAt));
               resolve(user);
             })

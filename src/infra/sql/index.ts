@@ -16,6 +16,8 @@ export default () => new Sequelize(
     dialect: (sqlDialect as SqlDialect),
     host: `${process.env.SQL_HOST || ''}`,
 
+    logging: false,
+
     pool: {
       acquire: 30000,
       idle: 10000,
@@ -25,6 +27,4 @@ export default () => new Sequelize(
 
     // SQLite only
     storage: path.join(__dirname, '../../../storage/db.sqlite'),
-
-    logging: false,
   });

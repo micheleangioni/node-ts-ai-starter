@@ -2,14 +2,14 @@ import { DataTypes, Sequelize } from 'sequelize';
 import User from './user';
 
 export const attributes = {
-  email: { type: DataTypes.STRING, allowNull: false },
+  email: { allowNull: false, type: DataTypes.STRING },
   id: {
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER.UNSIGNED,
   },
-  password: { type: DataTypes.STRING, allowNull: false },
-  username: { type: DataTypes.STRING, allowNull: true, defaultValue: null },
+  password: { allowNull: false, type: DataTypes.STRING },
+  username: { allowNull: true, defaultValue: null, type: DataTypes.STRING },
 };
 
 export const tableName = 'users';

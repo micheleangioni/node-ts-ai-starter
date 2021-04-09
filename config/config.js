@@ -4,8 +4,8 @@ const path = require('path');
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
 module.exports = {
-  dev: {
-    username: process.env.SQL_USERNAME,
+  development: {
+    username: process.env.SQL_USERNAME || 'root',
     password: process.env.SQL_PASSWORD,
     database: process.env.SQL_NAME
         ? `${process.env.SQL_NAME}`
