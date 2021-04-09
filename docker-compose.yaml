@@ -1,12 +1,24 @@
 version: '3.5'
 services:
-  mongo:
+  mysql-node-ts:
+    image: mysql:8.0.23
+    volumes:
+      - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
+    container_name: mysql-node-ts
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: mylorry-dispatcher
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  mongo-node-ts:
     container_name: mongo
     image: mongo:latest
     ports:
       - 27017:27017
 
-  zookeeper:
+  zookeeper-node-ts:
     image: zookeeper
     restart: always
     hostname: zookeeper
@@ -16,10 +28,10 @@ services:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
 
-  kafka-shift-planner:
+  kafka-node-ts:
     image: 'wurstmeister/kafka'
     depends_on:
-      - zookeeper
+      - zookeeper-node-ts
     ports:
       - '9092:9092'
     environment:
