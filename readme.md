@@ -16,7 +16,7 @@ It comes with the following features configured out of the box:
 - dotenv to handle environment variables
 - MongoDB integration
 - MySQL / SqLite / Postgres / MsSQL integration
-- Domain Event via Kafka Message Broker
+- Domain Events via Kafka Message Broker
 - Testing through Jest
 
 ## Installation
@@ -88,6 +88,7 @@ The following events are emitted by the Application:
   createdAt: <string>,
   email: <string>,
   username: <string | undefined>
+}
 ```
 
 ## Testing

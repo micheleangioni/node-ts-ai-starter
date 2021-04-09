@@ -1,8 +1,8 @@
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 
 export type UserCreatedData = {
   id: string;
-  createdAt: Moment;
+  createdAt: Dayjs;
   email: string;
   username?: string;
 };

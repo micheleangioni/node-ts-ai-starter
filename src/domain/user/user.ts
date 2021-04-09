@@ -1,4 +1,4 @@
-import moment, { Moment } from 'moment';
+import dayjs, { Dayjs } from 'dayjs';
 import { BaseEntity } from '../BaseEntity';
 import { IEntity } from '../declarations';
 import { UserData } from './declarations';
@@ -10,8 +10,8 @@ export default class User extends BaseEntity implements IEntity {
   private readonly email: string;
   private password: string;
   private username?: string;
-  private createdAt?: Moment;
-  private updatedAt?: Moment;
+  private createdAt?: Dayjs;
+  private updatedAt?: Dayjs;
 
   constructor({ id, createdAt, email, password, username, updatedAt }: UserData) {
     super();
@@ -25,11 +25,11 @@ export default class User extends BaseEntity implements IEntity {
     }
 
     if (createdAt) {
-      this.createdAt = moment(createdAt);
+      this.createdAt = dayjs(createdAt);
     }
 
     if (updatedAt) {
-      this.updatedAt = moment(updatedAt);
+      this.updatedAt = dayjs(updatedAt);
     }
   }
 
@@ -57,11 +57,11 @@ export default class User extends BaseEntity implements IEntity {
     this.username = username;
   }
 
-  public getCreatedAt(): Moment | undefined {
+  public getCreatedAt(): Dayjs | undefined {
     return this.createdAt;
   }
 
-  public getUpdatedAt(): Moment | undefined {
+  public getUpdatedAt(): Dayjs | undefined {
     return this.updatedAt;
   }
 
@@ -69,15 +69,15 @@ export default class User extends BaseEntity implements IEntity {
    * Update the createdAt and updatedAt keys.
    * If the createdAt key was not previously set, it means this is being persisted for the first time.
    *
-   * @param {Moment} date
+   * @param {Dayjs} date
    * @return void
    */
-  public updateDates(date: Moment) {
+  public updateDates(date: Dayjs) {
     if (!this.createdAt) {
       this.createdAt = date.clone();
 
       this.addDomainEvent(new UserCreated(User.AGGREGATE_NAME, {
-        createdAt: moment(date),
+        createdAt: dayjs(date),
         email: this.email,
         id: this.id.toString(),
         username: this.username,

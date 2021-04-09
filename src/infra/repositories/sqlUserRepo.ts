@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { UserData } from '../../domain/user/declarations';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
@@ -137,7 +137,7 @@ class SqlUserRepo implements IUserRepo {
 
             UserModel.create(userData)
               .then((persistedUserData) => {
-                user.updateDates(moment(persistedUserData.createdAt));
+                user.updateDates(dayjs(persistedUserData.createdAt));
 
                 resolve(new User(this.convertUserModelToUserData(persistedUserData)));
               })
@@ -148,7 +148,7 @@ class SqlUserRepo implements IUserRepo {
           UserModel
             .update(userData, { returning: true, where: { id: user.getId() } })
             .then(([_, [persistedUserData]]) => {
-              user.updateDates(moment(persistedUserData.updatedAt));
+              user.updateDates(dayjs(persistedUserData.updatedAt));
               resolve(user);
             })
             .catch((error: any) => reject(error));

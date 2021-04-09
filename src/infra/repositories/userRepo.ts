@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Model, mongo } from 'mongoose';
 import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
@@ -133,7 +133,7 @@ class UserRepo implements IUserRepo {
       userData,
       { new: true, upsert: true }).lean() as PersistedUserMongoData;
 
-    user.updateDates(moment(updatedUser.createdAt));
+    user.updateDates(dayjs(updatedUser.createdAt));
 
     return user;
   }
