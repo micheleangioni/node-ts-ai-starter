@@ -21,6 +21,7 @@ export default (app: express.Application, source: string) => {
   /**
    * Retrieve all Users.
    */
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   router.get('/', async (_req, res) => {
     let users;
 
@@ -40,6 +41,7 @@ export default (app: express.Application, source: string) => {
   /**
    * Create a new User.
    */
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   router.post('/', usersValidationNew, async (req, res) => {
     let user;
 
@@ -61,6 +63,7 @@ export default (app: express.Application, source: string) => {
   /**
    * Retrieve all Users.
    */
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   router.get('/sql', async (_req, res) => {
     let users;
 
