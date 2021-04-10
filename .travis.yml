@@ -9,7 +9,7 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS node_ts_starter_test;'
 
 install:
-  - docker-compose up -d
+  - docker-compose -f docker-compose-travis.yaml up -d
   - npm install
   - npm run migrate
 
