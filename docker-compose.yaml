@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.8'
 services:
   mysql-node-ts:
     image: mysql:8.0.23
@@ -19,9 +19,10 @@ services:
       - 27017:27017
 
   zookeeper-node-ts:
-    image: zookeeper
+    container_name: zookeeper-node-ts
+    image: zookeeper:3.5.5
     restart: always
-    hostname: zookeeper
+    hostname: zookeeper-node-ts
     ports:
       - 2181:2181
     environment:
@@ -29,11 +30,14 @@ services:
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
 
   kafka-node-ts:
+    container_name: kafka-node-ts
     image: 'wurstmeister/kafka'
     depends_on:
       - zookeeper-node-ts
     ports:
-      - '9092:9092'
+      - "9092:9092"
+    expose:
+      - "9093"
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-node-ts:2181
       KAFKA_ADVERTISED_HOST_NAME: localhost
