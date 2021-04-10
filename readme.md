@@ -12,12 +12,13 @@ Node TypeScript Starter is a starter kit for applications written in TypeScript 
 It comes with the following features configured out of the box:
 
 - DDD structure
-- server configuration with enabled CORS
+- Server configuration with enabled CORS
 - dotenv to handle environment variables
 - MongoDB integration
 - MySQL / SqLite / Postgres / MsSQL integration
-- Domain Events via Kafka Message Broker
+- Domain Events via [Apache Kafka](https://kafka.apache.org/)
 - Testing through Jest
+- Modern .eslintrc configuration
 
 ## Installation
 
