@@ -1,0 +1,56 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.22
+    - 14.14.24
+    - 14.14.25
+    - 14.14.26
+    - 14.14.28
+    - 14.14.30
+    - 14.14.31
+    - 14.14.32
+    - 14.14.33
+    - 14.14.34
+    - 14.14.35
+    - 14.14.36
+    - 14.14.37
+    - 15.0.0
+  - dependency-name: eslint
+    versions:
+    - 7.24.0
+  - dependency-name: helmet
+    versions:
+    - 4.4.1
+  - dependency-name: mongoose
+    versions:
+    - 5.11.14
+    - 5.11.15
+    - 5.11.16
+    - 5.11.17
+    - 5.11.18
+    - 5.11.19
+    - 5.12.0
+    - 5.12.1
+    - 5.12.2
+    - 5.12.3
+  - dependency-name: sequelize
+    versions:
+    - 6.5.0
+    - 6.5.1
+    - 6.6.1
+    - 6.6.2
+  - dependency-name: sqlite3
+    versions:
+    - 5.0.1
+    - 5.0.2
+  - dependency-name: "@types/cors"
+    versions:
+    - 2.8.10
+    - 2.8.9
