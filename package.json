@@ -47,7 +47,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@micheleangioni/node-messagebrokers": "^0.8.0",
+    "@micheleangioni/node-messagebrokers": "^0.9.4",
     "@types/express": "^4.17.11",
     "@types/helmet": "4.0.0",
     "@types/jsonwebtoken": "^8.5.1",
