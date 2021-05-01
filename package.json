@@ -72,7 +72,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.7",
     "@types/dotenv": "^8.2.0",
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^26.0.23",
     "@types/shelljs": "^0.8.8",
     "@types/supertest": "^2.0.11",
     "@types/validator": "^13.1.3",
