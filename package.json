@@ -62,7 +62,7 @@
     "express": "^4.17.1",
     "helmet": "^4.5.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.0",
+    "mongoose": "^5.12.7",
     "mysql2": "^2.2.5",
     "sequelize": "^5.22.4",
     "sequelize-cli": "^6.2.0",
