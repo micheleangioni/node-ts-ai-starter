@@ -1,7 +1,7 @@
 # Node TypeScript Starter
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/micheleangioni/node-ts-starter?color=stable&label=version)
-[![Build Status](https://api.travis-ci.org/micheleangioni/node-ts-starter.svg?branch=master)](https://travis-ci.org/micheleangioni/node-ts-starter)
+[![Build Status](https://github.com/micheleangioni/node-ts-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/micheleangioni/node-ts-starter/actions/workflows/ci.yml)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 > Starter kit application for projects using Express and TypeScript with MongoDB, SQL, Jest testing and much more configured out of the box.
