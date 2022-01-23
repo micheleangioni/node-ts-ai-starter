@@ -1,13 +1,14 @@
-import { Dayjs } from 'dayjs';
+export type Timestamps = {
+  createdAt?: Date;
+  updatedAt?: Date;
+};
 
 export type UserDomainData = {
   email: string;
   password: string;
   username?: string;
-  createdAt?: Date | Dayjs;
-  updatedAt?: Date | Dayjs;
 };
 
-export type UserData = UserDomainData & {
+export type UserData = UserDomainData & Timestamps & {
   id: number | string;
 };

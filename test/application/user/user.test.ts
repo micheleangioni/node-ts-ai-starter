@@ -19,29 +19,26 @@ describe('Test the User Application Service', () => {
 
   const userService = new UserService(userRepo, mockEventPublisher);
 
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     await cleanDatabase();
     await seedDatabase();
-    mockPublish.mockClear();
-    done();
   });
 
-  afterEach(async (done) => {
+  afterEach(async () => {
     await cleanDatabase();
-    done();
+    jest.resetAllMocks();
   });
 
   describe('Test getAll()', () => {
-    test('It correctly gets the Users', async (done) => {
+    test('It correctly gets the Users', async () => {
       const users = await userService.getAll();
 
       expect(users.length).toBe(2);
-      done();
     });
   });
 
   describe('Test createUser()', () => {
-    test('It correctly creates a User', async (done) => {
+    test('It correctly creates a User', async () => {
       const userData: UserCreateData = {
         email: 'test10@test.com',
         password: 'password',
@@ -59,10 +56,9 @@ describe('Test the User Application Service', () => {
         email: userData.email,
         username: userData.username,
       });
-      done();
     });
 
-    test('It gets a error if trying to add a User with already taken email', async (done) => {
+    test('It gets a error if trying to add a User with already taken email', async () => {
       const userData: UserCreateData = {
         email: 'test@test.com',
         password: 'password10',
@@ -71,7 +67,6 @@ describe('Test the User Application Service', () => {
 
       await expect(userService.createUser(userData, '/test')).rejects.toThrow();
       expect(mockPublish).toHaveBeenCalledTimes(0);
-      done();
     });
   });
 });

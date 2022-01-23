@@ -56,12 +56,12 @@ export default class UserService {
   public async createUser(data: UserCreateData, source: string): Promise<User> {
     const user = new User({ id: this.userRepo.nextIdentity(), ...data });
 
-    return this.persistUserAndEmitEvents(user, source);
+    return await this.persistUserAndEmitEvents(user, source);
   }
 
   private async persistUserAndEmitEvents(user: User, source: string): Promise<User> {
     const updatedUser = await this.userRepo.persist(user);
-    await this.sendApplicationEvents(source, user);
+    await this.sendApplicationEvents(source, updatedUser);
 
     return updatedUser;
   }

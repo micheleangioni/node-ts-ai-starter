@@ -11,6 +11,8 @@
     "sourceMap": true,
     "allowJs": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "useUnknownInCatchVariables": false,
     "target": "es2019",
     "outDir": "build",
     "rootDir": "./"

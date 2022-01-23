@@ -53,10 +53,6 @@ export default (app: express.Application) => {
     allowedHeaders: ['Authorization', 'Content-Type', 'X-Requested-With'],
     exposedHeaders: ['Authorization', 'Content-Type'],
   }));
-  app.options('*', cors({
-    allowedHeaders: ['Authorization', 'Content-Type', 'X-Requested-With'],
-    exposedHeaders: ['Authorization', 'Content-Type'],
-  }));
 
   process.on('uncaughtException', (err) => {
     // tslint:disable-next-line:no-console

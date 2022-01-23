@@ -5,7 +5,7 @@ import User from '../../domain/user/user';
 import { PersistedUserMongoData, ToBePersistedUserMongoData } from './declarations';
 
 class UserRepo implements IUserRepo {
-  constructor(private readonly userModel: Model<any>) {}
+  constructor(private readonly userModel: Model<PersistedUserMongoData>) {}
 
   /**
    * Create and return a new MongoDB id.
@@ -39,7 +39,7 @@ class UserRepo implements IUserRepo {
    */
   public async findById(userId: string): Promise<User|null> {
     try {
-      const userData = await this.userModel.findById(userId).lean() as PersistedUserMongoData | null;
+      const userData = await this.userModel.findById(userId).lean();
 
       return userData && new User({
         ...userData,
@@ -63,7 +63,7 @@ class UserRepo implements IUserRepo {
    */
   public async findByEmail(email: string): Promise<User|null> {
     try {
-      const userData = await this.userModel.findOne({ email }).lean() as PersistedUserMongoData | null;
+      const userData = await this.userModel.findOne({ email }).lean();
 
       return userData && new User({
         ...userData,
@@ -87,7 +87,7 @@ class UserRepo implements IUserRepo {
    */
   public async findByUsername(username: string): Promise<User|null> {
     try {
-      const userData = await this.userModel.findOne({ username }).lean() as PersistedUserMongoData | null;
+      const userData = await this.userModel.findOne({ username }).lean();
 
       return userData && new User({
         ...userData,
@@ -118,24 +118,25 @@ class UserRepo implements IUserRepo {
    * @return Promise<User>
    */
   public async persist(user: User): Promise<User> {
-    const userData: ToBePersistedUserMongoData = {
-      _id: user.getId().toString(),
-      email: user.getEmail(),
-      password: user.getPassword(),
-    };
-
-    if (user.getUsername()) {
-      userData.username = user.getUsername();
-    }
+    const userData = this.getDataToBePersisted(user);
 
     const updatedUser = await this.userModel.findByIdAndUpdate(
       user.getId().toString(),
       userData,
-      { new: true, upsert: true }).lean() as PersistedUserMongoData;
+      { new: true, upsert: true }).lean();
 
-    user.updateDates(dayjs(updatedUser.createdAt));
+    user.updateDates(dayjs(updatedUser.updatedAt));
 
     return user;
+  }
+
+  private getDataToBePersisted(user: User): ToBePersistedUserMongoData {
+    return {
+      _id: user.getId().toString(),
+      email: user.getEmail(),
+      password: user.getPassword(),
+      ...(user.getUsername() && { username: user.getUsername() }),
+    };
   }
 }
 
