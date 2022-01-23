@@ -19,7 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Run docker-compose
-        run: docker-compose -f dev/docker-compose.yaml up -d
+        run: docker-compose -f docker-compose.yaml up -d
 
       - name: Sleep for 60 seconds
         run: sleep 60s
