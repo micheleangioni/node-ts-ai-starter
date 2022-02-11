@@ -4,7 +4,7 @@
   "description": "Starter kit for Node.js application written in TypeScript",
   "main": "build/server.js",
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node build/src/server.js",
     "serve": "npm start",
     "build": "npm run lint && rm -rf ./build && tsc --strictNullChecks && npm run copy-static-assets",
     "debug": "node --inspect=3001 -r ts-node/register src/server.ts",
