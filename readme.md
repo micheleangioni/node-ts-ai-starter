@@ -98,6 +98,17 @@ Run `npm test` to run the tests or `npm run watch-test` to run the tests with th
 
 The tests will use both a MongoDB and an in-memory SqLite database, against which migrations and seedings will be run. 
 
+## Running the Application
+
+### Docker
+
+Node TypeScript Starter comes with a Dockerfile out of the box. 
+In order to locally run the Container, just make sure to have Docker installed and run:
+
+- (Optional) `docker-compose up` (or `TMPDIR=/private$TMPDIR docker-compose up` on MacOS) to run the docker-compose with the needed dependencies
+- `docker build -t node-ts-start .` to build the Container
+- `docker run -dp 3010:3010 node-ts-start` to run it. The application will be served on the port 3010
+
 ## Going Serverless
 
 If you are interested in Serverless architecture, take a look at [Serverless Node TypeScript](https://github.com/micheleangioni/sls-node-ts),
