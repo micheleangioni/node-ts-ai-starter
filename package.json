@@ -63,7 +63,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.14",
     "mysql2": "^2.3.3",
-    "sequelize": "^5.22.5",
+    "sequelize": "^6.25.0",
     "sequelize-cli": "^6.4.1",
     "umzug": "^2.3.0",
     "validator": "^13.7.0"
