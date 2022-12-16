@@ -48,7 +48,7 @@
   "license": "MIT",
   "dependencies": {
     "@micheleangioni/node-messagebrokers": "^0.9.4",
-    "@types/express": "^4.17.13",
+    "@types/express": "^4.17.15",
     "@types/helmet": "4.0.0",
     "@types/jsonwebtoken": "^8.5.7",
     "@types/mongoose": "^5.11.97",
@@ -58,7 +58,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.10.7",
     "dotenv": "^8.2.0",
-    "express": "^4.17.2",
+    "express": "^4.18.2",
     "helmet": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.14",
