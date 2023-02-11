@@ -81,7 +81,7 @@
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-sort-class-members": "^1.14.1",
     "jest": "^27.4.7",
-    "nodemon": "^2.0.15",
+    "nodemon": "^2.0.20",
     "shelljs": "^0.8.5",
     "sqlite3": "^5.0.2",
     "supertest": "^6.2.2",
