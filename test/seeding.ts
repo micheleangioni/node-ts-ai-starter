@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import path from 'path';
-import SequelizeLibrary from 'sequelize';
-import Umzug from 'umzug';
+import { Umzug, SequelizeStorage } from 'umzug';
 import userSchemaCreator from '../src/infra/mongo/models/users/usersSchema';
 import userRepoCreator from '../src/infra/repositories/userRepo';
 import Sequelize from '../src/infra/sql';
@@ -23,19 +21,10 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
 const sequelize = Sequelize();
 
 const umzug = new Umzug({
-  storage: 'sequelize',
-
-  storageOptions: {
-    sequelize,
-  },
-
-  migrations: {
-    params: [
-      sequelize.getQueryInterface(),
-      SequelizeLibrary,
-    ],
-    path: path.join(__dirname, '../migrations'),
-  },
+  context: sequelize.getQueryInterface(),
+  logger: console,
+  migrations: { glob: 'migrations/*.js' },
+  storage: new SequelizeStorage({ sequelize }),
 });
 
 // Connect to MongoDB using Mongoose and attach the models to it
