@@ -3,7 +3,9 @@
   "include": [
     "copyStaticAssets.ts",
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+
+    ".eslintrc.js"
   ],
   "exclude": [
     "build",
