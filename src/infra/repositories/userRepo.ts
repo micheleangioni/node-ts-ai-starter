@@ -13,7 +13,7 @@ class UserRepo implements IUserRepo {
    * @return string
    */
   public nextIdentity(): string {
-    return new mongo.ObjectID().toString();
+    return new mongo.ObjectId().toString();
   }
 
   /**

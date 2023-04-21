@@ -12,7 +12,7 @@ const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
   : `mongodb://localhost:27017/node-ts-starter_${process.env.NODE_ENV}`;
 
-mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoUri, {})
   .catch((e: any) => {
     throw e;
   });
@@ -50,6 +50,6 @@ export const seedDatabase = async () => {
 };
 
 export const cleanDatabase = async () => {
-  await userModel.remove({});
+  await userModel.deleteMany({});
   await umzug.down();
 };
