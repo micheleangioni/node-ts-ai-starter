@@ -7,6 +7,9 @@ import User from '../src/infra/sql/models/users/user';
 import { attributes, tableName } from '../src/infra/sql/models/users/usersSchema';
 import usersData from './testData/users.json';
 
+process.env.OPENAI_ORGANIZATION_ID =  'organizationId';
+process.env.OPENAI_API_KEY = 'key';
+
 // Connect to mongoose
 const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
