@@ -6,6 +6,8 @@
 
 > Starter kit application for projects using Express and TypeScript with MongoDB, SQL, Jest testing and much more configured out of the box.
 
+> An optionally-removable OpenAI-powered Chat endpoint powered by local memory is also available out of the box.  
+
 ## Introduction
 
 Node TypeScript Starter is a starter kit for applications written in TypeScript and using Express as web framework. 
@@ -19,6 +21,7 @@ It comes with the following features configured out of the box:
 - Domain Events via [Apache Kafka](https://kafka.apache.org/)
 - Testing through Jest
 - Modern .eslintrc configuration
+- Chat endpoint powered by OpenAI and MemoryBuffer
 
 ## Installation
 
@@ -36,6 +39,11 @@ It comes with the following features configured out of the box:
 
     Migrations can be undone by running `migrate-revert` or `migrate-revert-all`.
 
+5. (optional) If you want to remove the endpoint and logic for the AI-powered chat, follow this steps:
+
+    - Run `npm run clear-ai`
+    - Delete the unused lines in src/api/index.ts 
+
 ## Running the Application
 
 First compile the application via `npm run build`.
@@ -46,13 +54,38 @@ Then simply run `npm start` to run it.
 
 Run `npm run debug` to debug the application or `npm run watch` to run the debugger with Nodemon.
 
-Take a look at [this article](https://samkirkiles.svbtle.com/webstorm-node-js-debugging-with-nodemon) to integrate the debugger into WebStorm.
-
 ## Building the application
 
 Run `npm run build` to build the application.
 
 ## Configuration and Features
+
+### OpenAI-powered Chat
+
+node-ts-starter comes with an OpenAI-powered chat set up out of the box. 
+In order to use it, please obtain an AI key from https://platform.openai.com/account/api-keys.
+
+The API endpoint identifies incoming requests via the ip address and context is kept in memory. 
+Therefore, rebooting the application will remove all existing memory. 
+
+Configuration
+
+`OPENAI_ORGANIZATION_ID`: The organization id used by OpenAI
+`OPENAI_API_KEY`: Your API key
+
+Endpoints:
+
+ - POST `/api/chat/message`
+    ```
+   // Body
+   {
+     message: <string>; // The message sent to the chat
+   }
+   // Response
+   {
+     data: <string>; // The message message
+   }
+    ```
 
 ### Domain Events
 
