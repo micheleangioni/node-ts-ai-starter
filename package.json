@@ -10,6 +10,7 @@
     "debug": "node --inspect=3001 -r ts-node/register src/server.ts",
     "watch": "nodemon --inspect=3001 src/server.ts",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\"",
+    "clear-ai": "ts-node clearAI.ts",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "test": "jest --runInBand --forceExit --verbose",
     "watch-test": "jest --runInBand --verbose --watchAll",
