@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "include": [
+    "clearAI.ts",
     "copyStaticAssets.ts",
     "src/**/*.ts",
     "test/**/*.ts",
