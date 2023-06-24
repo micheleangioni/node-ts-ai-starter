@@ -10,4 +10,17 @@ export default {
       },
     },
   },
+
+  llm: {
+    fileLoading: {
+      chunkOverlap: 50,
+      chunkSize: 1000
+    },
+
+    vectorStore: {
+      hnswlib: {
+        folder: 'storage',
+      },
+    },
+  },
 };
