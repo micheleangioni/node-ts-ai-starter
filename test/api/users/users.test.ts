@@ -1,9 +1,9 @@
 import express from 'express';
 import supertest from 'supertest';
-import appModule from '../../src/app';
-import EventPublisher from '../../src/application/eventPublisher';
-import {UserCreated} from '../../src/domain/user/events/UserCreated';
-import {cleanDatabase, seedDatabase} from '../seeding';
+import appModule from '../../../src/app';
+import EventPublisher from '../../../src/application/eventPublisher';
+import {UserCreated} from '../../../src/domain/user/events/UserCreated';
+import {cleanDatabase, seedDatabase} from '../../seeding';
 
 jest.mock('../../src/application/eventPublisher');
 
