@@ -5,7 +5,7 @@ import EventPublisher from '../../../src/application/eventPublisher';
 import {UserCreated} from '../../../src/domain/user/events/UserCreated';
 import {cleanDatabase, seedDatabase} from '../../seeding';
 
-jest.mock('../../src/application/eventPublisher');
+jest.mock('../../../src/application/eventPublisher');
 
 const mockPublish = jest.fn();
 
