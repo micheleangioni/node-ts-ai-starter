@@ -1,5 +1,5 @@
-import ChatConversation from '../../../src/application/chat/chatConversation';
-import conversationHolder from '../../../src/application/chat/conversationHolder';
+import ChatConversation from '../../../src/application/llm/chatConversation';
+import conversationHolder from '../../../src/application/llm/conversationHolder';
 
 describe('ConversationHolder', () => {
   let holder = conversationHolder();
