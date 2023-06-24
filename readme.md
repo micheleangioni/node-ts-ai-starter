@@ -70,10 +70,14 @@ Therefore, rebooting the application will remove all existing memory.
 
 Configuration
 
-`OPENAI_ORGANIZATION_ID`: The organization id used by OpenAI
-`OPENAI_API_KEY`: Your API key
+- `CHAT_MEMORY_PERSISTENCE`: How the chat discussions are persisted. Accepted values:
+  - `memory`
+- `OPENAI_ORGANIZATION_ID`: The organization id used by OpenAI
+- `OPENAI_API_KEY`: Your API key
+- `VECTOR_STORE`: Vector store to be used. Accepted values:
+  - `hnswlib` (default)
 
-Endpoints:
+- Endpoints:
 
  - POST `/api/chat/message`
     ```
