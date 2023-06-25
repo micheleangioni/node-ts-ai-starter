@@ -40,7 +40,7 @@ describe('Test the llm API', () => {
   //   const filePath = `${__dirname}/../../testData/shortText.txt`;
   //
   //   const {body, statusCode} = await supertest(app)
-  //     .post('/api/llm/search/load')
+  //     .post('/api/llm/search/load-document')
   //     .attach('file', filePath, {
   //       contentType: 'text/plain',
   //     });
