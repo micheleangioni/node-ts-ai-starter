@@ -90,7 +90,7 @@ export default (app: express.Application, _source: string) => {
   // <--- SEARCH ENDPOINTS --- >
 
   router.post(
-    '/search/load',
+    '/search/load-document',
     upload.single('file'),
     async (req, res) => {
       if (!req.file) {

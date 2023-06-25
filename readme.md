@@ -94,9 +94,9 @@ Configuration
     This endpoint allows you to chat with an LLM. It will keep track of your conversation history,
     using the IP Address of the incoming request as user identified.
 
-  - POST `/api/llm/search/load`
+  - POST `/api/llm/search/load-document`
     ```
-     // Body (form-data_
+     // Body (form-data)
      {
        file // File to be ingested
      }
