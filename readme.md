@@ -79,7 +79,7 @@ Configuration
 
 - Endpoints:
 
- - POST `/api/chat/message`
+ - POST `/api/llm/chat/message`
     ```
    // Body
    {
@@ -90,6 +90,23 @@ Configuration
      data: <string>; // The message message
    }
     ```
+   
+    This endpoint allows you to chat with an LLM. It will keep track of your conversation history,
+    using the IP Address of the incoming request as user identified.
+
+  - POST `/api/llm/search/load`
+    ```
+     // Body (form-data_
+     {
+       file // File to be ingested
+     }
+     // Response
+     {
+       data: <string>; // A confirmation message that the file has been successfully loaded
+     }
+      ```
+
+     This endpoint allows ingesting an input file to allow for future searches.
 
 ### Domain Events
 
