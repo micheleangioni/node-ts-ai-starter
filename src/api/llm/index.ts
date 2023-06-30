@@ -15,6 +15,8 @@ import {
   LoadFileIntoVectorStoreCommandHandler,
 } from '../../application/llm/eventHandlers/loadFileIntoVectorStoreCommandHandler';
 import {LoadFileIntoVectorStoreCommand} from '../../application/llm/commands/loadFileIntoVectorStoreCommand';
+import {QueryDocsQueryHandler} from '../../application/llm/eventHandlers/queryDocsQueryHandler';
+import {QueryDocsQuery} from '../../application/llm/queries/queryDocsQuery';
 
 const router = express.Router();
 const storage = multer.memoryStorage();
@@ -41,7 +43,7 @@ const loadVectorStore = async () => {
       try {
         vectorStore = await HNSWLib.load(vectorStoreFolder, new OpenAIEmbeddings());
       } catch (e) {
-        vectorStore = await HNSWLib.fromTexts([], [], new OpenAIEmbeddings());
+        vectorStore = await HNSWLib.fromTexts(['Initialising'], [], new OpenAIEmbeddings());
         await vectorStore.save(vectorStoreFolder);
       }
 
@@ -88,6 +90,33 @@ export default (app: express.Application, _source: string) => {
   });
 
   // <--- SEARCH ENDPOINTS --- >
+
+  router.get(
+    '/search/documents',
+    async (req, res) => {
+      if (typeof req.query.query !== 'string') {
+        return errorHandler(new ApplicationError({
+          code: ErrorCodes.INVALID_DATA,
+          error: 'Query parameter `query` not provided',
+          status: 412,
+        }), res, logger);
+      }
+
+      const loadedVectorStore = await loadVectorStore();
+
+      try {
+        const response = await (new QueryDocsQueryHandler({vectorStore: loadedVectorStore}))
+          .handle(new QueryDocsQuery({
+            query: req.query.query,
+          }));
+
+        res.json({
+          data: response,
+        });
+      } catch (err) {
+        return errorHandler(err, res, logger);
+      }
+    });
 
   router.post(
     '/search/load-document',
