@@ -13,8 +13,8 @@ export default {
 
   llm: {
     fileLoading: {
-      chunkOverlap: 50,
-      chunkSize: 1000
+      chunkOverlap: 10,
+      chunkSize: 100
     },
 
     vectorStore: {
