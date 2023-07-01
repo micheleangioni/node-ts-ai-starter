@@ -2,6 +2,9 @@ import {OpenAI} from 'langchain/llms/openai';
 import {BufferMemory} from 'langchain/memory';
 import {PromptTemplate} from 'langchain/prompts';
 import {LLMChain} from 'langchain/chains';
+import config from '../../config';
+
+const {defaultContext, defaultMaxTokens, defaultTemperature} = config.llm.chat;
 
 export default ({context, maxTokens, temperature, verbose}: {
   context?: string;
@@ -11,24 +14,26 @@ export default ({context, maxTokens, temperature, verbose}: {
   verbose?: boolean;
 }) => {
   const model = new OpenAI({
-    maxTokens: maxTokens?? 100,
+    maxTokens: maxTokens?? defaultMaxTokens,
     modelName: 'gpt-3.5-turbo',
     streaming: false,
-    temperature: temperature ?? 0.2,
+    temperature: temperature ?? defaultTemperature,
   });
 
-  // Instantiate the BufferMemory passing the memory key for storing state
-  const memory = new BufferMemory({ memoryKey: 'chat_history' });
+  // Instantiate the Chat Memory for storing state
+  // LangChain seems not to expose a proper interface for this :/
+  let memory: any;
+
+  switch (process.env.CHAT_MEMORY_PERSISTENCE) {
+    case 'memory':
+    default:
+      memory = new BufferMemory({ memoryKey: 'chat_history' });
+  }
 
   // Create the template. The template is actually a "parameterized prompt".
   // A "parameterized prompt" is a prompt in which the input parameter names are used
   // and the parameter values are supplied from external input
-  const chatContext = context ?? `
-    The following is a friendly conversation between a human and an AI. 
-    The AI is talkative and provides lots of specific details from its context. 
-    If the AI does not know the answer to a question, it truthfully says it does not know. The AI simply.
-    Every time you are prompted, simply complete the prompt with a single AI answer.
-    `;
+  const chatContext = context ?? defaultContext;
 
   const template = chatContext +
     `Current conversation:
