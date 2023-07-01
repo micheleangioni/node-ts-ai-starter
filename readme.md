@@ -68,7 +68,7 @@ In order to use it, please obtain an AI key from https://platform.openai.com/acc
 The API endpoint identifies incoming requests via the ip address and context is kept in memory. 
 Therefore, rebooting the application will remove all existing memory. 
 
-Configuration
+**Infrastructure Configuration**
 
 - `CHAT_MEMORY_PERSISTENCE`: How the chat discussions are persisted. Accepted values:
   - `memory`
@@ -77,7 +77,11 @@ Configuration
 - `VECTOR_STORE`: Vector store to be used. Accepted values:
   - `hnswlib` (default)
 
-- Endpoints:
+**Behaviour Configurations**
+
+Check the `/src/config/index.ts` file to customise the behaviour of the LLM.
+
+**Endpoints**
 
  - POST `/api/llm/chat/message`
     ```
@@ -107,6 +111,20 @@ Configuration
       ```
 
      This endpoint allows ingesting an input file to allow for future searches.
+
+  - GET `/api/llm/search/documents`
+    ```
+     // Query Params
+     {
+       query: <string> Query to be sent to search in the documents
+     }
+     // Response
+     {
+       data: <string>; // The response to the input query, which the relevant information, if found.
+     }
+      ```
+
+     This endpoint allows to directly query the documents previously loaded via the POST endpoints. 
 
 ### Domain Events
 
