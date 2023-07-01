@@ -1,20 +1,19 @@
-import {SaveableVectorStore} from 'langchain/dist/vectorstores/base';
 import {Document} from 'langchain/document';
 import {CharacterTextSplitter} from 'langchain/text_splitter';
 import {LoadFileIntoVectorStoreCommand} from '../commands/loadFileIntoVectorStoreCommand';
 import config from '../../../config';
 import IHandler from '../../IHandler';
+import {addDocumentsToVectorStore, loadVectorStore, persistVectorStore} from '../../../infra/llm/vectorStore';
 
 const {chunkOverlap, chunkSize} = config.llm.fileLoading;
 
 export class LoadFileIntoVectorStoreCommandHandler implements IHandler {
-  constructor(
-    private readonly vectorStore: SaveableVectorStore,
-    private readonly folder: string,
-  ) {}
-
   async handle({ buffer, fileName, mimetype }: LoadFileIntoVectorStoreCommand): Promise<void> {
+    // Ideally the Vector Store should be loaded at infra level in src/infra/index.ts
+    await loadVectorStore();
+
     // TODO Missing: check whether a previously added file is trying to be added
+    // A uploaded file db is needed
 
     // Split input document into chunks
     const textSplitter = new CharacterTextSplitter({
@@ -36,9 +35,9 @@ export class LoadFileIntoVectorStoreCommandHandler implements IHandler {
     });
 
     // Save the docs into the vector store
-    await this.vectorStore.addDocuments(docs);
+    await addDocumentsToVectorStore(docs);
 
     // Persist is again
-    await this.vectorStore.save(this.folder);
+    await persistVectorStore();
   }
 }
