@@ -1,15 +1,10 @@
 import * as crypto from 'crypto';
 import express from 'express';
 import multer from 'multer';
-import {SaveableVectorStore} from 'langchain/dist/vectorstores/base';
-import {OpenAIEmbeddings} from 'langchain/embeddings/openai';
-import {HNSWLib} from 'langchain/vectorstores/hnswlib';
-import ILogger from '../../infra/logger/ILogger';
 import errorHandler from '../errorHandler';
 import {SendMessageCommandHandler} from '../../application/llm/eventHandlers/sendMessageCommandHandler';
 import {SendMessageCommand} from '../../application/llm/commands/sendMessageCommand';
 import ApplicationError from '../../application/ApplicationError';
-import config from '../../config';
 import {ErrorCodes} from '../../application/declarations';
 import {
   LoadFileIntoVectorStoreCommandHandler,
@@ -17,6 +12,8 @@ import {
 import {LoadFileIntoVectorStoreCommand} from '../../application/llm/commands/loadFileIntoVectorStoreCommand';
 import {QueryDocsQueryHandler} from '../../application/llm/eventHandlers/queryDocsQueryHandler';
 import {QueryDocsQuery} from '../../application/llm/queries/queryDocsQuery';
+import {loadVectorStore} from '../../infra/llm/vectorStore';
+import ILogger from '../../infra/logger/ILogger';
 
 const router = express.Router();
 const storage = multer.memoryStorage();
@@ -24,34 +21,6 @@ const upload = multer({storage});
 
 const generateRandomString = (length: number) =>
   [...crypto.getRandomValues(new Uint8Array(length))].map(x => String.fromCharCode(x)).join('');
-
-let vectorStore: SaveableVectorStore;
-const vectorStoreFolder = `./${config.llm.vectorStore.hnswlib.folder}`;
-
-// Setting up the Vector Store persistence should happen in the infrastructure layer
-// Being done here to simplify the removal of the AI code in case it's not needed in a new project
-// It might/should be improved later
-const loadVectorStore = async () => {
-  if (vectorStore) {
-    return vectorStore;
-  }
-
-  switch (process.env.VECTOR_STORE?.toString()) {
-    case 'hnswlib':
-    default:
-
-      try {
-        vectorStore = await HNSWLib.load(vectorStoreFolder, new OpenAIEmbeddings());
-      } catch (e) {
-        vectorStore = await HNSWLib.fromTexts(['Initialising'], [], new OpenAIEmbeddings());
-        await vectorStore.save(vectorStoreFolder);
-      }
-
-      break;
-  }
-
-  return vectorStore;
-};
 
 export default (app: express.Application, _source: string) => {
   const logger = app.get('logger') as ILogger;
@@ -130,10 +99,8 @@ export default (app: express.Application, _source: string) => {
         }), res, logger);
       }
 
-      const loadedVectorStore = await loadVectorStore();
-
       try {
-        await (new LoadFileIntoVectorStoreCommandHandler(loadedVectorStore, vectorStoreFolder))
+        await (new LoadFileIntoVectorStoreCommandHandler())
           .handle(new LoadFileIntoVectorStoreCommand({
             buffer: req.file.buffer,
             fileName: req.file.filename,
