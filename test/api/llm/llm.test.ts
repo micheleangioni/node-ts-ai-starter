@@ -3,10 +3,16 @@ import supertest from 'supertest';
 import appModule from '../../../src/app';
 import EventPublisher from '../../../src/application/eventPublisher';
 import {cleanDatabase, seedDatabase} from '../../seeding';
+import {loadVectorStore} from '../../../src/infra/llm/vectorStore';
+import {MemoryVectorStore} from 'langchain/vectorstores/memory';
+
+process.env.VECTOR_STORE = 'memory';
 
 jest.mock('../../../src/application/eventPublisher');
+jest.mock('../../../src/infra/llm/vectorStore');
 
 const mockPublish = jest.fn();
+const mockLoadVectorStore = jest.mocked(loadVectorStore);
 
 // @ts-ignore
 EventPublisher.mockImplementation(() => {
@@ -36,7 +42,9 @@ describe('Test the llm API', () => {
   });
 
   // This tests fails because JEST causes a Segmentation Fault when the Vector Store tries to save the db to file
-  test('(POST)/ should create and return a new user', async () => {
+  test('(POST)/search/load-document should create and return a new user', async () => {
+    mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<MemoryVectorStore>);
+
     const filePath = `${__dirname}/../../testData/shortText.txt`;
 
     const {body, statusCode} = await supertest(app)
@@ -46,7 +54,8 @@ describe('Test the llm API', () => {
       });
 
     expect(statusCode).toBe(200);
-    expect(body.data).toMatchObject({
+    expect(mockLoadVectorStore).toBeCalledTimes(1);
+    expect(body).toMatchObject({
       data: 'File successfully loaded into the Vector Store',
     });
   });

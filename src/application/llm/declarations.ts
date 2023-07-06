@@ -1,4 +1,4 @@
-import {SaveableVectorStore} from 'langchain/dist/vectorstores/base';
+import {VectorStore} from 'langchain/dist/vectorstores/base';
 
 export type ChatOptions = {
   context?: string;
@@ -11,7 +11,7 @@ export type ChatOptions = {
 export type QueryDocsOptions = {
   maxTokens?: number;
   temperature?: number;
-  vectorStore: SaveableVectorStore;
+  vectorStore: VectorStore;
   verbose?: boolean;
 };
 
