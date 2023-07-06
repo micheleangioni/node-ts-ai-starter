@@ -76,6 +76,7 @@ Therefore, rebooting the application will remove all existing memory.
 - `OPENAI_API_KEY`: Your API key
 - `VECTOR_STORE`: Vector store to be used. Accepted values:
   - `hnswlib` (default)
+  - `memory`
 
 **Behaviour Configurations**
 
