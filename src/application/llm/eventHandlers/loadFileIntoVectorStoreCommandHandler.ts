@@ -13,7 +13,7 @@ export class LoadFileIntoVectorStoreCommandHandler implements IHandler {
     await loadVectorStore();
 
     // TODO Missing: check whether a previously added file is trying to be added
-    // A uploaded file db is needed
+    // A uploaded files db is needed
 
     // Split input document into chunks
     const textSplitter = new CharacterTextSplitter({
@@ -37,7 +37,7 @@ export class LoadFileIntoVectorStoreCommandHandler implements IHandler {
     // Save the docs into the vector store
     await addDocumentsToVectorStore(docs);
 
-    // Persist is again
+    // Persist it again
     await persistVectorStore();
   }
 }
