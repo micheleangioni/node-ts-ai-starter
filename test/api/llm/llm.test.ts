@@ -41,7 +41,6 @@ describe('Test the llm API', () => {
     jest.resetAllMocks();
   });
 
-  // This tests fails because JEST causes a Segmentation Fault when the Vector Store tries to save the db to file
   test('(POST)/search/load-document should create and return a new user', async () => {
     mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<MemoryVectorStore>);
 
