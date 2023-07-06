@@ -18,6 +18,7 @@ export class QueryDocsQueryHandler implements IHandler {
     });
 
     // We want to implement Contextual Compression
+    // See https://js.langchain.com/docs/modules/indexes/retrievers/contextual-compression-retriever
 
     // The LLMChainExtractor will iterate over the initially returned documents
     // and extract from each only the content that is relevant to the query.
