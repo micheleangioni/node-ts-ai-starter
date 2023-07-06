@@ -1,5 +1,3 @@
-import {VectorStore} from 'langchain/dist/vectorstores/base';
-
 export type ChatOptions = {
   context?: string;
   maxTokens?: number;
@@ -11,7 +9,6 @@ export type ChatOptions = {
 export type QueryDocsOptions = {
   maxTokens?: number;
   temperature?: number;
-  vectorStore: VectorStore;
   verbose?: boolean;
 };
 

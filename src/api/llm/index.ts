@@ -12,7 +12,6 @@ import {
 import {LoadFileIntoVectorStoreCommand} from '../../application/llm/commands/loadFileIntoVectorStoreCommand';
 import {QueryDocsQueryHandler} from '../../application/llm/eventHandlers/queryDocsQueryHandler';
 import {QueryDocsQuery} from '../../application/llm/queries/queryDocsQuery';
-import {loadVectorStore} from '../../infra/llm/vectorStore';
 import ILogger from '../../infra/logger/ILogger';
 
 const router = express.Router();
@@ -71,10 +70,8 @@ export default (app: express.Application, _source: string) => {
         }), res, logger);
       }
 
-      const loadedVectorStore = await loadVectorStore();
-
       try {
-        const response = await (new QueryDocsQueryHandler({vectorStore: loadedVectorStore}))
+        const response = await (new QueryDocsQueryHandler({}))
           .handle(new QueryDocsQuery({
             query: req.query.query,
           }));
