@@ -1,6 +1,6 @@
 import * as shell from 'shelljs';
 
-shell.exec('npm remove hnswlib-node langchain multer openai @types/multer');
+shell.exec('npm remove hnswlib-node langchain multer openai redis @types/multer');
 shell.rm('-rf', 'src/api/llm');
 shell.rm('-rf', 'src/application/llm');
 shell.rm('-rf', 'src/infra/llm');

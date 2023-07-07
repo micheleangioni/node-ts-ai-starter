@@ -18,6 +18,13 @@ services:
     ports:
       - 27017:27017
 
+  redis-node-ts:
+    container_name: redis-node-ts
+    image: redis/redis-stack
+    ports:
+      - "6379:6379"
+    restart: always
+
   zookeeper-node-ts:
     container_name: zookeeper-node-ts
     image: zookeeper:3.5.5
