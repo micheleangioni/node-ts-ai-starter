@@ -25,7 +25,12 @@ export class QueryDocsQueryHandler implements IHandler {
       });
     }
 
-    const response = await this.chain.call({query});
+    const response = await this.chain.call({
+      query: `
+        Use ONLY the provided context above to answer this message: ${query}.
+        If the information is not provided in the context, just answer 'I don't know'
+      `,
+    });
 
     return response.text;
   }
