@@ -32,5 +32,10 @@ export default async ({maxTokens, temperature, verbose}: {
 
   // We then create a Retrieval Q&A. The Retriever will be used to retrieve the docs relevant to the input query
   // everytime the LLM will get called
-  return RetrievalQAChain.fromLLM(model, retriever, {verbose});
+  // In case adding Memory to the conversation is needed,
+  // see https://js.langchain.com/docs/modules/chains/index_related_chains/conversational_retrieval
+  return RetrievalQAChain.fromLLM(model, retriever, {
+    returnSourceDocuments: false,
+    verbose,
+  });
 };
