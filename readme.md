@@ -60,7 +60,7 @@ Run `npm run build` to build the application.
 
 ## Configuration and Features
 
-### OpenAI-powered Chat
+### OpenAI-powered Features
 
 node-ts-starter comes with an OpenAI-powered chat set up out of the box. 
 In order to use it, please obtain an AI key from https://platform.openai.com/account/api-keys.
@@ -74,8 +74,11 @@ Therefore, rebooting the application will remove all existing memory.
   - `memory`
 - `OPENAI_ORGANIZATION_ID`: The organization id used by OpenAI
 - `OPENAI_API_KEY`: Your API key
+- `REDIS_URL`: If using Redis as Vector store, the Redis URL is required 
+- `REDIS_PASSWORD`= If using Redis as Vector store, and the instance is password protected
 - `VECTOR_STORE`: Vector store to be used. Accepted values:
   - `hnswlib` (default)
+  - `redis`
   - `memory`
 
 **Behaviour Configurations**
