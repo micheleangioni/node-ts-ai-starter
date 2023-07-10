@@ -1,11 +1,14 @@
-import IUserRepo from '../../domain/user/IUserRepo';
-import User from '../../domain/user/user';
+import {AbstractApplicationService} from '../AbstractApplicationService';
 import ApplicationError from '../ApplicationError';
 import { ErrorCodes, UserCreateData } from '../declarations';
 import EventPublisher from '../eventPublisher';
+import IUserRepo from '../../domain/user/IUserRepo';
+import User from '../../domain/user/user';
 
-export default class UserService {
-  constructor(private userRepo: IUserRepo, private eventPublisher?: EventPublisher) {}
+export default class UserService extends AbstractApplicationService {
+  constructor(private readonly userRepo: IUserRepo, eventPublisher?: EventPublisher) {
+    super(eventPublisher);
+  }
 
   public async getAll(): Promise<User[]> {
     return await this.userRepo.all();
@@ -64,21 +67,5 @@ export default class UserService {
     await this.sendApplicationEvents(source, updatedUser);
 
     return updatedUser;
-  }
-
-  private async sendApplicationEvents(source: string, user: User): Promise<true> {
-    if (!user.getCreatedAt()) {
-      throw new ApplicationError({
-        code: ErrorCodes.INTERNAL_ERROR,
-        error: 'A non-persisted User should not be used to send events',
-        status: 500,
-      });
-    }
-
-    if (this.eventPublisher) {
-      await this.eventPublisher.publish(source, user.releaseDomainEvents(), user.getId().toString());
-    }
-
-    return true;
   }
 }

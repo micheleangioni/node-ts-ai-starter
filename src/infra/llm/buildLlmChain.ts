@@ -2,16 +2,16 @@ import {OpenAI} from 'langchain/llms/openai';
 import {BufferMemory} from 'langchain/memory';
 import {PromptTemplate} from 'langchain/prompts';
 import {LLMChain} from 'langchain/chains';
+import isDebugModeActive from '../isDebugModeActive';
 import config from '../../config';
 
 const {defaultContext, defaultMaxTokens, defaultTemperature} = config.llm.chat;
 
-export default ({context, maxTokens, temperature, verbose}: {
+export default ({context, maxTokens, temperature}: {
   context?: string;
   maxTokens?: number;
   temperature?: number;
   template?: string;
-  verbose?: boolean;
 }) => {
   const model = new OpenAI({
     maxTokens: maxTokens?? defaultMaxTokens,
@@ -45,5 +45,5 @@ export default ({context, maxTokens, temperature, verbose}: {
   const prompt = PromptTemplate.fromTemplate(template);
 
   // Instantiate LLMChain, which consists of a PromptTemplate, an LLM and memory.
-  return new LLMChain({ llm: model, memory, prompt, verbose });
+  return new LLMChain({ llm: model, memory, prompt, verbose: isDebugModeActive() });
 };

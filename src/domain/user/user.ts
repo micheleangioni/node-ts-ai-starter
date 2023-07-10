@@ -1,12 +1,12 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { BaseEntity } from '../BaseEntity';
-import { IEntity } from '../declarations';
 import { UserData } from './declarations';
 import { UserCreated } from './events/UserCreated';
+import { BaseEntity } from '../BaseEntity';
+import IEntity from '../IEntity';
 
 export default class User extends BaseEntity implements IEntity {
   private static AGGREGATE_NAME = 'user';
-  private readonly id: number | string;
+  public readonly id: number | string;
   private readonly email: string;
   private password: string;
   private username?: string;

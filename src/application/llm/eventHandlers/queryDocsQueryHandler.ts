@@ -7,13 +7,11 @@ import buildRetrievalQAChain from '../../../infra/llm/buildRetrievalQAChain';
 export class QueryDocsQueryHandler implements IHandler {
   private readonly maxTokens?: number;
   private readonly temperature?: number;
-  private readonly verbose?: boolean;
   private chain: RetrievalQAChain;
 
-  constructor({maxTokens, temperature, verbose}: QueryDocsOptions) {
+  constructor({maxTokens, temperature}: QueryDocsOptions) {
     this.maxTokens = maxTokens;
     this.temperature = temperature;
-    this.verbose = verbose;
   }
 
   async handle({ query }: QueryDocsQuery): Promise<string> {
@@ -21,7 +19,6 @@ export class QueryDocsQueryHandler implements IHandler {
       this.chain = await buildRetrievalQAChain({
         maxTokens: this.maxTokens,
         temperature: this.temperature,
-        verbose: this.verbose,
       });
     }
 
