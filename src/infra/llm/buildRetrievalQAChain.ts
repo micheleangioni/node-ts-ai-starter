@@ -3,11 +3,11 @@ import {LLMChainExtractor} from 'langchain/retrievers/document_compressors/chain
 import {ContextualCompressionRetriever} from 'langchain/retrievers/contextual_compression';
 import {RetrievalQAChain} from 'langchain/chains';
 import {loadVectorStore} from './vectorStore';
+import isDebugModeActive from '../isDebugModeActive';
 
-export default async ({maxTokens, temperature, verbose}: {
+export default async ({maxTokens, temperature}: {
   maxTokens?: number;
   temperature?: number;
-  verbose?: boolean;
 }): Promise<RetrievalQAChain> => {
   const vectorStore = await loadVectorStore();
 
@@ -36,6 +36,6 @@ export default async ({maxTokens, temperature, verbose}: {
   // see https://js.langchain.com/docs/modules/chains/index_related_chains/conversational_retrieval
   return RetrievalQAChain.fromLLM(model, retriever, {
     returnSourceDocuments: false,
-    verbose,
+    verbose: isDebugModeActive(),
   });
 };
