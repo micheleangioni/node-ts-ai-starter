@@ -19,11 +19,25 @@ It comes with the following features configured out of the box:
 - MongoDB integration
 - MySQL / SqLite / Postgres / MsSQL integration
 - Domain Events via [Apache Kafka](https://kafka.apache.org/)
-- Testing through Jest
+- Testing via Jest
 - Modern .eslintrc configuration
 - Chat endpoint powered by OpenAI and MemoryBuffer
+- Endpoints to ingest documents and query them, powered by OpenAI + Memory/hnswlib/Redis
 
-## Installation
+## Content
+
+- [Installation](#installation)
+- [Development](#development)
+- [Running the Application](#running)
+- [Configuration and Features](#configuration-and-features)
+  - [Environment variables](#env)
+  - [OpenAI-Powered Features](#openai-powered-features)
+  - [Domain Events](#domain-events)
+- [Testing](#testing)
+- [Contribution Guidelines](#guidelines)
+- [License](#license)
+
+## <a name="installation"></a>Installation
 
 1. Clone the repo;
 
@@ -33,34 +47,52 @@ It comes with the following features configured out of the box:
 
 3. Run `npm install` to install the needed dependencies.
 
-4. (optional) If willing to use an SQL database, set the `SQL_DIALECT` env variable to one of the supported values: `mysql`, `sqlite`, `postgres`, `mssql` or `none`.
+4. (optional) If willing to use an SQL database, configure the SQL env variables (see below).
 
-    Then run migrations by running `npm run migrate` and seeding via `npm run seed`.
+    Then run the migrations via `npm run migrate` and seeding via `npm run seed`.
 
     Migrations can be undone by running `migrate-revert` or `migrate-revert-all`.
 
 5. (optional) If you want to remove the endpoint and logic for the AI-powered chat, follow this steps:
 
     - Run `npm run clear-ai`
-    - Delete the unused lines in src/api/index.ts 
+    - Delete the unused lines in `src/api/index.ts`
 
-## Running the Application
+## <a name="development"></a>Development
 
-First compile the application via `npm run build`.
+For local development Node TypeScript Starter is shipped with a docker-compose file.
 
-Then simply run `npm start` to run it.
+Simply `docker-compose up` (or `TMPDIR=/private$TMPDIR docker-compose up` on MacOS) to spin up the needed dependencies.
+Then run `npm run debug` to debug the application or `npm run watch` to run the debugger with Nodemon.
 
-## Development
+## <a name="running"></a>Running the Application
 
-Run `npm run debug` to debug the application or `npm run watch` to run the debugger with Nodemon.
+Node TypeScript Starter comes with a Dockerfile out of the box.
+In order to locally run the containers, just make sure to have Docker installed and run:
 
-## Building the application
+- (Optional) `docker-compose up` (or `TMPDIR=/private$TMPDIR docker-compose up` on MacOS) to run the docker-compose with the needed dependencies
+- `docker build -t node-ts-start .` to build the Container
+- `docker run -dp 3010:3010 node-ts-start` to run it. The application will be served on the port 3010
 
-Run `npm run build` to build the application.
+Alternatively, you can the application directly via `npm run build` and then `npm start` to run it.
 
-## Configuration and Features
+## <a name="configuration-and-features"></a> Configuration and Features
 
-### OpenAI-powered Features
+### <a name="env"></a>Environment Variables
+
+- `NODE_ENV` : Set the environment name, default is `development`
+- `PORT` : Port the server will be available in
+- `MONGO_URI` : Set the complete MongoDB connection string. Default `mongodb://localhost:27017/node-ts-starter_<NODE_ENV>}`, where `<NODE_ENV>` in the `NODE_ENV` env variable value
+- `SQL_DIALECT` : set the `SQL_DIALECT` env variable to one of the supported values: 
+  - `mysql`
+  - `sqlite`
+  - `postgres`
+  - `mssql`
+  - `none` (default)
+- `DEBUG_MODE`: Set the application to run in Debug Mode, i.e. max logging
+
+
+### <a name="openai-powered-features"></a>OpenAI-Powered Features
 
 node-ts-starter comes with an OpenAI-powered chat set up out of the box. 
 In order to use it, please obtain an AI key from https://platform.openai.com/account/api-keys.
@@ -130,7 +162,7 @@ Check the `/src/config/index.ts` file to customise the behaviour of the LLM.
 
      This endpoint allows to directly query the documents previously loaded via the POST endpoints. 
 
-### Domain Events
+### <a name="domain-events"></a>Domain Events
 
 Domain Events will be automatically published when a User is created or updated. 
 The [Node Messagebrokers](https://github.com/micheleangioni/node-messagebrokers) package is used to publish to Apache Kafka.
@@ -154,7 +186,6 @@ Apache Kafka can be configured through the following environment variables:
 - `SSL_CERT`: SSL certificate (string);
 - `SSL_KEY`: SSL key (string);
 - `SSL_CA`: SSL certificate authority (string);
-- `REVERSE_DNS`: Reverse DNS to customise the type field of the event payload.
 
 The following events are emitted by the Application:
 
@@ -168,32 +199,16 @@ The following events are emitted by the Application:
 }
 ```
 
-## Testing
+## <a name="testing"></a>Testing
 
 Run `npm test` to run the tests or `npm run watch-test` to run the tests with the watcher.
 
-The tests will use both a MongoDB and an in-memory SqLite database, against which migrations and seedings will be run. 
+The tests will use both a MongoDB and an in-memory SqLite database, against which migrations and seedings will be run.
 
-## Running the Application
-
-### Docker
-
-Node TypeScript Starter comes with a Dockerfile out of the box. 
-In order to locally run the Container, just make sure to have Docker installed and run:
-
-- (Optional) `docker-compose up` (or `TMPDIR=/private$TMPDIR docker-compose up` on MacOS) to run the docker-compose with the needed dependencies
-- `docker build -t node-ts-start .` to build the Container
-- `docker run -dp 3010:3010 node-ts-start` to run it. The application will be served on the port 3010
-
-## Going Serverless
-
-If you are interested in Serverless architecture, take a look at [Serverless Node TypeScript](https://github.com/micheleangioni/sls-node-ts),
-a starter kit ready for Serverless deployment out of the box. 
-
-## Contribution Guidelines
+## <a name="guidelines"></a>Contribution Guidelines
 
 Pull requests are welcome.
 
-## License
+## <a name="license"></a>License
 
 Node TypeScript Starter is free software distributed under the terms of the MIT license.
