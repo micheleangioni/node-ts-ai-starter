@@ -111,7 +111,6 @@ Therefore, rebooting the application will remove all existing memory.
 - `VECTOR_STORE`: Vector store to be used. Accepted values:
   - `hnswlib` (default)
   - `redis`
-  - `memory`
 
 **Behaviour Configurations**
 

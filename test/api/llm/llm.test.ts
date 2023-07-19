@@ -1,5 +1,5 @@
 import express from 'express';
-import {MemoryVectorStore} from 'langchain/vectorstores/memory';
+import {SaveableVectorStore} from 'langchain/vectorstores/base';
 import supertest from 'supertest';
 import appModule from '../../../src/app';
 import EventPublisher from '../../../src/application/eventPublisher';
@@ -68,7 +68,7 @@ describe('Test the llm API', () => {
   });
 
   test('(POST) /search/load-document should load a document into the Vector Store', async () => {
-    mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<MemoryVectorStore>);
+    mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<SaveableVectorStore>);
 
     const filePath = `${__dirname}/../../testData/shortText.txt`;
 
@@ -87,7 +87,7 @@ describe('Test the llm API', () => {
 
   test('(DELETE) /search/documents should remove all documents from the Vector Store', async () => {
     mockCleanVectorStore.mockImplementation(() => Promise.resolve());
-    mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<MemoryVectorStore>);
+    mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<SaveableVectorStore>);
 
     const {body, statusCode} = await supertest(app)
       .delete('/api/llm/search/documents');
