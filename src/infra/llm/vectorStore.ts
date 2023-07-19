@@ -3,7 +3,6 @@ import {Document} from 'langchain/document';
 import {OpenAIEmbeddings} from 'langchain/embeddings/openai';
 import {SaveableVectorStore} from 'langchain/vectorstores/base';
 import {HNSWLib} from 'langchain/vectorstores/hnswlib';
-import {MemoryVectorStore} from 'langchain/vectorstores/memory';
 import {RedisVectorStore} from 'langchain/vectorstores/redis';
 import config from '../../config';
 import {VectorStore} from 'langchain/dist/vectorstores/base';
@@ -23,9 +22,6 @@ export const loadVectorStore = async (forceReload: boolean = false) => {
   }
 
   switch (process.env.VECTOR_STORE?.toString()) {
-    case 'memory':
-      vectorStore = await MemoryVectorStore.fromTexts(['Initialising'], [], new OpenAIEmbeddings());
-      break;
     case 'redis':
       // eslint-disable-next-line no-case-declarations
       const redisClient = await connectToRedis();
@@ -70,12 +66,6 @@ export const persistVectorStore = async () => {
  */
 export const cleanVectorStore = async () => {
   await loadVectorStore();
-
-  if (vectorStore instanceof MemoryVectorStore) {
-    await loadVectorStore(true);
-
-    return;
-  }
 
   if (vectorStore instanceof RedisVectorStore) {
     const redisClient = await connectToRedis();
