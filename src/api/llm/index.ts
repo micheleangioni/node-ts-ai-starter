@@ -86,7 +86,7 @@ export default (app: express.Application, _source: string) => {
     });
 
   router.post(
-    '/search/load-document',
+    '/search/documents',
     upload.single('file'),
     async (req, res) => {
       if (!req.file) {
