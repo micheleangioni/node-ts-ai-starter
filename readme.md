@@ -127,40 +127,50 @@ Check the `/src/config/index.ts` file to customise the behaviour of the LLM.
    }
    // Response
    {
-     data: <string>; // The message message
+     data: <string>; // The message returned from the chat
    }
     ```
    
-    This endpoint allows you to chat with an LLM. It will keep track of your conversation history,
+    This endpoint allows to chat with an LLM. It will keep track of your conversation history,
     using the IP Address of the incoming request as user identified.
 
   - POST `/api/llm/search/load-document`
     ```
-     // Body (form-data)
-     {
-       file // File to be ingested
-     }
-     // Response
-     {
-       data: <string>; // A confirmation message that the file has been successfully loaded
-     }
-      ```
+    // Body (form-data)
+    {
+      file // File to be ingested
+    }
+    // Response
+    {
+      data: <string>; // A confirmation message that the file has been successfully loaded
+    }
+    ```
 
      This endpoint allows ingesting an input file to allow for future searches.
 
   - GET `/api/llm/search/documents`
     ```
-     // Query Params
-     {
-       query: <string> Query to be sent to search in the documents
-     }
-     // Response
-     {
-       data: <string>; // The response to the input query, which the relevant information, if found.
-     }
-      ```
+    // Query Params
+    {
+      query: <string> Query to be sent to search in the documents
+    }
+    // Response
+    {
+      data: <string>; // The response to the input query, which the relevant information, if found.
+    }
+    ```
 
-     This endpoint allows to directly query the documents previously loaded via the POST endpoints. 
+    This endpoint allows to directly query the documents previously loaded via the POST endpoints. 
+
+  - DELETE `/api/llm/search/documents`
+    ```
+    // Response
+    {
+      data: <string>; // A confirmation message that the Vector Store has been successfully cleaned
+    }
+    ```
+
+  This endpoint allows to remove all data previously included in the Vector Store. 
 
 ### <a name="domain-events"></a>Domain Events
 
