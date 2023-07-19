@@ -133,7 +133,7 @@ Check the `/src/config/index.ts` file to customise the behaviour of the LLM.
     This endpoint allows to chat with an LLM. It will keep track of your conversation history,
     using the IP Address of the incoming request as user identified.
 
-  - POST `/api/llm/search/load-document`
+  - POST `/api/llm/search/documents`
     ```
     // Body (form-data)
     {
