@@ -10,6 +10,7 @@ import {
   LoadFileIntoVectorStoreCommandHandler,
 } from '../../application/llm/eventHandlers/loadFileIntoVectorStoreCommandHandler';
 import {LoadFileIntoVectorStoreCommand} from '../../application/llm/commands/loadFileIntoVectorStoreCommand';
+import {CleanVectorStoreCommandHandler} from '../../application/llm/eventHandlers/cleanVectorStoreCommandHandler';
 import {QueryDocsQueryHandler} from '../../application/llm/eventHandlers/queryDocsQueryHandler';
 import {QueryDocsQuery} from '../../application/llm/queries/queryDocsQuery';
 import ILogger from '../../infra/logger/ILogger';
@@ -36,7 +37,7 @@ export default (app: express.Application, _source: string) => {
       typeof message !== 'string'
     ) {
       return errorHandler(new ApplicationError({
-        code: 'INVALID_INPUT',
+        code: ErrorCodes.INVALID_DATA,
         error: 'Missing or invalid `message` input parameter',
         status: 412,
       }), res, logger);
@@ -106,6 +107,21 @@ export default (app: express.Application, _source: string) => {
 
         res.json({
           data: 'File successfully loaded into the Vector Store',
+        });
+      } catch (err) {
+        return errorHandler(err, res, logger);
+      }
+    });
+
+  router.delete(
+    '/search/documents',
+    async (_req, res) => {
+      try {
+        await (new CleanVectorStoreCommandHandler())
+          .handle();
+
+        res.json({
+          data: 'Vector Store successfully cleaned',
         });
       } catch (err) {
         return errorHandler(err, res, logger);
