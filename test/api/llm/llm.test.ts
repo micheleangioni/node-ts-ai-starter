@@ -4,7 +4,7 @@ import supertest from 'supertest';
 import appModule from '../../../src/app';
 import EventPublisher from '../../../src/application/eventPublisher';
 import {cleanDatabase, seedDatabase} from '../../seeding';
-import {loadVectorStore} from '../../../src/infra/llm/vectorStore';
+import {loadVectorStore, cleanVectorStore} from '../../../src/infra/llm/vectorStore';
 import retrievalQAChain from '../../../src/infra/llm/buildRetrievalQAChain';
 import {RetrievalQAChain} from 'langchain/chains';
 
@@ -15,6 +15,7 @@ jest.mock('../../../src/infra/llm/buildRetrievalQAChain');
 jest.mock('../../../src/infra/llm/vectorStore');
 
 const mockPublish = jest.fn();
+const mockCleanVectorStore = jest.mocked(cleanVectorStore);
 const mockLoadVectorStore = jest.mocked(loadVectorStore);
 const mockRetrievalQAChain = jest.mocked(retrievalQAChain);
 
@@ -81,6 +82,20 @@ describe('Test the llm API', () => {
     expect(mockLoadVectorStore).toBeCalledTimes(1);
     expect(body).toMatchObject({
       data: 'File successfully loaded into the Vector Store',
+    });
+  });
+
+  test('(DELETE) /search/documents should remove all documents from the Vector Store', async () => {
+    mockCleanVectorStore.mockImplementation(() => Promise.resolve());
+    mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<MemoryVectorStore>);
+
+    const {body, statusCode} = await supertest(app)
+      .delete('/api/llm/search/documents');
+
+    expect(statusCode).toBe(200);
+    expect(mockCleanVectorStore).toBeCalledTimes(1);
+    expect(body).toMatchObject({
+      data: 'Vector Store successfully cleaned',
     });
   });
 });
