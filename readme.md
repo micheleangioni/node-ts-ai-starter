@@ -93,6 +93,7 @@ Therefore, rebooting the application will remove all existing memory.
   - `memory`
 - `OPENAI_ORGANIZATION_ID`: The organization id used by OpenAI
 - `OPENAI_API_KEY`: Your API key
+- `OPEN_AI_MODEL`: The OpenAI model you want to use. Default: `gpt-3.5-turbo` 
 - `REDIS_URL`: If using Redis as Vector store, the Redis URL is required 
 - `REDIS_PASSWORD`= If using Redis as Vector store, and the instance is password protected
 - `VECTOR_STORE`: Vector store to be used. Accepted values:
