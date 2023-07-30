@@ -1,5 +1,6 @@
 import {FastifyInstance} from 'fastify';
 import cors from '@fastify/cors';
+import helmet from '@fastify/helmet';
 import path from 'path';
 import api from './api';
 import createIoCContainer from './api/createIoCContainer';
@@ -12,6 +13,10 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 import infraServices from './infra';
 
 const registerPlugins = async (app: FastifyInstance) => {
+  app.register(
+    helmet,
+  );
+
   await app.register(cors, {
     allowedHeaders: ['Authorization', 'Content-Type', 'X-Requested-With'],
     exposedHeaders: ['Authorization', 'Content-Type'],
