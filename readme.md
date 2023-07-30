@@ -4,7 +4,7 @@
 [![Build Status](https://github.com/micheleangioni/node-ts-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/micheleangioni/node-ts-starter/actions/workflows/ci.yml)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-> Starter kit application for projects using Express and TypeScript with MongoDB, SQL, Jest testing and much more configured out of the box.
+> Starter kit application for projects using Express and TypeScript with MongoDB, Jest testing and much more configured out of the box.
 
 > An optionally-removable OpenAI-powered Chat endpoint powered by local memory is also available out of the box.  
 
@@ -17,7 +17,6 @@ It comes with the following features configured out of the box:
 - Server configuration with enabled CORS
 - dotenv to handle environment variables
 - MongoDB integration
-- MySQL / SqLite / Postgres / MsSQL integration
 - Domain Events via [Apache Kafka](https://kafka.apache.org/)
 - Testing via Jest
 - Modern .eslintrc configuration
@@ -47,13 +46,7 @@ It comes with the following features configured out of the box:
 
 3. Run `npm install` to install the needed dependencies.
 
-4. (optional) If willing to use an SQL database, configure the SQL env variables (see below).
-
-    Then run the migrations via `npm run migrate` and seeding via `npm run seed`.
-
-    Migrations can be undone by running `migrate-revert` or `migrate-revert-all`.
-
-5. (optional) If you want to remove the endpoint and logic for the AI-powered chat, follow this steps:
+4. (optional) If you want to remove the endpoint and logic for the AI-powered chat, follow this steps:
 
     - Run `npm run clear-ai`
     - Delete the unused lines in `src/api/index.ts`
@@ -83,12 +76,6 @@ Alternatively, you can the application directly via `npm run build` and then `np
 - `NODE_ENV` : Set the environment name, default is `development`
 - `PORT` : Port the server will be available in
 - `MONGO_URI` : Set the complete MongoDB connection string. Default `mongodb://localhost:27017/node-ts-starter_<NODE_ENV>}`, where `<NODE_ENV>` in the `NODE_ENV` env variable value
-- `SQL_DIALECT` : set the `SQL_DIALECT` env variable to one of the supported values: 
-  - `mysql`
-  - `sqlite`
-  - `postgres`
-  - `mssql`
-  - `none` (default)
 - `DEBUG_MODE`: Set the application to run in Debug Mode, i.e. max logging
 
 
@@ -211,8 +198,6 @@ The following events are emitted by the Application:
 ## <a name="testing"></a>Testing
 
 Run `npm test` to run the tests or `npm run watch-test` to run the tests with the watcher.
-
-The tests will use both a MongoDB and an in-memory SqLite database, against which migrations and seedings will be run.
 
 ## <a name="guidelines"></a>Contribution Guidelines
 
