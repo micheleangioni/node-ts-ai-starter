@@ -1,4 +1,5 @@
 import {FastifyInstance} from 'fastify';
+import cors from '@fastify/cors';
 import path from 'path';
 import api from './api';
 import createIoCContainer from './api/createIoCContainer';
@@ -9,6 +10,14 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
 import infraServices from './infra';
+
+const registerPlugins = async (app: FastifyInstance) => {
+  await app.register(cors, {
+    allowedHeaders: ['Authorization', 'Content-Type', 'X-Requested-With'],
+    exposedHeaders: ['Authorization', 'Content-Type'],
+    origin: '*',
+  });
+};
 
 const loadApp = async (app: FastifyInstance) => {
   /**
@@ -36,19 +45,11 @@ const loadApp = async (app: FastifyInstance) => {
   return app;
 };
 
-export default (app: FastifyInstance) => {
+export default async (app: FastifyInstance) => {
   // TODO HELMET
 
-  // TODO CORS
+  await registerPlugins(app);
+  await loadApp(app);
 
-  // app.use(cors({
-  //   allowedHeaders: ['Authorization', 'Content-Type', 'X-Requested-With'],
-  //   exposedHeaders: ['Authorization', 'Content-Type'],
-  // }));
-
-  return loadApp(app)
-    .then(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      return { app };
-    });
+  return { app };
 };
