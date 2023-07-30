@@ -4,7 +4,7 @@ import IUserRepo from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import { PersistedUserMongoData, ToBePersistedUserMongoData } from './declarations';
 
-class UserRepo implements IUserRepo {
+export default class UserRepo implements IUserRepo {
   constructor(private readonly userModel: Model<PersistedUserMongoData>) {}
 
   /**
@@ -139,7 +139,3 @@ class UserRepo implements IUserRepo {
     };
   }
 }
-
-export default (userModel: Model<any>): UserRepo => {
-  return new UserRepo(userModel);
-};

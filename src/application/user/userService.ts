@@ -57,6 +57,40 @@ export default class UserService extends AbstractApplicationService {
   }
 
   public async createUser(data: UserCreateData, source: string): Promise<User> {
+    // Check whether the email has already been taken
+
+    try {
+      await this.getByEmail(data.email);
+
+      throw new ApplicationError({
+        code: ErrorCodes.FORBIDDEN,
+        error: 'The email has already been taken.',
+        status: 403,
+      });
+    } catch (error) {
+      if (error.status !== 404) {
+        throw error;
+      }
+    }
+
+    // Check whether the username has already been taken
+
+    if (data.username) {
+      try {
+        await this.getByUsername(data.username);
+
+        throw new ApplicationError({
+          code: ErrorCodes.FORBIDDEN,
+          error: 'The username has already been taken.',
+          status: 403,
+        });
+      } catch (error) {
+        if (error.status !== 404) {
+          throw error;
+        }
+      }
+    }
+
     const user = new User({ id: this.userRepo.nextIdentity(), ...data });
 
     return await this.persistUserAndEmitEvents(user, source);

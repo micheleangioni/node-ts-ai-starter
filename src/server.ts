@@ -1,19 +1,24 @@
-import express from 'express';
+import Fastify from 'fastify';
 import application from './app';
 
-const expressApp: express.Application = express();
-const port = process.env.PORT || 3010;
-
-expressApp.on('ready', () => {
-  // tslint:disable-next-line:no-console
-  expressApp.listen(port, () => console.log(`Application start: listening on port ${port}!`));
+const fastifyApp = Fastify({
+  logger: true,
 });
+const port = Number(process.env.PORT) || 3010;
 
-application(expressApp)
-  .then(({ app, logger }) => {
+application(fastifyApp)
+  .then(({ app }) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    logger.info(`Going to start application on port ${port}!`);
-    app.emit('ready');
+    app.log.info(`Going to start application on port ${port}!`);
+
+    app.listen({ port }, (err, address) => {
+      if (err) {
+        app.log.error(err);
+        process.exit(1);
+      }
+
+      console.log(`Application start: listening on address ${address}!`);
+    });
   })
   .catch((error) => {
     console.error(error);
