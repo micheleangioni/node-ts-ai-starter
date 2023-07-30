@@ -15,7 +15,7 @@ export default ({context, maxTokens, temperature}: {
 }) => {
   const model = new OpenAI({
     maxTokens: maxTokens?? defaultMaxTokens,
-    modelName: 'gpt-3.5-turbo',
+    modelName: process.env.OPEN_AI_MODEL ?? 'gpt-3.5-turbo',
     streaming: false,
     temperature: temperature ?? defaultTemperature,
   });

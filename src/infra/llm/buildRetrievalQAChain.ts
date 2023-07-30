@@ -13,7 +13,7 @@ export default async ({maxTokens, temperature}: {
 
   const model = new OpenAI({
     maxTokens: maxTokens?? 100,
-    modelName: 'gpt-3.5-turbo',
+    modelName: process.env.OPEN_AI_MODEL ?? 'gpt-3.5-turbo',
     streaming: false,
     temperature: temperature ?? 0.2,
   });
