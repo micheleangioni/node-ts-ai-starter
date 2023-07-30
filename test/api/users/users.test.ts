@@ -1,4 +1,4 @@
-import express from 'express';
+import Fastify, {FastifyInstance} from 'fastify';
 import supertest from 'supertest';
 import appModule from '../../../src/app';
 import EventPublisher from '../../../src/application/eventPublisher';
@@ -19,11 +19,14 @@ EventPublisher.mockImplementation(() => {
 process.env.ENABLE_MESSAGE_BROKER = 'true';
 
 describe('Test the users API', () => {
-  const expressApp: express.Application = express();
-  let app: express.Application;
+  const fastifyApp = Fastify({
+    logger: true,
+  });
+  let app: FastifyInstance;
 
   beforeAll(async () => {
-    app = (await appModule(expressApp)).app;
+    app = (await appModule(fastifyApp)).app;
+    await app.ready();
   });
 
   beforeEach(async () => {
@@ -37,23 +40,25 @@ describe('Test the users API', () => {
   });
 
   test('(GET)/ should respond with the list of users', async () => {
-    const {body, statusCode} = await supertest(app).get('/api/users');
+    const {body} = await supertest(fastifyApp.server)
+      .get('/api/users')
+      .expect(200);
 
-    expect(statusCode).toBe(200);
     expect(body.data.length).toBe(2);
   });
 
   test('(POST)/ should create and return a new user', async () => {
     const userData = {
       email: 'users.spec@test.com',
-      password: 'password',
-      username: 'usersSpec',
+      password: 'passwordOfAtLeast12Chars',
+      username: 'User_Spec',
     };
 
-    const {body, statusCode} = await supertest(app).post('/api/users')
-      .send(userData);
+    const {body} = await supertest(app.server)
+      .post('/api/users')
+      .send(userData)
+      .expect(200);
 
-    expect(statusCode).toBe(200);
     expect(body.data).toMatchObject({
       email: userData.email,
       username: userData.username,
@@ -68,22 +73,33 @@ describe('Test the users API', () => {
   });
 
   test('(POST)/ should return 422 if parameters are wrong', async () => {
-    const userData: object = {
+    const userDataInvalidUsername: object = {
       email: 'users.spec@test.com',
       password: 'password',
       username: 'invalid.character',
     };
 
-    const {statusCode} = await supertest(app).post('/api/users')
-      .send(userData);
+    const userDataShortPassword: object = {
+      email: 'users.spec@test.com',
+      password: 'short',
+      username: 'validUsername10',
+    };
 
-    expect(statusCode).toBe(422);
-  });
+    const missingEmail: object = {
+      password: 'password',
+      username: 'validUsername10',
+    };
 
-  test('(GET)/sql should respond with the list of users of the SQL db', async () => {
-    const {body, statusCode} = await supertest(app).get('/api/users/sql');
+    await supertest(app.server).post('/api/users')
+      .send(userDataInvalidUsername)
+      .expect(400);
 
-    expect(statusCode).toBe(200);
-    expect(body.data.length).toBe(2);
+    await supertest(app.server).post('/api/users')
+      .send(userDataShortPassword)
+      .expect(400);
+
+    await supertest(app.server).post('/api/users')
+      .send(missingEmail)
+      .expect(400);
   });
 });

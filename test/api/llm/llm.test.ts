@@ -1,4 +1,5 @@
-import express from 'express';
+import Fastify, {FastifyInstance} from 'fastify';
+import {RetrievalQAChain} from 'langchain/chains';
 import {SaveableVectorStore} from 'langchain/vectorstores/base';
 import supertest from 'supertest';
 import appModule from '../../../src/app';
@@ -6,7 +7,6 @@ import EventPublisher from '../../../src/application/eventPublisher';
 import {cleanDatabase, seedDatabase} from '../../seeding';
 import {loadVectorStore, cleanVectorStore} from '../../../src/infra/llm/vectorStore';
 import retrievalQAChain from '../../../src/infra/llm/buildRetrievalQAChain';
-import {RetrievalQAChain} from 'langchain/chains';
 
 process.env.VECTOR_STORE = 'memory';
 
@@ -29,11 +29,14 @@ EventPublisher.mockImplementation(() => {
 process.env.ENABLE_MESSAGE_BROKER = 'true';
 
 describe('Test the llm API', () => {
-  const expressApp: express.Application = express();
-  let app: express.Application;
+  const fastifyApp = Fastify({
+    logger: true,
+  });
+  let app: FastifyInstance;
 
   beforeAll(async () => {
-    app = (await appModule(expressApp)).app;
+    app = (await appModule(fastifyApp)).app;
+    await app.ready();
   });
 
   beforeEach(async () => {
@@ -55,7 +58,7 @@ describe('Test the llm API', () => {
       } as unknown as Promise<RetrievalQAChain>
     });
 
-    const {body, statusCode} = await supertest(app)
+    const {body, statusCode} = await supertest(app.server)
       .get('/api/llm/search/documents')
       .query({
         query: mockedLLMResponseText,
@@ -72,13 +75,13 @@ describe('Test the llm API', () => {
 
     const filePath = `${__dirname}/../../testData/shortText.txt`;
 
-    const {body, statusCode} = await supertest(app)
+    const {body} = await supertest(app.server)
       .post('/api/llm/search/documents')
       .attach('file', filePath, {
         contentType: 'text/plain',
-      });
+      })
+      .expect(200);
 
-    expect(statusCode).toBe(200);
     expect(mockLoadVectorStore).toBeCalledTimes(1);
     expect(body).toMatchObject({
       data: 'File successfully loaded into the Vector Store',
@@ -89,10 +92,10 @@ describe('Test the llm API', () => {
     mockCleanVectorStore.mockImplementation(() => Promise.resolve());
     mockLoadVectorStore.mockImplementation(() => Promise.resolve() as unknown as Promise<SaveableVectorStore>);
 
-    const {body, statusCode} = await supertest(app)
-      .delete('/api/llm/search/documents');
+    const {body} = await supertest(app.server)
+      .delete('/api/llm/search/documents')
+      .expect(200);
 
-    expect(statusCode).toBe(200);
     expect(mockCleanVectorStore).toBeCalledTimes(1);
     expect(body).toMatchObject({
       data: 'Vector Store successfully cleaned',

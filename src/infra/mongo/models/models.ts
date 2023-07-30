@@ -1,6 +1,10 @@
-import express from 'express';
 import usersModel from './users/users';
+import {Mongoose} from 'mongoose';
 
-export default (app: express.Application) => {
-  app.set('userModel', usersModel(app));
+export default (mongooseClient: Mongoose) => {
+  const userModel = usersModel(mongooseClient);
+
+  return {
+    userModel,
+  };
 };

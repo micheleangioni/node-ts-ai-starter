@@ -1,47 +1,22 @@
-import express from 'express';
-const router = express.Router();
-import usersValidationNew from './middlewares/users.validation.new';
+import {FastifyInstance} from 'fastify';
+import {FromSchema} from 'json-schema-to-ts';
 import userTransformer from './userTransformer';
+import createIoCContainer from '../createIoCContainer';
 import errorHandler from '../errorHandler';
-import UserService from '../../application/user/userService';
 import CreateUserCommand from '../../application/user/commands/createUserCommand';
 import {CreateUserCommandHandler} from '../../application/user/handlers/createUserCommandHandler';
-import IUserRepo from '../../domain/user/IUserRepo';
+import UserService from '../../application/user/userService';
 import User from '../../domain/user/user';
-import ILogger from '../../infra/logger/ILogger';
-import ApplicationError from '../../application/ApplicationError';
-import {ErrorCodes} from '../../application/declarations';
 
-export default (app: express.Application, source: string) => {
-  const logger = app.get('logger') as ILogger;
-  const sqlUserRepo = app.get('sqlUserRepo') as IUserRepo;
-  const userService = app.get('userService') as UserService;
+export default (app: FastifyInstance, source: string) => {
+  const logger = app.log;
+  const container = createIoCContainer();
+  const userService = container.resolve(UserService);
 
   /**
    * Retrieve all Users.
    */
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  router.get('/sql', async (_req, res) => {
-    let users;
-
-    try {
-      users = await sqlUserRepo.all();
-    } catch (err) {
-      return errorHandler(err, res, logger);
-    }
-
-    res.json({
-      data: users.map((user: User) => {
-        return userTransformer(user);
-      }),
-    });
-  });
-
-  /**
-   * Retrieve all Users.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  router.get('/', async (_req, res) => {
+  app.get(source, async (_req, res) => {
     let users;
 
     try {
@@ -50,49 +25,66 @@ export default (app: express.Application, source: string) => {
       return errorHandler(err, res, logger);
     }
 
-    res.json({
+    res.send({
       data: users.map((user: User) => {
         return userTransformer(user);
       }),
     });
   });
 
+  const postUserBody = {
+    properties: {
+      email: {
+        format: 'email',
+        maxLength: 128,
+        minLength: 6,
+        type: 'string',
+      },
+      password: {
+        maxLength: 100,
+        minLength: 12,
+        type: 'string',
+      },
+      username: {
+        maxLength: 25,
+        minLength: 4,
+        // eslint-disable-next-line
+        pattern: '^[\\w]+', // \w is equivalent to [A-Za-z0-9_]
+        type: 'string',
+      },
+    },
+    required: ['email', 'password'],
+    type: 'object',
+  } as const;
+
   /**
    * Create a new User.
    */
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  router.post('/', usersValidationNew, async (req, res) => {
-    let user;
+  app.post<{ Body: FromSchema<typeof postUserBody> }>(
+    source,
+    {
+      schema: {
+        body: postUserBody,
+      }},
+    async (req, res) => {
+      let user;
+      const {email, password, username} = req.body;
 
-    const {email, password, username} = req.body;
+      try {
+        user = await new CreateUserCommandHandler(userService).handle(new CreateUserCommand({
+          email,
+          password,
+          source,
+          username,
+        }));
+      } catch (err) {
+        return errorHandler(err, res, logger);
+      }
 
-    if (
-      typeof email !== 'string'
-      || typeof password !== 'string'
-      || (username && typeof username !== 'string')
-    ) {
-      return errorHandler(new ApplicationError({
-        code: ErrorCodes.INVALID_DATA,
-        error: 'Invalid input parameters. `email` and `password` must be a string. Optional `username` as well',
-        status: 412,
-      }), res, logger);
-    }
-
-    try {
-      user = await new CreateUserCommandHandler(userService).handle(new CreateUserCommand({
-        email,
-        password,
-        source,
-        username,
-      }));
-    } catch (err) {
-      return errorHandler(err, res, logger);
-    }
-
-    res.json({
-      data: userTransformer(user),
+      res.send({
+        data: userTransformer(user),
+      });
     });
-  });
 
-  return router;
+  return app;
 };

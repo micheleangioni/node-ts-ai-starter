@@ -1,9 +1,7 @@
-import express from 'express';
 import userSchemaCreator from './usersSchema';
 import {Model, Mongoose} from 'mongoose';
 
-export default (app: express.Application) => {
-  const mongoose = app.get('mongooseClient') as Mongoose;
+export default (mongoose: Mongoose) => {
   const usersSchema = userSchemaCreator(mongoose);
   let model: Model<any, any, any>;
 

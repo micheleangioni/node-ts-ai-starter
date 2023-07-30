@@ -1,17 +1,5 @@
 version: '3.5'
 services:
-  mysql-node-ts:
-    image: mysql:8
-    volumes:
-      - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
-    container_name: mysql-node-ts
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_DATABASE: node-ts-starter_test
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-
   mongo-node-ts:
     container_name: mongo
     image: mongo:latest

@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
-import { Umzug, SequelizeStorage } from 'umzug';
 import userSchemaCreator from '../src/infra/mongo/models/users/usersSchema';
-import userRepoCreator from '../src/infra/repositories/userRepo';
-import Sequelize from '../src/infra/sql';
-import User from '../src/infra/sql/models/users/user';
-import { attributes, tableName } from '../src/infra/sql/models/users/usersSchema';
+import UserRepo from '../src/infra/repositories/userRepo';
 import usersData from './testData/users.json';
 
 process.env.OPENAI_ORGANIZATION_ID =  'organizationId';
@@ -20,39 +16,19 @@ mongoose.connect(mongoUri, {})
     throw e;
   });
 
-// Connect to SqLite
-const sequelize = Sequelize();
-
-const umzug = new Umzug({
-  context: sequelize.getQueryInterface(),
-  logger: console,
-  migrations: { glob: 'migrations/*.js' },
-  storage: new SequelizeStorage({ sequelize }),
-});
-
 // Connect to MongoDB using Mongoose and attach the models to it
 const mongooseClient: any = mongoose;
 
 const userSchema = userSchemaCreator(mongooseClient);
-const userModel = mongoose.model('users', userSchema);
+const userModel = mongoose.model('users', userSchema) as any;
 
-export const userRepo = userRepoCreator(userModel);
+export const userRepo = new UserRepo(userModel);
 
 export const seedDatabase = async () => {
   // Mongo
   await userModel.insertMany(usersData);
-
-  // SqLite migrations and seedings
-  User.init(attributes, {
-    sequelize,
-    tableName,
-  });
-
-  await umzug.up();
-  await User.bulkCreate(usersData);
 };
 
 export const cleanDatabase = async () => {
   await userModel.deleteMany({});
-  await umzug.down();
 };

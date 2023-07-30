@@ -1,10 +1,12 @@
-import { Application } from 'express';
 import UserService from './user/userService';
+import {IContainer} from '../api/createIoCContainer';
+import UserRepo from '../infra/repositories/userRepo';
+import EventPublisher from './eventPublisher';
 
-export default async (app: Application) => {
+export default async (container: IContainer) => {
   // Add application services
 
-  app.set('userService', new UserService(app.get('userRepo'), app.get('messageBroker')));
+  container.bind(UserService, () => new UserService(container.resolve(UserRepo), container.resolve(EventPublisher)));
 
   return Promise.resolve();
 };
