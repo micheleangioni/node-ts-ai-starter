@@ -38,6 +38,8 @@ It comes with the following features configured out of the box:
 
 ## <a name="installation"></a>Installation
 
+Be sure to use Node.js 18+.
+
 1. Clone the repo;
 
 2. Either 
