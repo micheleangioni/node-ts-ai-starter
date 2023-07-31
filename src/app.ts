@@ -51,8 +51,6 @@ const loadApp = async (app: FastifyInstance) => {
 };
 
 export default async (app: FastifyInstance) => {
-  // TODO HELMET
-
   await registerPlugins(app);
   await loadApp(app);
 
