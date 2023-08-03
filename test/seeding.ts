@@ -9,7 +9,7 @@ process.env.OPENAI_API_KEY = 'key';
 // Connect to mongoose
 const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
-  : `mongodb://localhost:27017/node-ts-starter_${process.env.NODE_ENV}`;
+  : `mongodb://localhost:27017/node-ts-ai-starter_${process.env.NODE_ENV}`;
 
 mongoose.connect(mongoUri, {})
   .catch((e: any) => {
