@@ -1,7 +1,7 @@
 {
-  "name": "node-ts-starter",
+  "name": "node-ts-ai-starter",
   "version": "1.2.0",
-  "description": "Starter kit for Node.js application written in TypeScript",
+  "description": "Starter kit for Node.js AI-driven application written in TypeScript",
   "main": "build/server.js",
   "scripts": {
     "start": "node build/server.js",

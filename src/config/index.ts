@@ -6,7 +6,7 @@ export default {
       user: {
         numPartitions: ['staging', 'production'].includes(env) ? 16 : 1,
         replicationFactor: ['staging', 'production'].includes(env) ? 2 : 1,
-        topic: 'myCompany.events.node-ts-starter.user',
+        topic: 'myCompany.events.node-ts-ai-starter.user',
       },
     },
   },
