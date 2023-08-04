@@ -56,7 +56,7 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.9",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.3.1",
     "fastify": "^4.21.0",
     "langchain": "^0.0.120",
     "mongoose": "^7.4.1",
@@ -66,7 +66,6 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
-    "@types/dotenv": "^8.2.0",
     "@types/jest": "^29.5.3",
     "@types/multer": "^1.4.7",
     "@types/shelljs": "^0.8.12",
@@ -79,7 +78,7 @@
     "eslint-plugin-sort-class-members": "^1.18.0",
     "jest": "^29.6.2",
     "json-schema-to-ts": "^2.9.1",
-    "nodemon": "^2.0.22",
+    "nodemon": "^3.0.1",
     "shelljs": "^0.8.5",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
